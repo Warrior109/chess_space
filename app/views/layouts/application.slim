@@ -1,0 +1,15 @@
+html
+  head
+    title
+      | ChessSpace
+    = csrf_meta_tags
+    = csp_meta_tag
+
+    - if should_prerender_on_server?
+      = javascript_pack_tag 'main'
+    - else
+      = javascript_packs_with_chunks_tag 'main'
+    = stylesheet_pack_tag 'main-styles'
+
+  body
+    = react_component('ServerRendering', props: default_props_for_react, prerender: should_prerender_on_server?)

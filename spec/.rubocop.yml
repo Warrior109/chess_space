@@ -1,0 +1,86 @@
+inherit_from: ../.rubocop.yml
+
+Layout/AlignHash:
+  Enabled: false
+
+Layout/IndentFirstHashElement:
+  EnforcedStyle: consistent
+
+Layout/MultilineMethodCallIndentation:
+  EnforcedStyle: indented
+  IndentationWidth: 2
+
+Lint/AmbiguousBlockAssociation:
+  Enabled: false
+
+Metrics/LineLength:
+  Enabled: false
+
+Metrics/BlockLength:
+  Max: 30
+  ExcludedMethods: ['xdescribe', 'describe', 'context', 'shared_examples', 'shared_context', 'each', 'factory', 'define', 'permissions']
+
+Style/Documentation:
+  Enabled: false
+
+Style/ClassAndModuleChildren:
+  Enabled: false
+
+Style/BlockDelimiters:
+  Enabled: false
+
+Style/Send:
+  Enabled: false
+
+# Prohibits even '2018-01-01 00:00:00'.to_time, which is inconvenient and doesn't bring any value
+Rails/Date:
+  Enabled: false
+
+# update_all is valuable for specs
+Rails/SkipsModelValidations:
+  Enabled: false
+
+# What? "Don't use" one of the most idiomatic and readable RSpec features? What world is that???
+RSpec/ImplicitSubject:
+  Enabled: false
+
+RSpec/NestedGroups:
+  Max: 5
+
+RSpec/MultipleExpectations:
+  Max: 2
+
+RSpec/MessageSpies:
+  Enabled: false
+
+RSpec/ContextWording:
+  Prefixes:
+  - when
+  - with
+  - without
+  - for
+
+# Like, seriously? What next? "Don't use letter 'x', it is weird and we decided to prohibit it"?
+RSpec/LetSetup:
+  Enabled: false
+
+# Any length by lines is dumb. It is really handy to write examples like
+#  .to have_attributes(
+#     50 lines
+#  )
+# or
+#  .to change(this)
+#  .and change(that)
+#  .and change(
+#     something more complicated
+#  )
+# ...and all of it is perfectly readable
+RSpec/ExampleLength:
+  Enabled: false
+
+# Including custom methods from https://github.com/zverok/saharspec#its-addons
+RSpec/EmptyExampleGroup:
+  CustomIncludeMethods:
+  - its_block
+  - its_call
+  - its_map

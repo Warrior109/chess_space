@@ -1,0 +1,3 @@
+import <%= file_name.camelize %> from './<%= file_name.camelize %>';
+
+export { <%= file_name.camelize %> };

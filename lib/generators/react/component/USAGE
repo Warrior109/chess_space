@@ -1,0 +1,17 @@
+Description:
+  Generate nested and not nested react components
+
+Example:
+    rails generate component thing s
+
+    This will create:
+      frontend/js/screens/Thing/thing.js
+      frontend/js/screens/Thing/index.js
+
+    rails generate component thing/test l
+
+    This will create:
+      frontend/js/layouts/Thing/components/Test/test.js
+      frontend/js/layouts/Thing/components/Test/index.js
+    and import and export this component in:
+      frontend/js/layouts/Thing/components/index.js

@@ -1,0 +1,13 @@
+import React from 'react';
+import {} from 'prop-types';
+
+const propTypes = {};
+
+const <%= file_name.camelize %> = (props) => {
+  return (
+    <div>TEST</div>
+  );
+};
+<%= file_name.camelize %>.propTypes = propTypes;
+
+export default <%= file_name.camelize %>;

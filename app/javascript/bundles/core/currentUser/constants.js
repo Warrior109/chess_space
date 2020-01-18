@@ -1,0 +1,10 @@
+//
+// ACTION TYPES
+//
+
+export const types = {
+  SET_CURRENT_USER: 'SET_CURRENT_USER',
+  LOG_OUT: 'LOG_OUT',
+  SIGN_IN: 'SIGN_IN',
+  CURRENT_USER_SIGN_UP: 'CURRENT_USER_SIGN_UP'
+};

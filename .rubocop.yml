@@ -1,0 +1,191 @@
+require:
+  - rubocop-rails
+  - rubocop-rspec
+
+AllCops:
+  DisplayCopNames: true
+  TargetRubyVersion: 2.7
+  Exclude:
+    - inherit
+    - 'db/schema.rb'
+    - 'bin/**'
+    - 'node_modules/**/**'
+
+# Our preferred style ==============================================================================
+
+Metrics/LineLength:
+  Max: 100
+  IgnoredPatterns: ['\#.*'] # ignore long comments
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+  Exclude:
+    - 'app/graphql/mutations/**'
+    - 'app/graphql/queries/**'
+
+Layout/SpaceInsideHashLiteralBraces:
+  EnforcedStyle: no_space
+
+Style/SignalException:
+  EnforcedStyle: semantic
+
+Style/FormatString:
+  EnforcedStyle: percent
+
+Style/MultilineBlockChain:
+  Enabled: false
+
+Style/AndOr:
+  EnforcedStyle: conditionals
+
+# It is nicer to define all scopes with -> {}, despite of block size
+Style/Lambda:
+  Exclude:
+    - 'app/models/**/*.rb'
+
+Layout/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth: 2
+
+Layout/AlignArguments:
+  EnforcedStyle: with_fixed_indentation
+  IndentationWidth: 2
+
+Layout/ClassStructure:
+  Enabled: true
+
+# 't' fot tubby
+Naming/UncommunicativeMethodParamName:
+  AllowedNames:
+    - 't'
+    - 'io'
+    - 'id'
+    - 'tm'
+    - 'to'
+
+Style/RescueStandardError:
+  Enabled: false
+
+# Disabled but default, but those are cool, let's enable!
+Style/OptionHash:
+  Enabled: true
+
+Style/ReturnNil:
+  Enabled: true
+
+Style/CollectionMethods:
+  Enabled: true
+  PreferredMethods:
+    collect: map
+    collect!: map!
+    inject: reduce
+    detect: find
+    find_all: select
+    yield_self: then
+
+Style/DateTime:
+  Enabled: true
+
+# TODO: Should be acted upon, but more than 20 offences currently
+Style/Send:
+  Enabled: false
+
+# Our style is {} for functional blocks AND one-line imperative blocks
+Style/BlockDelimiters:
+  EnforcedStyle: semantic
+  AllowBracesOnProceduralOneLiners: true
+  FunctionalMethods:
+    - then
+    - yield_self
+    - find # No idea why Rubocop originally thinks it is procedural...
+
+Rails:
+  Enabled: true
+
+# Prohibits `only: :update` in controller filters, if #update is not defined in the current controller class.
+# But it is useful for our Passwords/Sessions controllers
+Rails/LexicallyScopedActionFilter:
+  Enabled: false
+
+# Too formal, don't need so much
+Rails/HasManyOrHasOneDependent:
+  Enabled: false
+
+# For use has_and_belongs_to_many associations
+Rails/HasAndBelongsToMany:
+  Enabled: false
+
+# May be useful, but prohibits too much sane uses
+Rails/OutputSafety:
+  Enabled: false
+
+Rails/InverseOf:
+  Enabled: false
+
+Rails/SaveBang:
+  Enabled: true
+  Exclude:
+    - 'app/controllers/**/*' # We have a lot of if @model.valid?
+
+# As we are not a public site and has very limite number of target=_blank links, we can ignore this.
+Rails/LinkToBlank:
+  Enabled: false
+
+# Newere cops, disabled by default, let's enable them and see ======================================
+
+Layout/HeredocArgumentClosingParenthesis:
+  Enabled: true
+
+Style/AutoResourceCleanup:
+  Enabled: true
+
+# Broken in current Rubocop ========================================================================
+
+# Can't play well with memoize def
+Layout/RescueEnsureAlignment:
+  Enabled: false
+
+# That's just how things are, we will fix it probably sometime =====================================
+
+Metrics/MethodLength:
+  Max: 25
+
+# too much changes required... and I am not sure it is a good thing
+Layout/EmptyLineAfterGuardClause:
+  Enabled: false
+
+# Don't need them at all ===========================================================================
+
+# It is nice _sometimes_, but aligning everything all the time seems to be overkill.
+# In constants, it is better to have it aligned as a "table".
+# Inside methods, it is typically more convenient to have just natural 1-space alignment.
+Layout/AlignHash:
+  Enabled: false
+
+# It "experimentally" requires to freeze all constants, which makes lot of things just uglier,
+# without any real benefit.
+Style/MutableConstant:
+  Enabled: false
+
+Style/FormatStringToken:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
+
+Style/CommentAnnotation:
+  Enabled: false
+
+Style/StructInheritance:
+  Enabled: false
+
+Style/ParallelAssignment:
+  Enabled: false
+
+Style/AsciiComments:
+  Enabled: false
+
+# Empty case conditions look very regular for complicated choice. "Bozhidar doesn't like them" is
+# not a good reason for style rule.
+Style/EmptyCaseCondition:
+  Enabled: false

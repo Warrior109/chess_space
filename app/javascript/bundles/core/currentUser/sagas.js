@@ -1,0 +1,51 @@
+import { call, fork, put, select, takeLatest, takeEvery } from 'redux-saga/effects';
+import { setError } from 'lib/utils';
+import { toastr } from 'react-redux-toastr';
+
+import { selectors } from './selectors';
+
+import api from './api';
+import { types } from './constants';
+
+export function* logOut({ errorCallback, callback }) {
+  try {
+    const resp = yield call(api.logOut);
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: {} } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
+export function* signIn({ payload: { email, password }, errorCallback, callback }) {
+  try {
+    const resp = yield call(api.signIn, { email, password });
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: resp.user } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
+export function* currentUserWatch() {
+  yield takeLatest(types.LOG_OUT, logOut);
+  yield takeLatest(types.SIGN_IN, signIn);
+}
+
+export const currentUserSagas = [
+  fork(currentUserWatch)
+];
