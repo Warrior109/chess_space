@@ -1,3 +1,3 @@
-import SignUpModal from './SignUpModal/signUpModal';
+import SignUpModal from './SignUpModal';
 
 export { SignUpModal };

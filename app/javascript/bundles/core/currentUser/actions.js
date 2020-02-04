@@ -9,5 +9,8 @@ export const actions = {
   }),
   signIn: ({ email, password, callback, errorCallback }) => ({
     type: types.SIGN_IN, payload: { email, password }, callback, errorCallback
+  }),
+  checkUserEmailUniqueness: ({ email, callback, errorCallback }) => ({
+    type: types.CHECK_USER_EMAIL_UNIQUENESS, payload: { email }, callback, errorCallback
   })
 };

@@ -1,9 +1,10 @@
 import { call, fork, put, select, takeLatest, takeEvery } from 'redux-saga/effects';
-import { setError } from 'lib/utils';
+import { stopSubmit } from 'redux-form';
 import { toastr } from 'react-redux-toastr';
 
-import { selectors } from './selectors';
+import { setError } from 'lib/utils';
 
+import { selectors } from './selectors';
 import api from './api';
 import { types } from './constants';
 
@@ -41,9 +42,27 @@ export function* signIn({ payload: { email, password }, errorCallback, callback 
   }
 }
 
+export function* checkUserEmailUniqueness({ payload: { email }, errorCallback, callback }) {
+  try {
+    const { isValid } = yield call(api.checkUserEmailUniqueness, { email });
+
+    if (isValid) {
+      if (callback) callback();
+    } else {
+      const errors = { email: 'Email already been taken' };
+      yield put(stopSubmit('signUpForm', errors));
+      if (errorCallback) errorCallback();
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
+  yield takeLatest(types.CHECK_USER_EMAIL_UNIQUENESS, checkUserEmailUniqueness);
 }
 
 export const currentUserSagas = [

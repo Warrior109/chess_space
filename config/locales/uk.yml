@@ -1,2 +1,8 @@
 uk:
   registration: Реєстрація
+  firstName: Ім'я
+  lastName: Прізвище
+  email: Email
+  password: Пароль
+  password_confirmation: Підтвердження паролю
+  registrate: Зареєструватись

@@ -1,0 +1,5 @@
+mutation emailUniquenessValidation($input: EmailUniquenessValidationInput!) {
+  emailUniquenessValidation(input: $input) {
+    isValid
+  }
+}
