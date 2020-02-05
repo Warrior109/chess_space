@@ -1,9 +1,9 @@
 import { graphQLRequest } from 'lib/utils';
-import { logOutUser, signInUser, checkUserEmailUniqueness } from './queries';
+import { logOut, signInUser, checkUserEmailUniqueness, signUpUser } from './queries';
 
 const api = {
   logOut: () => graphQLRequest({
-    query: logOutUser,
+    query: logOut,
     variables: { input: {} }
   }),
   signIn: ({ email, password }) => graphQLRequest({
@@ -14,6 +14,10 @@ const api = {
   checkUserEmailUniqueness: ({ email }) => graphQLRequest({
     query: checkUserEmailUniqueness,
     variables: { input: { email } }
+  }),
+  signUpUser: ({ firstName, lastName, email, password, passwordConfirmation }) => graphQLRequest({
+    query: signUpUser,
+    variables: { input: { firstName, lastName, email, password, passwordConfirmation } }
   })
 };
 

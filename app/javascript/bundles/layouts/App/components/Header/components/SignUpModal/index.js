@@ -9,7 +9,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatsh => (
   bindActionCreators({
-    checkUserEmailUniquenessDispatch: actions.checkUserEmailUniqueness
+    checkUserEmailUniquenessDispatch: actions.checkUserEmailUniqueness,
+    signUpUserDispatch: actions.signUpUser
   }, dispatsh)
 );
 

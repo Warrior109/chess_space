@@ -1,27 +1,41 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import { defaultMessages } from 'locales/default';
-// import { intlShape } from 'react-intl';
+import React, { Component } from 'react';
+import { NavItem } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
 import {} from 'prop-types';
 
 import SharedHeader from 'components/Header';
-import SignInModalLink from 'components/SignInModalLink';
+import { SignUpModal } from './components';
 
 const propTypes = {
-  // intl: intlShape.isRequired
 };
 
-const Header = ({ intl: { formatMessage } }) => {
-  return (
-    <SharedHeader>
-      <li className='nav-item auth-btn'>
-        <SignInModalLink className='nav-link' >
-          LOGIN
-          {/* { formatMessage(defaultMessages.login) } */}
-        </SignInModalLink>
-      </li>
-    </SharedHeader>
-  );
+class Header extends Component {
+  state = {
+    isSignUpModalOpen: false
+  };
+
+  toggleSignUpModal = () => {
+    this.setState(state => ({ isSignUpModalOpen: !state.isSignUpModalOpen }));
+  }
+
+  render() {
+    const {
+      toggleSignUpModal,
+      state: { isSignUpModalOpen }
+    } = this;
+
+    return (
+      <SharedHeader>
+        <NavItem>
+          <a onClick={ toggleSignUpModal } >
+            <FormattedMessage id='registration' />
+          </a>
+        </NavItem>
+
+        <SignUpModal isOpen={ isSignUpModalOpen } toggle={ toggleSignUpModal } />
+      </SharedHeader>
+    );
+  }
 };
 Header.propTypes = propTypes;
 

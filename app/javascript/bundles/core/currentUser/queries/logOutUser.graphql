@@ -1,5 +1,0 @@
-mutation logOutUser($input: LogOutUserInput!) {
-  logOutUser(input: $input) {
-    errors
-  }
-}

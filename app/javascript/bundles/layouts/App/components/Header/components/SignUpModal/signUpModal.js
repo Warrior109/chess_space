@@ -9,7 +9,8 @@ import { Form } from './components';
 const propTypes = {
   isOpen: bool.isRequired,
   toggle: func.isRequired,
-  checkUserEmailUniquenessDispatch: func.isRequired
+  checkUserEmailUniquenessDispatch: func.isRequired,
+  signUpUserDispatch: func.isRequired
 };
 
 class SignUpModal extends Component {
@@ -18,15 +19,14 @@ class SignUpModal extends Component {
   };
 
   handleSubmit = ({ firstName, lastName, email, password, passwordConfirmation }) => {
-    const {
-      setCurrentUserDispatch, currentUser, checkUserEmailUniquenessDispatch
-    } = this.props;
+    const { checkUserEmailUniquenessDispatch, signUpUserDispatch } = this.props;
 
-    const callback = () => {
-      // setCurrentUserDispatch({ currentUser: { ...currentUser, email, password, displayName, ...location } });
-      this.setState({ inProcess: false });
-    };
     const errorCallback = () => this.setState({ inProcess: false });
+    const callback = () => {
+      signUpUserDispatch({
+        firstName, lastName, email, password, passwordConfirmation, callback: errorCallback, errorCallback
+      });
+    };
 
     this.setState({ inProcess: true });
     checkUserEmailUniquenessDispatch({ email, callback, errorCallback });

@@ -14,10 +14,13 @@ module ChessSpace
 
     config.generators do |g|
       g.test_framework :rspec,
-        fixtures: true,
+        fixture: true,
         view_specs: false,
         helper_specs: false,
         routing_specs: false
+
+      g.factory_bot true
+      g.fixture_replacement :factory_bot, dir: 'spec/factories'
     end
 
     config.i18n.default_locale = :uk

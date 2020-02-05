@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 2020_02_02_083314) do
     t.datetime "updated_at", precision: 6, null: false
     t.string "first_name"
     t.string "last_name"
-    t.boolean "trainer"
+    t.boolean "trainer", default: false
     t.string "chess_category"
     t.date "birthday"
     t.string "country_code"

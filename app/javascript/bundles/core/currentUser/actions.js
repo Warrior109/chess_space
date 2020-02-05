@@ -12,5 +12,12 @@ export const actions = {
   }),
   checkUserEmailUniqueness: ({ email, callback, errorCallback }) => ({
     type: types.CHECK_USER_EMAIL_UNIQUENESS, payload: { email }, callback, errorCallback
+  }),
+  signUpUser: ({
+    firstName, lastName, email, password, passwordConfirmation, callback, errorCallback
+  }) => ({
+    type: types.SIGN_UP_USER,
+    payload: { firstName, lastName, email, password, passwordConfirmation },
+    callback, errorCallback
   })
 };

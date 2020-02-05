@@ -1,0 +1,5 @@
+mutation logOut($input: LogOutInput!) {
+  logOut(input: $input) {
+    errors
+  }
+}

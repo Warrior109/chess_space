@@ -59,10 +59,34 @@ export function* checkUserEmailUniqueness({ payload: { email }, errorCallback, c
   }
 }
 
+export function* signUpUser({
+  payload: { firstName, lastName, email, password, passwordConfirmation },
+  errorCallback, callback
+}) {
+  try {
+    const resp = yield call(
+      api.signUpUser,
+      { firstName, lastName, email, password, passwordConfirmation }
+    );
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: resp.user } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
   yield takeLatest(types.CHECK_USER_EMAIL_UNIQUENESS, checkUserEmailUniqueness);
+  yield takeLatest(types.SIGN_UP_USER, signUpUser);
 }
 
 export const currentUserSagas = [

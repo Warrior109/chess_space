@@ -1,54 +1,60 @@
 import React, { Component } from 'react';
-import { defaultMessages } from 'locales/default';
-// import { intlShape } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
-import { object, shape, string, number, func } from 'prop-types';
+import { NavItem } from 'reactstrap';
+import { FormattedMessage } from 'react-intl';
+import { object, shape, string, func } from 'prop-types';
 
+import { defaultMessages } from 'locales/default';
 import SharedHeader from 'components/Header';
+import Loader from 'components/Loader';
 import { paths } from 'layouts/constants';
 
 const propTypes = {
-  // intl: intlShape.isRequired,
   currentUser: shape({
-    avatar: shape({
-      thumbUrl: string.isRequired
-    }).isRequired,
-    displayName: string.isRequired,
-    bonusPoints: number.isRequired,
+    id: string.isRequired,
+    firstName: string.isRequired,
+    lastName: string.isRequired,
+    email: string.isRequired
   }).isRequired,
+  intl: object.isRequired,
   history: object.isRequired,
   logOutDispatch: func.isRequired
 };
 
 class Header extends Component {
   state = {
-    isDropdownOpen: false,
-    isOpenSettingsModal: false
+    inProcess: false
   };
 
   logOutHandler = () => {
     const { logOutDispatch, history, intl: { formatMessage } } = this.props;
 
     const callback = () => {
+      this.setState({ inProcess: false });
       toastr.success(formatMessage(defaultMessages.deviseSessionsSignedOut));
       history.push(paths.ROOT);
     };
-    logOutDispatch({ callback });
-  };
+    const errorCallback = () => this.setState({ inProcess: false });
 
-  toggle = key => this.setState({ [key]: !this.state[key] });
+    this.setState({ inProcess: true });
+    logOutDispatch({ callback, errorCallback });
+  };
 
   render() {
     const {
       logOutHandler,
-      toggle,
-      state: {},
+      state: { inProcess },
       props: { currentUser, intl: { formatMessage } }
     } = this;
 
     return (
       <SharedHeader>
-        Signed in
+        { inProcess && <Loader /> }
+        <NavItem>
+          <a onClick={ logOutHandler } >
+            <FormattedMessage id='log_out' />
+          </a>
+        </NavItem>
       </SharedHeader>
     );
   }

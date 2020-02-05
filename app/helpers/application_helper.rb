@@ -3,7 +3,7 @@
 module ApplicationHelper
   def default_props_for_react
     user_props =
-      if false # current_user
+      if current_user
         {
           current_user: {
             object: current_user.as_json
