@@ -15,19 +15,7 @@ const propTypes = {
 
 const Form = ({ intl: { formatMessage }, handleSubmit }) => {
   return (
-    <form onSubmit={ handleSubmit }>
-      <Field
-        component={ FieldWithErrors }
-        type='text'
-        name='firstName'
-        placeholder={ formatMessage(defaultMessages.firstName) }
-      />
-      <Field
-        component={ FieldWithErrors }
-        type='text'
-        name='lastName'
-        placeholder={ formatMessage(defaultMessages.lastName) }
-      />
+    <form onSubmit={ handleSubmit } >
       <Field
         component={ FieldWithErrors }
         type='email'
@@ -40,14 +28,8 @@ const Form = ({ intl: { formatMessage }, handleSubmit }) => {
         name='password'
         placeholder={ formatMessage(defaultMessages.password) }
       />
-      <Field
-        component={ FieldWithErrors }
-        type='password'
-        name='passwordConfirmation'
-        placeholder={ formatMessage(defaultMessages.passwordConfirmation) }
-      />
       <button type='submit' >
-        <FormattedMessage id='registrate' />
+        <FormattedMessage id='sign_in' />
       </button>
     </form>
   );

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
 import { NavItem } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
-import { object, shape, string, func } from 'prop-types';
+import { object, shape, string, number, func } from 'prop-types';
 
 import { defaultMessages } from 'locales/default';
 import SharedHeader from 'components/Header';
@@ -11,7 +11,7 @@ import { paths } from 'layouts/constants';
 
 const propTypes = {
   currentUser: shape({
-    id: string.isRequired,
+    id: number.isRequired,
     firstName: string.isRequired,
     lastName: string.isRequired,
     email: string.isRequired
@@ -30,7 +30,6 @@ class Header extends Component {
     const { logOutDispatch, history, intl: { formatMessage } } = this.props;
 
     const callback = () => {
-      this.setState({ inProcess: false });
       toastr.success(formatMessage(defaultMessages.deviseSessionsSignedOut));
       history.push(paths.ROOT);
     };

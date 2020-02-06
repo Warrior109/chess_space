@@ -36,7 +36,7 @@ class SignUpModal extends Component {
     const {
       handleSubmit,
       state: { inProcess },
-      props: { isOpen, toggle, checkUserEmailUniquenessDispatch }
+      props: { isOpen, toggle }
     } = this;
 
     return (
