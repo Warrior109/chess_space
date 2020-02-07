@@ -1,0 +1,15 @@
+fragment userFields on User {
+  id,
+  firstName,
+  lastName,
+  email,
+  trainer,
+  skillLevel,
+  lat,
+  lng,
+  address,
+  countryCode,
+  birthday,
+  goal,
+  aboutMe
+}

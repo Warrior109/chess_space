@@ -11,5 +11,7 @@ html
       = javascript_packs_with_chunks_tag 'main'
     = stylesheet_pack_tag 'main-styles'
 
+    script src="https://maps.google.com/maps/api/js?key=AIzaSyAv6ILnjbTyxOGdmQxdCGd9i99WLwYmYKY&libraries=places"
+
   body
     = react_component('ServerRendering', props: default_props_for_react, prerender: should_prerender_on_server?)

@@ -24,6 +24,7 @@ gem 'redis', '~> 4.0'
 # gem 'image_processing', '~> 1.2'
 
 gem 'memoist'
+gem 'geocoder'
 # For store env variables
 gem 'dotenv-rails', require: 'dotenv/rails-now'
 

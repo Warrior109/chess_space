@@ -26,8 +26,9 @@ ActiveRecord::Schema.define(version: 2020_02_02_083314) do
     t.string "first_name"
     t.string "last_name"
     t.boolean "trainer", default: false
-    t.string "chess_category"
+    t.string "skill_level"
     t.date "birthday"
+    t.string "address"
     t.string "country_code"
     t.string "state"
     t.string "city"

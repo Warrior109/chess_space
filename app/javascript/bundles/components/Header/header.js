@@ -1,7 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Navbar } from 'reactstrap';
-import { FormattedMessage } from 'react-intl';
 import { any } from 'prop-types';
 
 import { paths } from 'layouts/constants';
@@ -16,7 +15,7 @@ const Header = ({ children }) => {
       <div className='container'>
         <Navbar className='navbar-expand-lg navbar-dark'>
           <NavLink to={ paths.ROOT } className='nav-link navbar-brand'>
-            <span>CheSSSpace</span>
+            <span style={ { color: 'black' } } >CheSSSpace</span>
           </NavLink>
           { children }
         </Navbar>

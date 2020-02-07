@@ -42,7 +42,7 @@ class SignUpModal extends Component {
     return (
       <Modal { ...{ isOpen, toggle } } >
         <ModalHeader { ...{ toggle } } charCode='x'>
-          <FormattedMessage id='registration' />
+          <FormattedMessage id='modals.registration' />
         </ModalHeader>
         <ModalBody>
           { inProcess && <Loader /> }

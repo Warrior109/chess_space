@@ -20,16 +20,16 @@ const Form = ({ intl: { formatMessage }, handleSubmit }) => {
         component={ FieldWithErrors }
         type='email'
         name='email'
-        placeholder={ formatMessage(defaultMessages.email) }
+        placeholder={ formatMessage(defaultMessages.userFieldsEmail) }
       />
       <Field
         component={ FieldWithErrors }
         type='password'
         name='password'
-        placeholder={ formatMessage(defaultMessages.password) }
+        placeholder={ formatMessage(defaultMessages.userFieldsPassword) }
       />
       <button type='submit' >
-        <FormattedMessage id='sign_in' />
+        <FormattedMessage id='actions.sign_in' />
       </button>
     </form>
   );

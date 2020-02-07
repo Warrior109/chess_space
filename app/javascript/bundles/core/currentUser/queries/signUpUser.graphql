@@ -1,10 +1,9 @@
+#import "./userFields.graphql"
+
 mutation signUp($input: SignUpInput!) {
   signUp(input: $input) {
     user {
-      id,
-      firstName,
-      lastName,
-      email
+      ...userFields
     },
     errors
   }

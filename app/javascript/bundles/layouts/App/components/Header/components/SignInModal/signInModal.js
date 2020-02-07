@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import Loader from 'components/Loader';
 import { Modal, ModalHeader, ModalBody } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
+import { toastr } from 'react-redux-toastr';
 import { object, bool, func } from 'prop-types';
 
 import { paths } from 'layouts/constants';
@@ -40,7 +41,7 @@ class SignInModal extends Component {
     return (
       <Modal { ...{ isOpen, toggle } } >
         <ModalHeader { ...{ toggle } } charCode='x' >
-          <FormattedMessage id='log_in' />
+          <FormattedMessage id='modals.log_in' />
         </ModalHeader>
         <ModalBody>
           { inProcess && <Loader /> }

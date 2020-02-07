@@ -19,5 +19,8 @@ export const actions = {
     type: types.SIGN_UP_USER,
     payload: { firstName, lastName, email, password, passwordConfirmation },
     callback, errorCallback
+  }),
+  userUpdate: ({ callback, errorCallback, ...params }) => ({
+    type: types.USER_UPDATE, payload: params, callback, errorCallback
   })
 };

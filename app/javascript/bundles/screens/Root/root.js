@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { FormattedMessage } from 'react-intl';
 import { string, shape, func } from 'prop-types';
 
 import { paths } from 'layouts/constants';
@@ -19,7 +20,11 @@ class Root extends Component {
     } = this;
 
     return (
-      <div>Root</div>
+      <div>
+        <Link to={ paths.USERS_EDIT_COMMON } >
+          <FormattedMessage id='pages.profile_edit' />
+        </Link>
+      </div>
     );
   }
 };

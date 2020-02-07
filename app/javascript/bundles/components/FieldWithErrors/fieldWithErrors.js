@@ -22,9 +22,7 @@ const defaultProps = {
 const FieldWithErrors = ({
   input, placeholder, disabled, type, className, meta: { touched, error }, componentType
 }) => {
-  const onFocusHandler = () => input.onChange('');
-
-  const inputProps = { ...input, onFocus: onFocusHandler, placeholder, disabled, type, className };
+  const inputProps = { ...input, placeholder, disabled, type, className };
   return (
     <div>
       {

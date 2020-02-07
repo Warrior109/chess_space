@@ -1,11 +1,29 @@
 uk:
-  registration: Реєстрація
-  first_name: Ім'я
-  last_name: Прізвище
-  email: Email
-  password: Пароль
-  password_confirmation: Підтвердження паролю
-  registrate: Зареєструватись
-  log_out: Вийти
-  log_in: Вхід
-  sign_in: Увійти
+  pages:
+    profile_edit: Редагувати профіль
+
+  modals:
+    registration: Реєстрація
+    log_in: Вхід
+
+  actions:
+    registrate: Зареєструватись
+    log_out: Вийти
+    sign_in: Увійти
+    save_changes: Зберегти зміни
+
+  user:
+    fields:
+      first_name: Ім'я
+      last_name: Прізвище
+      email: Email
+      password: Пароль
+      password_confirmation: Підтвердження паролю
+      trainer: Тренер
+      skill_level: Рівень майстерності
+      birthday: Дата народження
+      city_of_residence: Місто проживання # location. lat, lng
+      goal: Ціль
+      about_me: Про себе
+    success_messages:
+      update: Дані користувача успішно змінені.

@@ -1,0 +1,10 @@
+#import "./userFields.graphql"
+
+mutation userUpdate($input: UserUpdateInput!) {
+  userUpdate(input: $input) {
+    user {
+      ...userFields
+    },
+    errors
+  }
+}

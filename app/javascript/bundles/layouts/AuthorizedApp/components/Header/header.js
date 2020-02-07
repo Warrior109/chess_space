@@ -43,15 +43,15 @@ class Header extends Component {
     const {
       logOutHandler,
       state: { inProcess },
-      props: { currentUser, intl: { formatMessage } }
+      props: { currentUser }
     } = this;
 
     return (
       <SharedHeader>
         { inProcess && <Loader /> }
         <NavItem>
-          <a onClick={ logOutHandler } >
-            <FormattedMessage id='log_out' />
+          <a style={ { cursor: 'pointer' } } onClick={ logOutHandler } >
+            <FormattedMessage id='actions.log_out' />
           </a>
         </NavItem>
       </SharedHeader>

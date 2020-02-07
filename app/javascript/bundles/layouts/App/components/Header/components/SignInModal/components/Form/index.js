@@ -4,8 +4,6 @@ import { injectIntl } from 'react-intl';
 import Form from './form';
 import { MAXIMUM_PASSWORD_LENGTH, MINIMUM_PASSWORD_LENGTH } from 'core/currentUser/constants';
 
-import { selectors, actions } from 'core/currentUser';
-
 const validate = ({ email, password }) => {
   const errors = {};
   if (!email) errors.email = 'Required';

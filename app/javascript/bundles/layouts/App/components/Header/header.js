@@ -33,13 +33,13 @@ class Header extends Component {
     return (
       <SharedHeader>
         <NavItem>
-          <a onClick={ toggleSignUpModal } >
-            <FormattedMessage id='registration' />
+          <a style={ { cursor: 'pointer' } } onClick={ toggleSignUpModal } >
+            <FormattedMessage id='modals.registration' />
           </a>
         </NavItem>
         <NavItem>
-          <a onClick={ toggleSignInModal } >
-            <FormattedMessage id='log_in' />
+          <a style={ { cursor: 'pointer' } } onClick={ toggleSignInModal } >
+            <FormattedMessage id='modals.log_in' />
           </a>
         </NavItem>
 
