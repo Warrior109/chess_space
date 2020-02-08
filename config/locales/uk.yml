@@ -11,6 +11,8 @@ uk:
     log_out: Вийти
     sign_in: Увійти
     save_changes: Зберегти зміни
+    show_password: Показати пароль
+    hide_password: Приховати пароль
 
   user:
     fields:

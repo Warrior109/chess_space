@@ -9,7 +9,7 @@ const Footer = (props) => {
     <footer className='text-center'>
       © CheSSSpace.&nbsp;
       All rights reserved
-      <a href='mailto:chessspace@gmail.com'> chessspace@gmail.com</a>
+      <a href='mailto:chessspace@gmail.com'> ourchessspace@gmail.com</a>
     </footer>
   );
 };

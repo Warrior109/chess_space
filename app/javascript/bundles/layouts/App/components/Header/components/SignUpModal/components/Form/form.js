@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { shape, func } from 'prop-types';
@@ -13,44 +13,70 @@ const propTypes = {
   handleSubmit: func.isRequired
 };
 
-const Form = ({ intl: { formatMessage }, handleSubmit }) => {
-  return (
-    <form onSubmit={ handleSubmit }>
-      <Field
-        component={ FieldWithErrors }
-        type='text'
-        name='firstName'
-        placeholder={ formatMessage(defaultMessages.userFieldsFirstName) }
-      />
-      <Field
-        component={ FieldWithErrors }
-        type='text'
-        name='lastName'
-        placeholder={ formatMessage(defaultMessages.userFieldsLastName) }
-      />
-      <Field
-        component={ FieldWithErrors }
-        type='email'
-        name='email'
-        placeholder={ formatMessage(defaultMessages.userFieldsEmail) }
-      />
-      <Field
-        component={ FieldWithErrors }
-        type='password'
-        name='password'
-        placeholder={ formatMessage(defaultMessages.userFieldsPassword) }
-      />
-      <Field
-        component={ FieldWithErrors }
-        type='password'
-        name='passwordConfirmation'
-        placeholder={ formatMessage(defaultMessages.userFieldsPasswordConfirmation) }
-      />
-      <button type='submit' >
-        <FormattedMessage id='actions.registrate' />
-      </button>
-    </form>
-  );
+class Form extends Component {
+  state = {
+    isPasswordVisible: false
+  };
+
+  togglePasswordVisibilityHandler = (e) => {
+    e.preventDefault();
+    this.setState((state) => ({ isPasswordVisible: !state.isPasswordVisible }));
+  };
+
+  render() {
+    const {
+      togglePasswordVisibilityHandler,
+      state: { isPasswordVisible },
+      props: { intl: { formatMessage }, handleSubmit }
+    } = this;
+
+    return (
+      <form onSubmit={ handleSubmit }>
+        <Field
+          component={ FieldWithErrors }
+          type='text'
+          name='firstName'
+          placeholder={ formatMessage(defaultMessages.userFieldsFirstName) }
+        />
+        <Field
+          component={ FieldWithErrors }
+          type='text'
+          name='lastName'
+          placeholder={ formatMessage(defaultMessages.userFieldsLastName) }
+        />
+        <Field
+          component={ FieldWithErrors }
+          type='email'
+          name='email'
+          placeholder={ formatMessage(defaultMessages.userFieldsEmail) }
+        />
+        <Field
+          component={ FieldWithErrors }
+          type={ isPasswordVisible ? 'text' : 'password' }
+          name='password'
+          placeholder={ formatMessage(defaultMessages.userFieldsPassword) }
+        />
+        <button onClick={ togglePasswordVisibilityHandler }>
+          {/* FIXME: remvove from yml file, if will be replaced with icon */}
+          {
+            isPasswordVisible ?
+              <FormattedMessage id='actions.hide_password' />
+              :
+              <FormattedMessage id='actions.show_password' />
+          }
+        </button>
+        <Field
+          component={ FieldWithErrors }
+          type={ isPasswordVisible ? 'text' : 'password' }
+          name='passwordConfirmation'
+          placeholder={ formatMessage(defaultMessages.userFieldsPasswordConfirmation) }
+        />
+        <button type='submit' >
+          <FormattedMessage id='actions.registrate' />
+        </button>
+      </form>
+    );
+  }
 };
 Form.propTypes = propTypes;
 

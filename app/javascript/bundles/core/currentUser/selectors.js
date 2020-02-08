@@ -8,7 +8,7 @@ export const selectors = {
     ({ trainer, skillLevel, birthday, goal, aboutMe, lat, lng, address, countryCode }) => ({
       trainer,
       skillLevel,
-      birthday: new Date(birthday),
+      birthday: birthday && new Date(birthday),
       goal,
       aboutMe,
       location: { lat, lng, address, countryCode }

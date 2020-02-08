@@ -12,5 +12,5 @@ export const types = {
   CURRENT_USER_SIGN_UP: 'CURRENT_USER_SIGN_UP'
 };
 
-export const MINIMUM_PASSWORD_LENGTH = 10;
+export const MINIMUM_PASSWORD_LENGTH = 8;
 export const MAXIMUM_PASSWORD_LENGTH = 128;
