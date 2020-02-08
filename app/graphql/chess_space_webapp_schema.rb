@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Graphql schema for App
 class ChessSpaceWebappSchema < GraphQL::Schema
   mutation Types::MutationType
   # query Types::QueryType

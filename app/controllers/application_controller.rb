@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Base controller
 class ApplicationController < ActionController::Base
   include DeviseTokenAuth::Concerns::SetUserByToken
 
@@ -13,7 +14,7 @@ class ApplicationController < ActionController::Base
     nil
   end
 
-  def after_sign_in_path_for(resource)
+  def after_sign_in_path_for(_resource)
     root_path
   end
 end

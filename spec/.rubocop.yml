@@ -1,9 +1,9 @@
 inherit_from: ../.rubocop.yml
 
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
-Layout/IndentFirstHashElement:
+Layout/FirstHashElementIndentation:
   EnforcedStyle: consistent
 
 Layout/MultilineMethodCallIndentation:

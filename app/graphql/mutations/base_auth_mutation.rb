@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Base class for all mutations which requires user authentication
 class Mutations::BaseAuthMutation < Mutations::BaseMutation
   def self.visible?(context)
     super && context[:current_user].present?

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Controller for all Graphql requests
 class GraphqlController < ApplicationController
   skip_before_action :verify_authenticity_token
 
@@ -22,6 +23,7 @@ class GraphqlController < ApplicationController
     logger.error error.message
     logger.error error.backtrace.join("\n")
 
-    render json: { error: { message: error.message, backtrace: error.backtrace }, data: {} }, status: 500
+    render json: {error: {message: error.message, backtrace: error.backtrace}, data: {}},
+      status: 500
   end
 end

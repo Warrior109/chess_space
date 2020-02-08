@@ -43,11 +43,11 @@ Style/Lambda:
   Exclude:
     - 'app/models/**/*.rb'
 
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 2
 
-Layout/AlignArguments:
+Layout/ArgumentAlignment:
   EnforcedStyle: with_fixed_indentation
   IndentationWidth: 2
 
@@ -55,7 +55,7 @@ Layout/ClassStructure:
   Enabled: true
 
 # 't' fot tubby
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   AllowedNames:
     - 't'
     - 'io'
@@ -102,6 +102,10 @@ Style/BlockDelimiters:
 Rails:
   Enabled: true
 
+Style/ClassAndModuleChildren:
+  Exclude:
+    - 'app/controllers/**/*'
+    - 'app/graphql/**/*'
 # Prohibits `only: :update` in controller filters, if #update is not defined in the current controller class.
 # But it is useful for our Passwords/Sessions controllers
 Rails/LexicallyScopedActionFilter:
@@ -159,7 +163,7 @@ Layout/EmptyLineAfterGuardClause:
 # It is nice _sometimes_, but aligning everything all the time seems to be overkill.
 # In constants, it is better to have it aligned as a "table".
 # Inside methods, it is typically more convenient to have just natural 1-space alignment.
-Layout/AlignHash:
+Layout/HashAlignment:
   Enabled: false
 
 # It "experimentally" requires to freeze all constants, which makes lot of things just uglier,
