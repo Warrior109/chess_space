@@ -31,4 +31,5 @@
 
 en:
   pages:
-    profile_edit: Edit profile
+    profile_edit:
+      title: Edit profile

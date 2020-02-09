@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   namespace :users do
     resource :edit, only: [] do
       get :common
+      get :contacts
     end
   end
 

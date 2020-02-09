@@ -17,7 +17,10 @@ RSpec.describe Users::Update do
         lng: 23.989,
         address: 'Dolyna city',
         goal: 'Make me famous',
-        about_me: 'Very special person'
+        about_me: 'Very special person',
+        first_name: 'Test109',
+        last_name: 'SuperTest901',
+        email: 'test_email@super.com'
       )
     }
 

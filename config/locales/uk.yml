@@ -1,6 +1,10 @@
 uk:
   pages:
-    profile_edit: Редагувати профіль
+    profile_edit:
+      title: Редагувати профіль
+      common: Загальні дані
+      contacts: Контактна інформація
+
 
   modals:
     registration: Реєстрація
@@ -13,9 +17,12 @@ uk:
     save_changes: Зберегти зміни
     show_password: Показати пароль
     hide_password: Приховати пароль
+    edit: Редагувати
+    cancel: Відміна
 
   user:
     fields:
+      name: Ім'я # pseudo field, just combination of first name and last name
       first_name: Ім'я
       last_name: Прізвище
       email: Email

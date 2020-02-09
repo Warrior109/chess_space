@@ -22,5 +22,8 @@ export const actions = {
   }),
   userUpdate: ({ callback, errorCallback, ...params }) => ({
     type: types.USER_UPDATE, payload: params, callback, errorCallback
+  }),
+  userSecureUpdate: ({ callback, errorCallback, ...params }) => ({
+    type: types.USER_SECURE_UPDATE, payload: params, callback, errorCallback
   })
 };

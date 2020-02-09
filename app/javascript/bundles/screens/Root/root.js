@@ -22,7 +22,7 @@ class Root extends Component {
     return (
       <div>
         <Link to={ paths.USERS_EDIT_COMMON } >
-          <FormattedMessage id='pages.profile_edit' />
+          <FormattedMessage id='pages.profile_edit.title' />
         </Link>
       </div>
     );

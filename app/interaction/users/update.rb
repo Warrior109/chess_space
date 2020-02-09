@@ -12,6 +12,9 @@ class Users::Update < ApplicationInteraction
   string :address, default: nil
   string :goal, default: nil
   string :about_me, default: nil
+  string :first_name, default: nil
+  string :last_name, default: nil
+  string :email, default: nil
 
   def execute
     errors.merge!(user.errors) unless user.update(user_params)

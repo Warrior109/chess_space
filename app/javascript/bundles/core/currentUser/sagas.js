@@ -99,12 +99,30 @@ export function* userUpdate({ payload, errorCallback, callback }) {
   }
 }
 
+export function* userSecureUpdate({ payload, errorCallback, callback }) {
+  try {
+    const resp = yield call(api.userSecureUpdate, payload);
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: resp.user } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
   yield takeLatest(types.CHECK_USER_EMAIL_UNIQUENESS, checkUserEmailUniqueness);
   yield takeLatest(types.SIGN_UP_USER, signUpUser);
   yield takeLatest(types.USER_UPDATE, userUpdate);
+  yield takeLatest(types.USER_SECURE_UPDATE, userSecureUpdate);
 }
 
 export const currentUserSagas = [

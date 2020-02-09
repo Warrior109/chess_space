@@ -1,0 +1,10 @@
+#import "./userFields.graphql"
+
+mutation userSecureUpdate($input: UsersSecureUpdateInput!) {
+  userSecureUpdate(input: $input) {
+    user {
+      ...userFields
+    },
+    errors
+  }
+}

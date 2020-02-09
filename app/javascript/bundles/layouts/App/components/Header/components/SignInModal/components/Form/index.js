@@ -14,6 +14,7 @@ const validate = ({ email, password }) => {
   } else if (password.length > MAXIMUM_PASSWORD_LENGTH) {
     errors.password = `Password too long. Maximum ${MAXIMUM_PASSWORD_LENGTH} characters.`;
   }
+  return errors;
 };
 
 export default reduxForm({ form: 'signInForm', validate })(injectIntl(Form));
