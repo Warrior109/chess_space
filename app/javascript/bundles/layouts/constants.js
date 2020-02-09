@@ -1,4 +1,4 @@
-const USERS_EDIT = '/users/edit'
+const USERS_EDIT = '/users/edit';
 
 export const paths = {
   ROOT: '/',

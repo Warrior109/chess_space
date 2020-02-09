@@ -8,4 +8,4 @@ export const USER_FIELDS = `
   birthday,
   goal,
   aboutMe
-`
+`;

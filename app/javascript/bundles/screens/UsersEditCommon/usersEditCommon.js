@@ -24,7 +24,7 @@ class UsersEditCommon extends Component {
     const { userUpdateDispatch } = this.props;
 
     const callback = () => {
-      toastr.success('', { component: <FormattedMessage id='user.success_messages.update' /> })
+      toastr.success('', { component: <FormattedMessage id='user.success_messages.update' /> });
       this.setState({ inProcess: false });
     };
     const errorCallback = () => this.setState({ inProcess: false });

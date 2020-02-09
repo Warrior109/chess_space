@@ -17,9 +17,9 @@ const validate = ({ email, firstName, lastName, password, passwordConfirmation }
   }
 
   if (passwordConfirmation !== password) {
-    errors.passwordConfirmation = "Passwords doesn't mismatch";
+    errors.passwordConfirmation = 'Passwords doesn\'t mismatch';
   }
   return errors;
-}
+};
 
 export default reduxForm({ form: 'signUpForm', validate })(injectIntl(Form));

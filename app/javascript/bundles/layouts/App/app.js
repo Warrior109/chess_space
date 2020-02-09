@@ -1,37 +1,23 @@
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import { any, func, object, string } from 'prop-types';
 
 import Footer from 'components/Footer';
 
 import { Header } from './components';
-import { UnauthorizedModalsContext } from './context';
 import { paths } from 'layouts/constants';
 
 const propTypes = {
-  children: any,
-  setCurrentUserDispatch: func.isRequired,
-  history: object.isRequired,
-  location: object.isRequired
+  children: any
 };
 
-class App extends Component {
-  state = {
-  };
-
-  render() {
-    const {
-      state: {  },
-      props: { children }
-    } = this;
-
-    return (
-      <UnauthorizedModalsContext.Provider value={ {  } } >
-        <Header />
-        { children }
-        <Footer />
-      </UnauthorizedModalsContext.Provider>
-    );
-  }
+const App = ({ children }) => {
+  return (
+    <Fragment>
+      <Header />
+      { children }
+      <Footer />
+    </Fragment>
+  );
 };
 
 App.propTypes = propTypes;
