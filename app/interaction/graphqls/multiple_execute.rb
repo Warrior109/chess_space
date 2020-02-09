@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class Graphqls::MultipleExecute < ActiveInteraction::Base
+# Executes multiple requests in graphql
+class Graphqls::MultipleExecute < ApplicationInteraction
   hash :context, strip: false do
     object :current_user, class: User, default: nil
     object :controller, class: ApplicationController, default: nil
@@ -10,13 +11,13 @@ class Graphqls::MultipleExecute < ActiveInteraction::Base
   array :queries
 
   def execute
-    queries_with_context = queries.map do |qr|
+    queries_with_context = queries.map { |qr|
       {
         query: qr[:query],
         variables: qr[:variables],
         context: context
       }
-    end
+    }
 
     ChessSpaceWebappSchema.multiplex(queries_with_context)
   end

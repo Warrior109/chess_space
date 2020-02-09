@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class ReadFile < ActiveInteraction::Base
+# Interaction to read file
+class ReadFile < ApplicationInteraction
   object :pathname
 
   def execute

@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+# graphql implementation for image type.
+# Used in user avatar, for example
 class Types::ImageType < Types::BaseObject
   field :thumb_url, String, null: false
   field :medium_url, String, null: false

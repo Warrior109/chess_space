@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Graphqls::JsSync::CreateTransformGraphqlToReduxKeysHash < ActiveInteraction::Base
+# TODO: refactoring this system and make correct comments
+# .
+class Graphqls::JsSync::CreateTransformGraphqlToReduxKeysHash < ApplicationInteraction
   hash :queries, strip: false
 
   def execute

@@ -1,7 +1,9 @@
 # frozen_string_literal: true
 
-class Graphqls::JsSync::Execute < ActiveInteraction::Base
-  CORES_PATH = Rails.root.join('app', 'javascript', 'bundles', 'core').freeze
+# TODO: refactoring this system and make correct comments
+# .
+class Graphqls::JsSync::Execute < ApplicationInteraction
+  CORES_PATH = Rails.root.join('app/javascript/bundles/core').freeze
 
   object :controller, class: ApplicationController
   object :user, default: nil

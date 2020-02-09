@@ -1,11 +1,15 @@
 # frozen_string_literal: true
 
-class RubyHashFromString < ActiveInteraction::Base
+# Converts string to ruby hash
+# For now useing only to converting internal js files.
+#
+# WARNING: Should not be used to converts data from client. NEVER!!!!
+class RubyHashFromString < ApplicationInteraction
   string :string
 
-  def execute # rubocop:disable Security/Eval, Lint/RescueException
-    eval(string)
-  rescue Exception => e
+  def execute
+    eval(string) # rubocop:disable Security/Eval
+  rescue Exception => e # rubocop:disable Lint/RescueException
     raise e if Rails.env.development?
 
     Rails.logger.error(e.message)

@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# helper to show flash messages via toastr
 module FlashMessagesHelper
   TOASTR_NOTIFY_TYPES = %i[success warning error].freeze
 

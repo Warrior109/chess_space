@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Update user
-class Mutations::UserUpdate < Mutations::BaseAuthMutation
+class Mutations::Users::Update < Mutations::BaseAuthMutation
   field :user, Types::UserType, null: true
   field :errors, [String], null: false
 

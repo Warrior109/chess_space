@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Graphqls::JsSync::ReplaceQueryNamesWithQueries < ActiveInteraction::Base
+# TODO: refactoring this system and make correct comments
+# .
+class Graphqls::JsSync::ReplaceQueryNamesWithQueries < ApplicationInteraction
   hash :queries, strip: false
   string :attributes
 

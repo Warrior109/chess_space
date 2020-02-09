@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Graphqls::JsSync::LoadQueryNames < ActiveInteraction::Base
+# TODO: refactoring this system and make correct comments
+# .
+class Graphqls::JsSync::LoadQueryNames < ApplicationInteraction
   string :data
   string :queries_folder_name
 

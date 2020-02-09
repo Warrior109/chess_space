@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Interaction for create user
-class Users::Create < ActiveInteraction::Base
+class Users::Create < ApplicationInteraction
   string :first_name
   string :last_name
   string :email

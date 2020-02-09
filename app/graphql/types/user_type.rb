@@ -1,5 +1,6 @@
+# frozen_string_literal: true
 
-
+# graphql implementation for User model
 class Types::UserType < Types::BaseObject
   field :id, ID, null: false
   field :first_name, String, null: false

@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Graphqls::JsSync::LoadQueries < ActiveInteraction::Base
+# TODO: refactoring this system and make correct comments
+# .
+class Graphqls::JsSync::LoadQueries < ApplicationInteraction
   GRAPHQL_EXTENSION = 'graphql'
 
   object :queries_folder_path, class: Pathname

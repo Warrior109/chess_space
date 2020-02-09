@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class Graphqls::SingularExecute < ActiveInteraction::Base
+# Executes singular graphql queries
+class Graphqls::SingularExecute < ApplicationInteraction
   hash :context, strip: false do
     object :current_user, class: User, default: nil
     object :controller, class: ApplicationController, default: nil

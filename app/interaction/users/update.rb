@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Update user
-class Users::Update < ActiveInteraction::Base
+class Users::Update < ApplicationInteraction
   object :user, class: User
 
   boolean :trainer, default: nil

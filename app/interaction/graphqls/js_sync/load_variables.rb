@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Graphqls::JsSync::LoadVariables < ActiveInteraction::Base
+# TODO: refactoring this system and make correct comments
+# .
+class Graphqls::JsSync::LoadVariables < ApplicationInteraction
   array :variables, default: []
   string :attrs
 

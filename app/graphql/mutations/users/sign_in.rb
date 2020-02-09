@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 # Mutation for sign in user into the system
-class Mutations::SignIn < Mutations::BaseNoAuthMutation
+class Mutations::Users::SignIn < Mutations::BaseNoAuthMutation
   field :user, Types::UserType, null: true
   field :errors, [String], null: false
 

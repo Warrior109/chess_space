@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
-class Graphqls::RetrieveVariablesFromMultipartParams < ActiveInteraction::Base
+# Parse files variables from multipart requests into graphql variables
+class Graphqls::RetrieveVariablesFromMultipartParams < ApplicationInteraction
   hash :params, strip: false
 
   def execute
@@ -23,6 +24,6 @@ class Graphqls::RetrieveVariablesFromMultipartParams < ActiveInteraction::Base
   end
 
   def generate_deep_hash(file_key, file)
-    file_key.split('/').reverse.inject(file) { |val, key| { key => val } }
+    file_key.split('/').reverse.reduce(file) { |val, key| {key => val} }
   end
 end

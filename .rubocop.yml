@@ -106,6 +106,7 @@ Style/ClassAndModuleChildren:
   Exclude:
     - 'app/controllers/**/*'
     - 'app/graphql/**/*'
+    - 'app/interaction/**/*'
 # Prohibits `only: :update` in controller filters, if #update is not defined in the current controller class.
 # But it is useful for our Passwords/Sessions controllers
 Rails/LexicallyScopedActionFilter:

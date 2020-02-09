@@ -1,5 +1,6 @@
 # frozen_string_literal: true
 
+# Graphql implementation for file types
 class Types::FileType < Types::BaseScalar
   def self.coerce_input(input_value, _context)
     # Override this to prepare a client-provided GraphQL value for your Ruby code

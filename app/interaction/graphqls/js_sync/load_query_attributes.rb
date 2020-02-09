@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Graphqls::JsSync::LoadQueryAttributes < ActiveInteraction::Base
+# TODO: refactoring this system and make correct comments
+# .
+class Graphqls::JsSync::LoadQueryAttributes < ApplicationInteraction
   JS_GRAPHQL_REQUEST_FUNC_NAME = 'graphQLRequest'
 
   string :data

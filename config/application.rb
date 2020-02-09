@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require_relative 'boot'
 
 require 'rails/all'
@@ -8,6 +10,7 @@ require 'sprockets/railtie'
 Bundler.require(*Rails.groups)
 
 module ChessSpace
+  # Main application class
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
     config.load_defaults 6.0

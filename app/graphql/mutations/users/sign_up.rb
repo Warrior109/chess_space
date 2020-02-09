@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Mutations::SignUp < Mutations::BaseNoAuthMutation
+# User registration.
+# If registration successfully completed - sign in user
+class Mutations::Users::SignUp < Mutations::BaseNoAuthMutation
   field :user, Types::UserType, null: true
   field :errors, [String], null: false
 

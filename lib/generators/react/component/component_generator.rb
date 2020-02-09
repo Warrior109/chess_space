@@ -1,9 +1,13 @@
-module React
-  ROOT_PATH = 'app/javascript/bundles/'.freeze
+# frozen_string_literal: true
 
+module React
+  ROOT_PATH = 'app/javascript/bundles/'
+
+  # Generates react component according to conventions
   class ComponentGenerator < Rails::Generators::NamedBase
     source_root File.expand_path('templates', __dir__)
-    argument :component_type, type: :string, desc: 'can be l - "layouts", s - "screens" or c - "components"'
+    argument :component_type, type: :string,
+      desc: 'can be l - "layouts", s - "screens" or c - "components"'
 
     def retrieve_namespaces
       @namespaces = file_path.split('/').map(&:camelize)

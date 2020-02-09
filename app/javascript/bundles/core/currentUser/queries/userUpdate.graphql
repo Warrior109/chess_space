@@ -1,6 +1,6 @@
 #import "./userFields.graphql"
 
-mutation userUpdate($input: UserUpdateInput!) {
+mutation userUpdate($input: UsersUpdateInput!) {
   userUpdate(input: $input) {
     user {
       ...userFields
