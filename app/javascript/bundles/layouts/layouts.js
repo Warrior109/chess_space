@@ -6,7 +6,7 @@ import { object, string } from 'prop-types';
 import App from './App';
 import AuthorizedApp from './AuthorizedApp';
 import UsersEdit from './UsersEdit';
-import { Landing, Root, UsersEditCommon, UsersEditContacts } from 'screens';
+import { Landing, Root, UsersEditCommon, UsersEditContacts, UsersEditSecurity } from 'screens';
 import { paths } from './constants';
 
 const propTypes = {
@@ -17,6 +17,8 @@ const Layouts = () => {
     <CustomRouteSwitch>
       <CustomRouteSwitch component={ App } auth={ false } >
         <Route path={ paths.ROOT } component={ Landing } exact />
+
+        <Redirect to={ paths.ROOT } />
       </CustomRouteSwitch>
 
       <CustomRouteSwitch component={ AuthorizedApp } auth >
@@ -25,6 +27,7 @@ const Layouts = () => {
         <CustomRouteSwitch component={ UsersEdit } path={ paths.USERS_EDIT } >
           <Route path={ paths.USERS_EDIT_COMMON } component={ UsersEditCommon } />
           <Route path={ paths.USERS_EDIT_CONTACTS } component={ UsersEditContacts } />
+          <Route path={ paths.USERS_EDIT_SECURITY } component={ UsersEditSecurity } />
         </CustomRouteSwitch>
       </CustomRouteSwitch>
     </CustomRouteSwitch>

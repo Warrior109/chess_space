@@ -4,7 +4,7 @@ uk:
       title: Редагувати профіль
       common: Загальні дані
       contacts: Контактна інформація
-
+      security: Безпека
 
   modals:
     registration: Реєстрація
@@ -28,6 +28,9 @@ uk:
       email: Email
       password: Пароль
       password_confirmation: Підтвердження паролю
+      old_password: Старий пароль
+      new_password: Новий пароль
+      new_password_confirmation: Підтвердження нового паролю
       trainer: Тренер
       skill_level: Рівень майстерності
       birthday: Дата народження

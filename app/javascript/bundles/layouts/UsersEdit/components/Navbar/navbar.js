@@ -20,6 +20,11 @@ const Navbar = (props) => {
           <FormattedMessage id='pages.profile_edit.contacts' />
         </NavLink>
       </div>
+      <div>
+        <NavLink to={ paths.USERS_EDIT_SECURITY } >
+          <FormattedMessage id='pages.profile_edit.security' />
+        </NavLink>
+      </div>
     </div>
   );
 };

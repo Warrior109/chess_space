@@ -1,4 +1,4 @@
-mutation logOut($input: LogOutInput!) {
+mutation logOut($input: UsersLogOutInput!) {
   logOut(input: $input) {
     errors
   }

@@ -1,6 +1,6 @@
 #import "./userFields.graphql"
 
-mutation signIn($input: SignInInput!) {
+mutation signIn($input: UsersSignInInput!) {
   signIn(input: $input) {
     user {
       ...userFields

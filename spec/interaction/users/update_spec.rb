@@ -2,7 +2,7 @@
 
 RSpec.describe Users::Update do
   let(:interaction) { described_class.run(user: user, **inputs) }
-  let(:user) { create(:user) }
+  let(:user) { create(:user, password: '12345678', password_confirmation: '12345678') }
   let(:inputs) { {} }
 
   describe '#result' do
@@ -30,6 +30,18 @@ RSpec.describe Users::Update do
       let(:inputs) { {trainer: false} }
 
       its(:reload) { is_expected.to have_attributes(**inputs) }
+    end
+
+    context 'when password present' do
+      let(:inputs) { {password: '12344321', password_confirmation: '12344321'} }
+
+      its(:reload) { is_expected.to be_valid_password('12344321') }
+
+      context 'when password confirmation incorrect' do
+        let(:inputs) { super().merge(password_confirmation: '00') }
+
+        its(:reload) { is_expected.not_to be_valid_password('12344321') }
+      end
     end
   end
 end

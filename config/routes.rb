@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resource :edit, only: [] do
       get :common
       get :contacts
+      get :security
     end
   end
 

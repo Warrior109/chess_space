@@ -2,9 +2,12 @@
 
 # controller for edit pages
 class Users::EditsController < ApplicationController
-  # common page
+  # UsersEditCommon screen
   def common; end
 
-  # contacts page
+  # UsersEditContacts screen
   def contacts; end
+
+  # UsersEditSecurity screen
+  def security; end
 end

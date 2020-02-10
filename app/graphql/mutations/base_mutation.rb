@@ -12,6 +12,10 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
 
   private
 
+  def sign_in(user)
+    controller.sign_in(:user, user)
+  end
+
   def controller
     context.fetch(:controller)
   end
