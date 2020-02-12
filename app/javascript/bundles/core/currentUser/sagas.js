@@ -99,6 +99,25 @@ export function* userUpdate({ payload, errorCallback, callback }) {
   }
 }
 
+export function* updateCurrentUserAvatar({
+  payload: { originalAvatar, thumbnailAvatar }, errorCallback, callback
+}) {
+  try {
+    const resp = yield call(api.updateCurrentUserAvatar, { originalAvatar, thumbnailAvatar });
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: resp.user } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* userSecureUpdate({ payload, errorCallback, callback }) {
   try {
     const resp = yield call(api.userSecureUpdate, payload);
@@ -123,6 +142,7 @@ export function* currentUserWatch() {
   yield takeLatest(types.SIGN_UP_USER, signUpUser);
   yield takeLatest(types.USER_UPDATE, userUpdate);
   yield takeLatest(types.USER_SECURE_UPDATE, userSecureUpdate);
+  yield takeLatest(types.UPDATE_CURRENT_USER_AVATAR, updateCurrentUserAvatar);
 }
 
 export const currentUserSagas = [

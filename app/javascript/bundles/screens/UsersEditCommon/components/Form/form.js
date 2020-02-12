@@ -7,6 +7,7 @@ import { shape, string, func } from 'prop-types';
 import FieldWithErrors from 'components/FieldWithErrors';
 import DateField from 'components/DateField';
 import LocationField from 'components/LocationField';
+import { AvatarBlock } from './components';
 
 const propTypes = {
   currentUser: shape({
@@ -65,9 +66,7 @@ const Form = ({ handleSubmit, currentUser: { firstName, lastName } }) => {
             </Col>
           </Row>
         </Col>
-        <Col sm={ 3 } >
-          Avatar Block
-        </Col>
+        <Col sm={ 3 } ><AvatarBlock /></Col>
 
         <Col sm={ 12 } >
           <h5><FormattedMessage id='user.fields.goal' /></h5>

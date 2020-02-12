@@ -9,6 +9,7 @@ uk:
   modals:
     registration: Реєстрація
     log_in: Вхід
+    change_user_avatar: Зміна аватарки користувача
 
   actions:
     registrate: Зареєструватись
@@ -19,6 +20,7 @@ uk:
     hide_password: Приховати пароль
     edit: Редагувати
     cancel: Відміна
+    change: Змінити
 
   user:
     fields:
@@ -39,3 +41,4 @@ uk:
       about_me: Про себе
     success_messages:
       update: Дані користувача успішно змінені.
+      avatar_update: Аватар користувача успішно змінений.

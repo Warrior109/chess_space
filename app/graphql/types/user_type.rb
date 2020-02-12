@@ -19,4 +19,6 @@ class Types::UserType < Types::BaseObject
   field :state_district, String, null: true
   field :goal, String, null: true
   field :about_me, String, null: true
+  field :original_avatar, Types::ImageType, null: true
+  field :thumbnail_avatar, Types::ImageType, null: true
 end

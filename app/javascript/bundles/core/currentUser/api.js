@@ -33,6 +33,15 @@ const api = {
   userSecureUpdate: (params) => graphQLRequest({
     query: userSecureUpdate,
     variables: { input: params }
+  }),
+  updateCurrentUserAvatar: ({ originalAvatar, thumbnailAvatar }) => graphQLRequest({
+    query: userUpdate,
+    type: 'multipart',
+    data: {
+      variables_keys: 'input/originalAvatar;input/thumbnailAvatar',
+      'input/originalAvatar': originalAvatar,
+      'input/thumbnailAvatar': thumbnailAvatar
+    }
   })
 };
 

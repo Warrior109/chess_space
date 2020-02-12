@@ -13,10 +13,12 @@ class Mutations::Users::Update < Mutations::BaseAuthMutation
   argument :address, String, required: false
   argument :goal, String, required: false
   argument :about_me, String, required: false
+  argument :original_avatar, Types::FileType, required: false
+  argument :thumbnail_avatar, Types::FileType, required: false
 
   def resolve(
     trainer: nil, skill_level: nil, goal: nil, about_me: nil, birthday: nil,
-    lat: nil, lng: nil, address: nil
+    lat: nil, lng: nil, address: nil, original_avatar: nil, thumbnail_avatar: nil
   )
     interactor = Users::Update.run(
       user: current_user,
@@ -27,7 +29,9 @@ class Mutations::Users::Update < Mutations::BaseAuthMutation
       address: address,
       birthday: birthday,
       goal: goal,
-      about_me: about_me
+      about_me: about_me,
+      original_avatar: original_avatar,
+      thumbnail_avatar: thumbnail_avatar
     )
 
     if interactor.valid?

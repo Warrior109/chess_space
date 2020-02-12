@@ -19,7 +19,7 @@ class Graphqls::SingularExecute < ApplicationInteraction
   private
 
   def retrieve_variables
-    variables = parse_variables(params.fetch(:variables))
+    variables = parse_variables(params.fetch(:variables, nil))
     files = compose(Graphqls::RetrieveVariablesFromMultipartParams, inputs)
     variables.deep_merge!(files) if files
     variables

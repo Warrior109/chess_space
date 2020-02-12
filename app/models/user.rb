@@ -7,6 +7,9 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable, password_length: 8..128
 
+  has_one_attached :original_avatar
+  has_one_attached :thumbnail_avatar
+
   validates :first_name, presence: true
   validates :last_name, presence: true
 
@@ -21,4 +24,11 @@ class User < ApplicationRecord
     end
   end
   after_validation :reverse_geocode
+
+  def as_json(*args)
+    super.merge(
+      original_avatar: { url: image_path_for(original_avatar) },
+      thumbnail_avatar: { url: image_path_for(thumbnail_avatar) }
+    )
+  end
 end

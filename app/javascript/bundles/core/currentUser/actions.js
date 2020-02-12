@@ -25,5 +25,9 @@ export const actions = {
   }),
   userSecureUpdate: ({ callback, errorCallback, ...params }) => ({
     type: types.USER_SECURE_UPDATE, payload: params, callback, errorCallback
+  }),
+  updateCurrentUserAvatar: ({ originalAvatar, thumbnailAvatar, callback, errorCallback }) => ({
+    type: types.UPDATE_CURRENT_USER_AVATAR,
+    payload: { originalAvatar, thumbnailAvatar }, callback, errorCallback
   })
 };

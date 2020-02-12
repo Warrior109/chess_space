@@ -11,5 +11,7 @@ fragment userFields on User {
   countryCode,
   birthday,
   goal,
-  aboutMe
+  aboutMe,
+  originalAvatar { url },
+  thumbnailAvatar { url }
 }
