@@ -61,7 +61,7 @@ class Header extends Component {
             <span>{ currentUser.firstName } { currentUser.lastName }</span>
           </DropdownToggle>
           <DropdownMenu>
-            <DropdownItem tag={ Link } to={ paths.ROOT } >
+            <DropdownItem tag={ Link } to={ paths.USERS_MY_PROFILE } >
               <FormattedMessage id='pages.my_profile' />
             </DropdownItem>
 

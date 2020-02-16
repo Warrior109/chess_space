@@ -1,7 +1,10 @@
-const USERS_EDIT = '/users/edit';
+const USERS = '/users';
+const USERS_EDIT = `${USERS}/edit`;
 
 export const paths = {
   ROOT: '/',
+  USERS_MY_PROFILE: `${USERS}/my_profile`,
+
   USERS_EDIT,
   USERS_EDIT_COMMON: `${USERS_EDIT}/common`,
   USERS_EDIT_CONTACTS: `${USERS_EDIT}/contacts`,

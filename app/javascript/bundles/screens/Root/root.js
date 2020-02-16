@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import { FormattedMessage } from 'react-intl';
 import { string, shape, func } from 'prop-types';
-
-import { paths } from 'layouts/constants';
 
 const propTypes = {
 };
@@ -21,9 +17,7 @@ class Root extends Component {
 
     return (
       <div>
-        <Link to={ paths.USERS_EDIT_COMMON } >
-          <FormattedMessage id='pages.profile_edit.title' />
-        </Link>
+        ROOT PAGE
       </div>
     );
   }

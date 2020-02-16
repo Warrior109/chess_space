@@ -8,6 +8,7 @@ fragment userFields on User {
   lat,
   lng,
   address,
+  city,
   countryCode,
   birthday,
   goal,

@@ -6,7 +6,11 @@ import { object, string } from 'prop-types';
 import App from './App';
 import AuthorizedApp from './AuthorizedApp';
 import UsersEdit from './UsersEdit';
-import { Landing, Root, UsersEditCommon, UsersEditContacts, UsersEditSecurity } from 'screens';
+import {
+  Landing, Root,
+  UsersEditCommon, UsersEditContacts, UsersEditSecurity,
+  UsersMyProfile
+} from 'screens';
 import { paths } from './constants';
 
 const propTypes = {
@@ -24,10 +28,11 @@ const Layouts = () => {
       <CustomRouteSwitch component={ AuthorizedApp } auth >
         <Route path={ paths.ROOT } component={ Root } exact />
 
+        <Route path={ paths.USERS_MY_PROFILE } component={ UsersMyProfile } exact />
         <CustomRouteSwitch component={ UsersEdit } path={ paths.USERS_EDIT } >
-          <Route path={ paths.USERS_EDIT_COMMON } component={ UsersEditCommon } />
-          <Route path={ paths.USERS_EDIT_CONTACTS } component={ UsersEditContacts } />
-          <Route path={ paths.USERS_EDIT_SECURITY } component={ UsersEditSecurity } />
+          <Route path={ paths.USERS_EDIT_COMMON } component={ UsersEditCommon } exact />
+          <Route path={ paths.USERS_EDIT_CONTACTS } component={ UsersEditContacts } exact />
+          <Route path={ paths.USERS_EDIT_SECURITY } component={ UsersEditSecurity } exact />
         </CustomRouteSwitch>
       </CustomRouteSwitch>
     </CustomRouteSwitch>
