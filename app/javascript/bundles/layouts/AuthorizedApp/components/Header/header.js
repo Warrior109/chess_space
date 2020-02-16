@@ -1,7 +1,8 @@
 import React, { Component } from 'react';
 import { toastr } from 'react-redux-toastr';
-import { NavItem } from 'reactstrap';
+import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
+import { Link } from 'react-router-dom';
 import { object, shape, string, number, func } from 'prop-types';
 
 import { defaultMessages } from 'locales/default';
@@ -11,10 +12,11 @@ import { paths } from 'layouts/constants';
 
 const propTypes = {
   currentUser: shape({
-    id: number.isRequired,
     firstName: string.isRequired,
     lastName: string.isRequired,
-    email: string.isRequired
+    thumbnailAvatar: shape({
+      url: string.isRequired
+    }).isRequired
   }).isRequired,
   intl: object.isRequired,
   history: object.isRequired,
@@ -23,7 +25,8 @@ const propTypes = {
 
 class Header extends Component {
   state = {
-    inProcess: false
+    inProcess: false,
+    isDropdownOpen: false
   };
 
   logOutHandler = () => {
@@ -39,21 +42,36 @@ class Header extends Component {
     logOutDispatch({ callback, errorCallback });
   };
 
+  toggleDropdown = () => this.setState((state) => ({ isDropdownOpen: !state.isDropdownOpen }));
+
   render() {
     const {
       logOutHandler,
-      state: { inProcess },
+      toggleDropdown,
+      state: { inProcess, isDropdownOpen },
       props: { currentUser }
     } = this;
 
     return (
       <SharedHeader>
         { inProcess && <Loader /> }
-        <NavItem>
-          <a style={ { cursor: 'pointer' } } onClick={ logOutHandler } >
-            <FormattedMessage id='actions.log_out' />
-          </a>
-        </NavItem>
+        <Dropdown isOpen={ isDropdownOpen } toggle={ toggleDropdown } >
+          <DropdownToggle caret >
+            <img src={ currentUser.thumbnailAvatar.url } width={ 50 } height={ 50 } />
+            <span>{ currentUser.firstName } { currentUser.lastName }</span>
+          </DropdownToggle>
+          <DropdownMenu>
+            <DropdownItem tag={ Link } to={ paths.ROOT } >
+              <FormattedMessage id='pages.my_profile' />
+            </DropdownItem>
+
+            <DropdownItem divider />
+
+            <DropdownItem onClick={ logOutHandler }>
+              <FormattedMessage id='actions.log_out' />
+            </DropdownItem>
+          </DropdownMenu>
+        </Dropdown>
       </SharedHeader>
     );
   }

@@ -1,4 +1,4 @@
-mutation emailUniquenessValidation($input: EmailUniquenessValidationInput!) {
+mutation emailUniquenessValidation($input: UsersEmailUniquenessValidationInput!) {
   emailUniquenessValidation(input: $input) {
     isValid
   }

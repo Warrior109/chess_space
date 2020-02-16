@@ -13,7 +13,7 @@ AllCops:
 
 # Our preferred style ==============================================================================
 
-Metrics/LineLength:
+Layout/LineLength:
   Max: 100
   IgnoredPatterns: ['\#.*'] # ignore long comments
 

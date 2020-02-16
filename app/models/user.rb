@@ -13,6 +13,12 @@ class User < ApplicationRecord
   validates :first_name, presence: true
   validates :last_name, presence: true
 
+  # List of default paths for attachments. Used in the WithImageProcessing#default_image_path_for
+  DEFAULT_ATTACHMENT_PATHS = {
+    original_avatar: '/images/user-default-avatar.svg',
+    thumbnail_avatar: '/images/user-default-avatar.svg'
+  }.freeze
+
   reverse_geocoded_by :lat, :lng do |obj, results|
     geo = results.first
     if geo
@@ -27,8 +33,8 @@ class User < ApplicationRecord
 
   def as_json(*args)
     super.merge(
-      original_avatar: { url: image_path_for(original_avatar) },
-      thumbnail_avatar: { url: image_path_for(thumbnail_avatar) }
+      original_avatar: {url: image_path_for(original_avatar)},
+      thumbnail_avatar: {url: image_path_for(thumbnail_avatar)}
     )
   end
 end

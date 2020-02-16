@@ -29,6 +29,7 @@ class AvatarModal extends Component {
     const callback = () => {
       toggle();
       toastr.success('', { component: <FormattedMessage id='user.success_messages.avatar_update' /> });
+      this.setState({ inProcess: false });
     };
     const errorCallback = () => this.setState({ inProcess: false });
 

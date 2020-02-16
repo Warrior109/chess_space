@@ -5,6 +5,7 @@ uk:
       common: Загальні дані
       contacts: Контактна інформація
       security: Безпека
+    my_profile: Мій профіль
 
   modals:
     registration: Реєстрація

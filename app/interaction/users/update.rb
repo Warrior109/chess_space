@@ -21,7 +21,7 @@ class Users::Update < ApplicationInteraction
   string :password, :password_confirmation, default: nil
 
   def execute
-    errors.merge!(user.errors) unless user.update(user_params)
+    errors.merge!(user.errors) if user.update(user_params)
     user
   end
 

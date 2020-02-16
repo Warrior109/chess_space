@@ -6,11 +6,8 @@ import { AvatarModal } from './components';
 const propTypes = {
   currentUser: shape({
     originalAvatar: shape({
-      url: string.isRequired
-    }),
-    thumbnailAvatar: shape({
-      url: string.isRequired
-    })
+      url: string
+    }).isRequired
   }).isRequired
 };
 
@@ -36,13 +33,13 @@ class AvatarBlock extends Component {
       handleFile,
       toggleAvatarModal,
       state: { fileUrl, file, isAvatarModalOpen },
-      props: { currentUser: { originalAvatar, thumbnailAvatar } }
+      props: { currentUser: { originalAvatar } }
     } = this;
 
     return (
       <div>
         <div>
-          <img src={ originalAvatar.url } alt='IMAGE BLOCK' />
+          <img src={ originalAvatar.url } width={ 300 } alt='IMAGE BLOCK' />
         </div>
         <input type='file' accept='image/*' onChange={ handleFile } />
         <AvatarModal isOpen={ isAvatarModalOpen } toggle={ toggleAvatarModal } { ...{ fileUrl, file } } />

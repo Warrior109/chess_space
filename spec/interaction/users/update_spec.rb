@@ -6,7 +6,7 @@ RSpec.describe Users::Update do
   let(:inputs) { {} }
 
   describe '#result' do
-    subject { interaction.result }
+    subject { interaction.result&.reload }
 
     let(:inputs) {
       super().merge(
@@ -24,24 +24,31 @@ RSpec.describe Users::Update do
       )
     }
 
-    its(:reload) { is_expected.to have_attributes(**inputs) }
+    it { is_expected.to have_attributes(**inputs) }
 
     context 'when not all inputs present' do
       let(:inputs) { {trainer: false} }
 
-      its(:reload) { is_expected.to have_attributes(**inputs) }
+      it { is_expected.to have_attributes(**inputs) }
     end
 
     context 'when password present' do
       let(:inputs) { {password: '12344321', password_confirmation: '12344321'} }
 
-      its(:reload) { is_expected.to be_valid_password('12344321') }
+      it { is_expected.to be_valid_password('12344321') }
 
       context 'when password confirmation incorrect' do
         let(:inputs) { super().merge(password_confirmation: '00') }
 
-        its(:reload) { is_expected.not_to be_valid_password('12344321') }
+        it { is_expected.not_to be_valid_password('12344321') }
       end
+    end
+
+    context 'when avatars present' do
+      let(:inputs) { {original_avatar: fixture_file_upload('test.svg'), thumbnail_avatar: fixture_file_upload('test.svg')} }
+
+      its(:original_avatar) { is_expected.to be_attached }
+      its(:thumbnail_avatar) { is_expected.to be_attached }
     end
   end
 end
