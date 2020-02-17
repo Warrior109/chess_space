@@ -5,7 +5,8 @@ import {
   checkUserEmailUniqueness,
   signUpUser,
   userUpdate,
-  userSecureUpdate
+  userSecureUpdate,
+  currentUserDelete
 } from './queries';
 
 const api = {
@@ -42,6 +43,10 @@ const api = {
       'input/originalAvatar': originalAvatar,
       'input/thumbnailAvatar': thumbnailAvatar
     }
+  }),
+  currentUserDelete: ({ password }) => graphQLRequest({
+    query: currentUserDelete,
+    variables: { input: { password } }
   })
 };
 

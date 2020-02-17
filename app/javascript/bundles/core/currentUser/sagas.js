@@ -135,6 +135,23 @@ export function* userSecureUpdate({ payload, errorCallback, callback }) {
   }
 }
 
+export function* currentUserDelete({ payload: { password }, errorCallback, callback }) {
+  try {
+    const resp = yield call(api.currentUserDelete, { password });
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: {} } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
@@ -143,6 +160,7 @@ export function* currentUserWatch() {
   yield takeLatest(types.USER_UPDATE, userUpdate);
   yield takeLatest(types.USER_SECURE_UPDATE, userSecureUpdate);
   yield takeLatest(types.UPDATE_CURRENT_USER_AVATAR, updateCurrentUserAvatar);
+  yield takeLatest(types.CURRENT_USER_DELETE, currentUserDelete);
 }
 
 export const currentUserSagas = [

@@ -11,6 +11,9 @@ uk:
     registration: Реєстрація
     log_in: Вхід
     change_user_avatar: Зміна аватарки користувача
+    delete_account:
+      title: Видалити акаунт
+      explanation_message: Щоб видалити свій акаунт, введіть пароль
 
   actions:
     registrate: Зареєструватись
@@ -22,6 +25,8 @@ uk:
     edit: Редагувати
     cancel: Відміна
     change: Змінити
+    type_password: введіть пароль
+    delete: Видалити
 
   user:
     fields:
@@ -43,3 +48,4 @@ uk:
     success_messages:
       update: Дані користувача успішно змінені.
       avatar_update: Аватар користувача успішно змінений.
+      account_deleted: Ваш акаунт було успішно видалено.

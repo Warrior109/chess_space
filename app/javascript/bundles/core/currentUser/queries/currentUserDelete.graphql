@@ -1,0 +1,5 @@
+  mutation currentUserDelete($input: UsersDeleteInput!) {
+    currentUserDelete(input: $input) {
+      errors
+    }
+  }

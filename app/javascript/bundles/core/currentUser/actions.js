@@ -29,5 +29,8 @@ export const actions = {
   updateCurrentUserAvatar: ({ originalAvatar, thumbnailAvatar, callback, errorCallback }) => ({
     type: types.UPDATE_CURRENT_USER_AVATAR,
     payload: { originalAvatar, thumbnailAvatar }, callback, errorCallback
+  }),
+  currentUserDelete: ({ password, callback, errorCallback }) => ({
+    type: types.CURRENT_USER_DELETE, payload: { password }, callback, errorCallback
   })
 };

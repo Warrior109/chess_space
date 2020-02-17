@@ -51,6 +51,9 @@ gem 'omniauth-google-oauth2'
 gem 'graphql'
 gem 'graphql-batch'
 
+# Safety destroy
+gem 'paranoia'
+
 # Implement SPA
 gem 'react_on_rails'
 

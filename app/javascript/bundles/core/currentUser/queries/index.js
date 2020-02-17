@@ -4,6 +4,7 @@ import checkUserEmailUniqueness from './checkUserEmailUniqueness.graphql';
 import signUpUser from './signUpUser.graphql';
 import userUpdate from './userUpdate.graphql';
 import userSecureUpdate from './userSecureUpdate.graphql';
+import currentUserDelete from './currentUserDelete.graphql';
 
 export {
   logOut,
@@ -11,5 +12,6 @@ export {
   checkUserEmailUniqueness,
   signUpUser,
   userUpdate,
-  userSecureUpdate
+  userSecureUpdate,
+  currentUserDelete
 };

@@ -4,44 +4,48 @@ import { FormattedMessage } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
 import { object, bool, func } from 'prop-types';
 
-import Loader from 'components/Loader';
 import { paths } from 'layouts/constants';
+import Loader from 'components/Loader';
 import { Form } from './components';
 
 const propTypes = {
   isOpen: bool.isRequired,
+  history: object.isRequired,
   toggle: func.isRequired,
-  signInDispatch: func.isRequired
+  currentUserDeleteDispatch: func.isRequired
 };
 
-class SignInModal extends Component {
+class DeleteConfirmationModal extends Component {
   state = {
     inProcess: false
   };
 
-  handleSubmit = ({ email, password }) => {
-    const { signInDispatch } = this.props;
+  handleSubmit = ({ password }) => {
+    const { currentUserDeleteDispatch, history } = this.props;
 
     const callback = () => {
-      toastr.success('', { component: <FormattedMessage id='devise.sessions.signed_in' /> });
+      history.push(paths.ROOT);
+      toastr.success(
+        '', { component: <FormattedMessage id='user.success_messages.account_deleted' /> }
+      );
     };
     const errorCallback = () => this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
-    signInDispatch({ email, password, callback, errorCallback });
-  }
+    currentUserDeleteDispatch({ password, callback, errorCallback });
+  };
 
   render() {
     const {
       handleSubmit,
       state: { inProcess },
-      props: { isOpen, toggle }
+      props: { isOpen, toggle, currentUserDeleteDispatch }
     } = this;
 
     return (
       <Modal { ...{ isOpen, toggle } } >
         <ModalHeader { ...{ toggle } } charCode='x' >
-          <FormattedMessage id='modals.log_in' />
+          <FormattedMessage id='modals.delete_account.title' />
         </ModalHeader>
         <ModalBody>
           { inProcess && <Loader /> }
@@ -51,6 +55,6 @@ class SignInModal extends Component {
     );
   }
 };
-SignInModal.propTypes = propTypes;
+DeleteConfirmationModal.propTypes = propTypes;
 
-export default SignInModal;
+export default DeleteConfirmationModal;

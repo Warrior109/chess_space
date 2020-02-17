@@ -7,6 +7,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
     :recoverable, :rememberable, :validatable, password_length: 8..128
 
+  acts_as_paranoid
+
   has_one_attached :original_avatar
   has_one_attached :thumbnail_avatar
 
