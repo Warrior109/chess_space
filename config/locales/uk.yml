@@ -6,6 +6,8 @@ uk:
       contacts: Контактна інформація
       security: Безпека
     my_profile: Мій профіль
+    users_forgot_password_edit:
+      title: Змініть свій пароль
 
   modals:
     registration: Реєстрація
@@ -14,6 +16,10 @@ uk:
     delete_account:
       title: Видалити акаунт
       explanation_message: Щоб видалити свій акаунт, введіть пароль
+    forgot_password:
+      title: Забули пароль?
+      p1: Для того, щоб скинути Ваш пароль - будь ласка, введіть email. Ми надішлемо Вам посилання для того, щоб створити новий пароль.
+      remember_password: Згадали пароль?
 
   actions:
     registrate: Зареєструватись
@@ -27,6 +33,7 @@ uk:
     change: Змінити
     type_password: введіть пароль
     delete: Видалити
+    send: Надіслати
 
   user:
     fields:
@@ -49,3 +56,4 @@ uk:
       update: Дані користувача успішно змінені.
       avatar_update: Аватар користувача успішно змінений.
       account_deleted: Ваш акаунт було успішно видалено.
+      sended_reset_password_instructions: Інструкції по відновленню паролю успішно надіслані на ваш email.

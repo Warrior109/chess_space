@@ -5,6 +5,8 @@ import signUpUser from './signUpUser.graphql';
 import userUpdate from './userUpdate.graphql';
 import userSecureUpdate from './userSecureUpdate.graphql';
 import currentUserDelete from './currentUserDelete.graphql';
+import currentUserForgotPassword from './currentUserForgotPassword.graphql';
+import currentUserForgotPasswordUpdate from './currentUserForgotPasswordUpdate.graphql';
 
 export {
   logOut,
@@ -13,5 +15,7 @@ export {
   signUpUser,
   userUpdate,
   userSecureUpdate,
-  currentUserDelete
+  currentUserDelete,
+  currentUserForgotPassword,
+  currentUserForgotPasswordUpdate
 };

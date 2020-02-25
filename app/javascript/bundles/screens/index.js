@@ -4,6 +4,7 @@ import UsersEditCommon from './UsersEditCommon';
 import UsersEditContacts from './UsersEditContacts';
 import UsersEditSecurity from './UsersEditSecurity';
 import UsersMyProfile from './UsersMyProfile';
+import UsersForgotPasswordEdit from './UsersForgotPasswordEdit';
 
 export {
   Landing,
@@ -11,5 +12,6 @@ export {
   UsersEditCommon,
   UsersEditContacts,
   UsersEditSecurity,
-  UsersMyProfile
+  UsersMyProfile,
+  UsersForgotPasswordEdit
 };

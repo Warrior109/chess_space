@@ -20,6 +20,7 @@
     "postcss-loader": "^3.0.0",
     "postcss-preset-env": "^6.7.0",
     "prop-types": "^15.7.2",
+    "query-string": "^6.11.0",
     "react": "^16.12.0",
     "react-avatar-editor": "^12.0.0-beta.0",
     "react-date-picker": "^7.10.0",

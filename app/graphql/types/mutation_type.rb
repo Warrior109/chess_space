@@ -10,4 +10,6 @@ class Types::MutationType < Types::BaseObject
   field :user_update, mutation: Mutations::Users::Update
   field :user_secure_update, mutation: Mutations::Users::SecureUpdate
   field :current_user_delete, mutation: Mutations::Users::Delete
+  field :current_user_forgot_password, mutation: Mutations::Users::ForgotPassword
+  field :current_user_forgot_password_update, mutation: Mutations::Users::ForgotPasswordUpdate
 end

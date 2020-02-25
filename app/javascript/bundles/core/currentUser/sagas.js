@@ -152,6 +152,43 @@ export function* currentUserDelete({ payload: { password }, errorCallback, callb
   }
 }
 
+export function* currentUserForgotPassword({ payload: { email }, errorCallback, callback }) {
+  try {
+    const resp = yield call(api.currentUserForgotPassword, { email });
+
+    if (!resp.errors.length) {
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
+export function* currentUserForgotPasswordUpdate({
+  payload: { password, passwordConfirmation, resetPasswordToken }, errorCallback, callback
+}) {
+  try {
+    const resp = yield call(
+      api.currentUserForgotPasswordUpdate, { password, passwordConfirmation, resetPasswordToken }
+    );
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: resp.user } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
@@ -161,6 +198,8 @@ export function* currentUserWatch() {
   yield takeLatest(types.USER_SECURE_UPDATE, userSecureUpdate);
   yield takeLatest(types.UPDATE_CURRENT_USER_AVATAR, updateCurrentUserAvatar);
   yield takeLatest(types.CURRENT_USER_DELETE, currentUserDelete);
+  yield takeLatest(types.CURRENT_USER_FORGOT_PASSWORD, currentUserForgotPassword);
+  yield takeLatest(types.CURRENT_USER_FORGOT_PASSWORD_UPDATE, currentUserForgotPasswordUpdate);
 }
 
 export const currentUserSagas = [

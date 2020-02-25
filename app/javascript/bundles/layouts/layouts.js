@@ -9,7 +9,8 @@ import UsersEdit from './UsersEdit';
 import {
   Landing, Root,
   UsersEditCommon, UsersEditContacts, UsersEditSecurity,
-  UsersMyProfile
+  UsersMyProfile,
+  UsersForgotPasswordEdit
 } from 'screens';
 import { paths } from './constants';
 
@@ -21,6 +22,7 @@ const Layouts = () => {
     <CustomRouteSwitch>
       <CustomRouteSwitch component={ App } auth={ false } >
         <Route path={ paths.ROOT } component={ Landing } exact />
+        <Route path={ paths.USERS_FORGOT_PASSWORD_EDIT } component={ UsersForgotPasswordEdit } exact />
 
         <Redirect to={ paths.ROOT } />
       </CustomRouteSwitch>
@@ -34,6 +36,8 @@ const Layouts = () => {
           <Route path={ paths.USERS_EDIT_CONTACTS } component={ UsersEditContacts } exact />
           <Route path={ paths.USERS_EDIT_SECURITY } component={ UsersEditSecurity } exact />
         </CustomRouteSwitch>
+
+        <Redirect to={ paths.ROOT } />
       </CustomRouteSwitch>
     </CustomRouteSwitch>
   );

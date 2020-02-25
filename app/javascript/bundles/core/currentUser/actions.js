@@ -32,5 +32,15 @@ export const actions = {
   }),
   currentUserDelete: ({ password, callback, errorCallback }) => ({
     type: types.CURRENT_USER_DELETE, payload: { password }, callback, errorCallback
+  }),
+  currentUserForgotPassword: ({ email, callback, errorCallback }) => ({
+    type: types.CURRENT_USER_FORGOT_PASSWORD, payload: { email }, callback, errorCallback
+  }),
+  currentUserForgotPasswordUpdate: ({
+    password, passwordConfirmation, resetPasswordToken, callback, errorCallback
+  }) => ({
+    type: types.CURRENT_USER_FORGOT_PASSWORD_UPDATE,
+    payload: { password, passwordConfirmation, resetPasswordToken },
+    callback, errorCallback
   })
 };
