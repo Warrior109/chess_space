@@ -5,7 +5,8 @@ import UsersMyProfile from './usersMyProfile';
 import { selectors, actions } from 'core/currentUser';
 
 const mapStateToProps = state => ({
-  currentUser: selectors.getCurrentUser(state)
+  currentUser: selectors.getCurrentUser(state),
+  birthday: selectors.getBirthday(state)
 });
 
 const mapDispatchToProps = dispatsh => (

@@ -2,8 +2,7 @@ import React from 'react';
 import { Container, Row, Col, Toast, ToastHeader, ToastBody } from 'reactstrap';
 import { Link } from 'react-router-dom';
 import { FormattedMessage } from 'react-intl';
-import moment from 'moment';
-import { shape, string } from 'prop-types';
+import { shape, object, string } from 'prop-types';
 
 import { paths } from 'layouts/constants';
 
@@ -11,7 +10,6 @@ const propTypes = {
   currentUser: shape({
     firstName: string.isRequired,
     lastName: string.isRequired,
-    birthday: string,
     city: string,
     skillLevel: string,
     email: string.isRequired,
@@ -20,14 +18,15 @@ const propTypes = {
     originalAvatar: shape({
       url: string.isRequired
     }).isRequired
-  }).isRequired
+  }).isRequired,
+  birthday: string
 };
 
 const UsersMyProfile = ({
   currentUser: {
-    firstName, lastName, birthday, city, skillLevel, email, goal, aboutMe,
-    originalAvatar
-  }
+    firstName, lastName, city, skillLevel, email, goal, aboutMe, originalAvatar
+  },
+  birthday
 }) => {
   return (
     <Container>
@@ -52,8 +51,7 @@ const UsersMyProfile = ({
                   <FormattedMessage id='user.fields.birthday' />
                 </Col>
                 <Col sm={ 8 } >
-                  {/* FIXME: move moment and formatting to the selectors */}
-                  { birthday && moment(birthday).format('LLLL') }
+                  { birthday }
                 </Col>
 
                 <Col sm={ 4 } >

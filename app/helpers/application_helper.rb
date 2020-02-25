@@ -7,7 +7,8 @@ module ApplicationHelper
       if current_user
         {
           current_user: {
-            object: current_user.as_json
+            object: current_user.as_json,
+            locale: I18n.locale
           }
         }
       else
