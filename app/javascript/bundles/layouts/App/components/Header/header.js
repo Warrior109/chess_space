@@ -16,7 +16,7 @@ const Header = (props) => {
     <SharedHeader>
       <NavItem>
         <a style={ { cursor: 'pointer' } } onClick={ toggleSignUpModal } >
-          <FormattedMessage id='modals.registration' />
+          <FormattedMessage id='modals.registration.title' />
         </a>
       </NavItem>
       <NavItem>

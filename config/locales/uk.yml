@@ -10,7 +10,9 @@ uk:
       title: Змініть свій пароль
 
   modals:
-    registration: Реєстрація
+    registration:
+      title: Реєстрація
+      social: 'Або зареєструйтесь через:'
     log_in: Вхід
     change_user_avatar: Зміна аватарки користувача
     delete_account:

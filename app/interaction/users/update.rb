@@ -12,6 +12,7 @@ class Users::Update < ApplicationInteraction
   string :address, default: nil
   string :goal, default: nil
   string :about_me, default: nil
+
   file :original_avatar, default: nil
   file :thumbnail_avatar, default: nil
 
@@ -21,13 +22,15 @@ class Users::Update < ApplicationInteraction
   string :password, :password_confirmation, default: nil
 
   def execute
-    errors.merge!(user.errors) if user.update(user_params)
+    user.assign_attributes(user_params)
+    compose(Users::AttachAvatar, inputs)
+    errors.merge!(user.errors) unless user.save
     user
   end
 
   private
 
   def user_params
-    inputs.except(:user).compact
+    inputs.except(:user, :original_avatar, :thumbnail_avatar).compact
   end
 end

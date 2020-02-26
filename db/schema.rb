@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_02_17_075522) do
+ActiveRecord::Schema.define(version: 2020_02_26_130409) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,8 +60,12 @@ ActiveRecord::Schema.define(version: 2020_02_17_075522) do
     t.string "goal"
     t.string "about_me"
     t.datetime "deleted_at"
+    t.string "google_uid"
+    t.string "facebook_uid"
     t.index ["deleted_at"], name: "index_users_on_deleted_at"
     t.index ["email"], name: "index_users_on_email", unique: true
+    t.index ["facebook_uid"], name: "index_users_on_facebook_uid"
+    t.index ["google_uid"], name: "index_users_on_google_uid"
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 

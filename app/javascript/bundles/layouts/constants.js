@@ -10,5 +10,7 @@ export const paths = {
   USERS_EDIT_CONTACTS: `${USERS_EDIT}/contacts`,
   USERS_EDIT_SECURITY: `${USERS_EDIT}/security`,
 
-  USERS_FORGOT_PASSWORD_EDIT: `${USERS}/password/edit`
+  USERS_FORGOT_PASSWORD_EDIT: `${USERS}/password/edit`,
+
+  USERS_OAUTH_GOOGLE_SIGN_UP: `${USERS}/auth/google_oauth2?type=signup`
 };

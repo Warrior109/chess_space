@@ -8,8 +8,14 @@ class Users::Create < ApplicationInteraction
   string :password
   string :password_confirmation
 
+  file :original_avatar, default: nil
+  file :thumbnail_avatar, default: nil
+
+  string :google_uid, default: nil
+
   def execute
-    user = User.new(inputs)
+    user = User.new(inputs.except(:original_avatar, :thumbnail_avatar).compact)
+    compose(Users::AttachAvatar, user: user, **inputs)
     errors.merge!(user.errors) unless user.save
     user
   end

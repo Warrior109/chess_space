@@ -5,7 +5,9 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-    :recoverable, :rememberable, :validatable, password_length: 8..128
+    :recoverable, :rememberable, :validatable, :omniauthable,
+    password_length: 8..128,
+    omniauth_providers: %i[google_oauth2 facebook]
 
   acts_as_paranoid
 
@@ -14,6 +16,8 @@ class User < ApplicationRecord
 
   validates :first_name, presence: true
   validates :last_name, presence: true
+  validates :google_uid, uniqueness: {allow_nil: true}
+  validates :facebook_uid, uniqueness: {allow_nil: true}
 
   # List of default paths for attachments. Used in the WithImageProcessing#default_image_path_for
   DEFAULT_ATTACHMENT_PATHS = {

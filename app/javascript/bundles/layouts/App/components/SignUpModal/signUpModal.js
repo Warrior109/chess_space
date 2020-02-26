@@ -3,6 +3,7 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { bool, func } from 'prop-types';
 
+import { paths } from 'layouts/constants';
 import Loader from 'components/Loader';
 import { Form } from './components';
 
@@ -42,12 +43,20 @@ class SignUpModal extends Component {
     return (
       <Modal { ...{ isOpen, toggle } } >
         <ModalHeader { ...{ toggle } } charCode='x'>
-          <FormattedMessage id='modals.registration' />
+          <FormattedMessage id='modals.registration.title' />
         </ModalHeader>
         <ModalBody>
           { inProcess && <Loader /> }
           <Form onSubmit={ handleSubmit } />
         </ModalBody>
+        <ModalFooter>
+          <FormattedMessage id='modals.registration.social' />
+          <div>
+            <a href={ paths.USERS_OAUTH_GOOGLE_SIGN_UP } >
+              GOOGLE
+            </a>
+          </div>
+        </ModalFooter>
       </Modal>
     );
   };

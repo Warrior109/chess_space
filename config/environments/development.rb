@@ -10,7 +10,7 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
 
   # Do not eager load code on boot.
   config.eager_load = false
-  config.hosts << 'chessspace'
+  config.hosts.push('chessspace', 'ec2-52-57-123-204.eu-central-1.compute.amazonaws.com')
 
   # Show full error reports.
   config.consider_all_requests_local = true
