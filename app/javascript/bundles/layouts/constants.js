@@ -1,6 +1,8 @@
 const USERS = '/users';
 const USERS_EDIT = `${USERS}/edit`;
 
+const USERS_OAUTH_GOOGLE = `${USERS}/auth/google_oauth2`;
+
 export const paths = {
   ROOT: '/',
   USERS_MY_PROFILE: `${USERS}/my_profile`,
@@ -12,5 +14,6 @@ export const paths = {
 
   USERS_FORGOT_PASSWORD_EDIT: `${USERS}/password/edit`,
 
-  USERS_OAUTH_GOOGLE_SIGN_UP: `${USERS}/auth/google_oauth2?type=signup`
+  USERS_OAUTH_GOOGLE_SIGN_UP: `${USERS_OAUTH_GOOGLE}?type=signup`,
+  USERS_OAUTH_GOOGLE_SIGN_IN: `${USERS_OAUTH_GOOGLE}?type=signin`
 };

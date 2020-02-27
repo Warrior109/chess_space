@@ -13,7 +13,9 @@ uk:
     registration:
       title: Реєстрація
       social: 'Або зареєструйтесь через:'
-    log_in: Вхід
+    log_in:
+      title: Вхід
+      social: 'Або увійдіть через:'
     change_user_avatar: Зміна аватарки користувача
     delete_account:
       title: Видалити акаунт

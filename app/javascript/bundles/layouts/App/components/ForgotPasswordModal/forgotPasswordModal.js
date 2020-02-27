@@ -64,7 +64,7 @@ class ForgotPasswordModal extends Component {
             <FormattedMessage id='modals.forgot_password.remember_password' />
             &nbsp;
             <button onClick={ toggleSignInModal } >
-              <FormattedMessage id='modals.log_in' />
+              <FormattedMessage id='modals.log_in.title' />
             </button>
           </div>
         </ModalBody>

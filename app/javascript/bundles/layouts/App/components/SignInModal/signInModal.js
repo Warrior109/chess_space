@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
 import { object, bool, func } from 'prop-types';
@@ -41,12 +41,18 @@ class SignInModal extends Component {
     return (
       <Modal { ...{ isOpen, toggle } } >
         <ModalHeader { ...{ toggle } } charCode='x' >
-          <FormattedMessage id='modals.log_in' />
+          <FormattedMessage id='modals.log_in.title' />
         </ModalHeader>
         <ModalBody>
           { inProcess && <Loader /> }
           <Form onSubmit={ handleSubmit } />
         </ModalBody>
+        <ModalFooter>
+          <FormattedMessage id='modals.log_in.social' />
+          <div>
+            <a href={ paths.USERS_OAUTH_GOOGLE_SIGN_IN } >GOOGLE</a>
+          </div>
+        </ModalFooter>
       </Modal>
     );
   }

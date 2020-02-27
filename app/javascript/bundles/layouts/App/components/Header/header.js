@@ -21,7 +21,7 @@ const Header = (props) => {
       </NavItem>
       <NavItem>
         <a style={ { cursor: 'pointer' } } onClick={ toggleSignInModal } >
-          <FormattedMessage id='modals.log_in' />
+          <FormattedMessage id='modals.log_in.title' />
         </a>
       </NavItem>
     </SharedHeader>

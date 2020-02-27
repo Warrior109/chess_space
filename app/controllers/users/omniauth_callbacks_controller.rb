@@ -6,7 +6,8 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   before_action :set_auth
 
   CALLBACK_TYPE_TO_INTERACTION = {
-    signup: Users::Omniauth::SignUp
+    signup: Users::Omniauth::SignUp,
+    signin: Users::Omniauth::Find
   }.freeze
 
   def google_oauth2
