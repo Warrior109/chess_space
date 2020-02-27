@@ -42,5 +42,8 @@ export const actions = {
     type: types.CURRENT_USER_FORGOT_PASSWORD_UPDATE,
     payload: { password, passwordConfirmation, resetPasswordToken },
     callback, errorCallback
+  }),
+  currentUserDisconnectSocial: ({ provider, callback, errorCallback }) => ({
+    type: types.CURRENT_USER_DISCONNECT_SOCIAL, payload: { provider }, callback, errorCallback
   })
 };

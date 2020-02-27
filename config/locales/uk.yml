@@ -38,6 +38,8 @@ uk:
     type_password: введіть пароль
     delete: Видалити
     send: Надіслати
+    connect: Підключити
+    disconnect: Відключити
 
   user:
     fields:
@@ -56,8 +58,11 @@ uk:
       city_of_residence: Місто проживання # location. lat, lng
       goal: Ціль
       about_me: Про себе
+      social: Соцмережі # social block, google_uid, facebook_uid
     success_messages:
       update: Дані користувача успішно змінені.
       avatar_update: Аватар користувача успішно змінений.
       account_deleted: Ваш акаунт було успішно видалено.
       sended_reset_password_instructions: Інструкції по відновленню паролю успішно надіслані на ваш email.
+      social_disconected: "%{social} успішно від'єднано від вашого акаунту."
+      social_connected: "%{social} успішно підключено до вашого акаунту."

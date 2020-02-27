@@ -7,6 +7,7 @@ import userSecureUpdate from './userSecureUpdate.graphql';
 import currentUserDelete from './currentUserDelete.graphql';
 import currentUserForgotPassword from './currentUserForgotPassword.graphql';
 import currentUserForgotPasswordUpdate from './currentUserForgotPasswordUpdate.graphql';
+import currentUserDisconnectSocial from './currentUserDisconnectSocial.graphql';
 
 export {
   logOut,
@@ -17,5 +18,6 @@ export {
   userSecureUpdate,
   currentUserDelete,
   currentUserForgotPassword,
-  currentUserForgotPasswordUpdate
+  currentUserForgotPasswordUpdate,
+  currentUserDisconnectSocial
 };

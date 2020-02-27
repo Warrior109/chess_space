@@ -14,5 +14,7 @@ fragment userFields on User {
   goal,
   aboutMe,
   originalAvatar { url },
-  thumbnailAvatar { url }
+  thumbnailAvatar { url },
+  googleUid,
+  facebookUid
 }

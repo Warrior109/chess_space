@@ -1,0 +1,10 @@
+#import "./userFields.graphql"
+
+mutation currentUserDisconnectSocial($input: UsersDisconnectSocialInput!) {
+  currentUserDisconnectSocial(input: $input) {
+    user {
+      ...userFields
+    },
+    errors
+  }
+}

@@ -8,7 +8,8 @@ import {
   userSecureUpdate,
   currentUserDelete,
   currentUserForgotPassword,
-  currentUserForgotPasswordUpdate
+  currentUserForgotPasswordUpdate,
+  currentUserDisconnectSocial
 } from './queries';
 
 const api = {
@@ -57,6 +58,10 @@ const api = {
   currentUserForgotPasswordUpdate: (inputs) => graphQLRequest({
     query: currentUserForgotPasswordUpdate,
     variables: { input: inputs }
+  }),
+  currentUserDisconnectSocial: ({ provider }) => graphQLRequest({
+    query: currentUserDisconnectSocial,
+    variables: { input: { provider } }
   })
 };
 

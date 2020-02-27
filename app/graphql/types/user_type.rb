@@ -21,4 +21,6 @@ class Types::UserType < Types::BaseObject
   field :about_me, String, null: true
   field :original_avatar, Types::ImageType, null: true
   field :thumbnail_avatar, Types::ImageType, null: true
+  field :google_uid, String, null: true
+  field :facebook_uid, String, null: true
 end

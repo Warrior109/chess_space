@@ -2,9 +2,7 @@
 
 # Find user by omniauth params
 class Users::Omniauth::Find < ApplicationInteraction
-  PROVIDER_TO_UID_NAME = {
-    google_oauth2: :google_uid
-  }.freeze
+  PROVIDER_TO_UID_NAME = User::OAUTH_PROVIDER_TO_UID_NAME
 
   object :auth, class: OmniAuth::AuthHash
 

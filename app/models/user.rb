@@ -25,6 +25,14 @@ class User < ApplicationRecord
     thumbnail_avatar: '/images/user-default-avatar.svg'
   }.freeze
 
+  OAUTH_PROVIDER_TO_UID_NAME = {
+    google_oauth2: :google_uid
+  }.freeze
+
+  OAUTH_PROVIDER_TO_SOCIAL = {
+    google_oauth2: 'Google'
+  }.freeze
+
   reverse_geocoded_by :lat, :lng do |obj, results|
     geo = results.first
     if geo

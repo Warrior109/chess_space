@@ -189,6 +189,23 @@ export function* currentUserForgotPasswordUpdate({
   }
 }
 
+export function* currentUserDisconnectSocial({ payload: { provider }, errorCallback, callback }) {
+  try {
+    const resp = yield call(api.currentUserDisconnectSocial, { provider });
+
+    if (!resp.errors.length) {
+      yield put({ type: types.SET_CURRENT_USER, payload: { currentUser: resp.user } });
+      if (callback) callback();
+    } else {
+      yield* setError(resp.errors);
+      if (errorCallback) errorCallback(resp.errors);
+    }
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
@@ -200,6 +217,7 @@ export function* currentUserWatch() {
   yield takeLatest(types.CURRENT_USER_DELETE, currentUserDelete);
   yield takeLatest(types.CURRENT_USER_FORGOT_PASSWORD, currentUserForgotPassword);
   yield takeLatest(types.CURRENT_USER_FORGOT_PASSWORD_UPDATE, currentUserForgotPasswordUpdate);
+  yield takeLatest(types.CURRENT_USER_DISCONNECT_SOCIAL, currentUserDisconnectSocial);
 }
 
 export const currentUserSagas = [

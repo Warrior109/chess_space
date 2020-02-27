@@ -21,6 +21,9 @@ class Users::Update < ApplicationInteraction
   string :email, default: nil
   string :password, :password_confirmation, default: nil
 
+  string :google_uid, default: nil
+  string :facebook_uid, default: nil
+
   def execute
     user.assign_attributes(user_params)
     compose(Users::AttachAvatar, inputs)
