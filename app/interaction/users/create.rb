@@ -12,6 +12,7 @@ class Users::Create < ApplicationInteraction
   file :thumbnail_avatar, default: nil
 
   string :google_uid, default: nil
+  string :facebook_uid, default: nil
 
   def execute
     user = User.new(inputs.except(:original_avatar, :thumbnail_avatar).compact)

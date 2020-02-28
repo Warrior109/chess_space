@@ -56,6 +56,11 @@ class SignUpModal extends Component {
               GOOGLE
             </a>
           </div>
+          <div>
+            <a href={ paths.USERS_OAUTH_FACEBOOK_SIGN_UP } >
+              Facebook
+            </a>
+          </div>
         </ModalFooter>
       </Modal>
     );

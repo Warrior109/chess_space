@@ -52,6 +52,9 @@ class SignInModal extends Component {
           <div>
             <a href={ paths.USERS_OAUTH_GOOGLE_SIGN_IN } >GOOGLE</a>
           </div>
+          <div>
+            <a href={ paths.USERS_OAUTH_FACEBOOK_SIGN_IN } >Facebook</a>
+          </div>
         </ModalFooter>
       </Modal>
     );

@@ -12,7 +12,11 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
   }.freeze
 
   def google_oauth2
-    autorize
+    authorize
+  end
+
+  def facebook
+    authorize
   end
 
   def failure
@@ -31,7 +35,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     @auth = request.env['omniauth.auth']
   end
 
-  def autorize
+  def authorize
     interactor = CALLBACK_TYPE_TO_INTERACTION.fetch(callback_type).run(
       auth: auth, user: warden.user
     )

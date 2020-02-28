@@ -32,4 +32,33 @@ RSpec.describe Users::Omniauth::Find do
       end
     end
   end
+
+  describe 'facebook provider' do
+    let(:auth) { {provider: 'facebook', uid: 'test-facebook-uid'} }
+    let!(:user) { create(:user, facebook_uid: 'test-facebook-uid') }
+
+    describe '#result' do
+      subject { interaction.result }
+
+      it { is_expected.to eq user }
+
+      context 'when user does not exists' do
+        let(:auth) { super().merge(uid: 'not-existing-facebook-uid') }
+
+        it { is_expected.to be_nil }
+      end
+    end
+
+    describe '#errors' do
+      subject { interaction.errors }
+
+      it { is_expected.to be_empty }
+
+      context 'when user does not exists' do
+        let(:auth) { super().merge(uid: 'not-existing-facebook-uid') }
+
+        it { is_expected.to be_present }
+      end
+    end
+  end
 end

@@ -26,11 +26,13 @@ class User < ApplicationRecord
   }.freeze
 
   OAUTH_PROVIDER_TO_UID_NAME = {
-    google_oauth2: :google_uid
+    google_oauth2: :google_uid,
+    facebook: :facebook_uid
   }.freeze
 
   OAUTH_PROVIDER_TO_SOCIAL = {
-    google_oauth2: 'Google'
+    google_oauth2: 'Google',
+    facebook: 'Facebook'
   }.freeze
 
   reverse_geocoded_by :lat, :lng do |obj, results|

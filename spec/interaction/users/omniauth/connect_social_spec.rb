@@ -14,6 +14,12 @@ RSpec.describe Users::Omniauth::ConnectSocial do
 
       its_block { is_expected.to change(user, :google_uid).from(nil).to('test-google-uid') }
     end
+
+    context 'when provider is facebook' do
+      let(:auth) { {provider: 'facebook', uid: 'test-facebook-uid'} }
+
+      its_block { is_expected.to change(user, :facebook_uid).from(nil).to('test-facebook-uid') }
+    end
   end
 
   describe '#errors' do
@@ -26,6 +32,18 @@ RSpec.describe Users::Omniauth::ConnectSocial do
 
       context 'when social already connected' do
         let(:user_props) { {google_uid: 'some-uid'} }
+
+        it { is_expected.to be_present }
+      end
+    end
+
+    context 'when provider is facebook' do
+      let(:auth) { {provider: 'facebook', uid: 'test-facebook-uid'} }
+
+      it { is_expected.to be_empty }
+
+      context 'when social already connected' do
+        let(:user_props) { {facebook_uid: 'some-uid'} }
 
         it { is_expected.to be_present }
       end

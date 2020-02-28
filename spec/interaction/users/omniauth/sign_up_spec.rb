@@ -78,4 +78,73 @@ RSpec.describe Users::Omniauth::SignUp do
       end
     end
   end
+
+  describe 'facebook provider' do
+    let(:auth) {
+      {
+        provider: 'facebook',
+        uid: 'test-facebook-uid',
+        info: {
+          email: 'test10@mail.com',
+          first_name: 'Alex',
+          last_name: 'Test',
+          image: 'test_image'
+        },
+        extra: {raw_info: {picture: {data: {url: 'test_thumbnail_image'}}}}
+      }
+    }
+
+    describe '#result' do
+      subject { interaction.result }
+
+      it { is_expected.to be_persisted }
+      its(:original_avatar) { is_expected.to be_attached }
+      its(:thumbnail_avatar) { is_expected.to be_attached }
+
+      it {
+        is_expected.to have_attributes(
+          email: 'test10@mail.com',
+          first_name: 'Alex',
+          last_name: 'Test',
+          facebook_uid: 'test-facebook-uid'
+        )
+      }
+
+      context 'when avatar is empty' do
+        let(:auth) { super().merge(extra: {raw_info: {picture: {data: {url: ''}}}}) }
+
+        its(:thumbnail_avatar) { is_expected.not_to be_attached }
+      end
+
+      context 'when user with uid already exists' do
+        let!(:user) { create(:user, facebook_uid: 'test-facebook-uid') }
+
+        it { is_expected.to be_nil }
+      end
+
+      context 'when user with email already exists' do
+        let!(:user) { create(:user, email: 'test10@mail.com') }
+
+        it { is_expected.to be_nil }
+      end
+    end
+
+    describe '#errors' do
+      subject { interaction.errors }
+
+      it { is_expected.to be_empty }
+
+      context 'when user with uid already exists' do
+        let!(:user) { create(:user, facebook_uid: 'test-facebook-uid') }
+
+        it { is_expected.to be_present }
+      end
+
+      context 'when user with email already exists' do
+        let!(:user) { create(:user, email: 'test10@mail.com') }
+
+        it { is_expected.to be_present }
+      end
+    end
+  end
 end

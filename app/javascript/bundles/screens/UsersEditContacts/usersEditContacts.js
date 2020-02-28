@@ -5,7 +5,7 @@ import { toastr } from 'react-redux-toastr';
 import { shape, string, func } from 'prop-types';
 
 import Loader from 'components/Loader';
-import { paths, GOOGLE_PROVIDER } from 'layouts/constants';
+import { paths, GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from 'layouts/constants';
 import { PROVIDER_TO_SOCIAL } from './constants';
 import { NameForm, EmailForm } from './components';
 
@@ -72,6 +72,19 @@ class UsersEditContacts extends Component {
                   </button>
                   :
                   <a href={ paths.USERS_OAUTH_GOOGLE_CONNECT } >
+                    <FormattedMessage id='actions.connect' />
+                  </a>
+              }
+            </div>
+            <div>
+              Facebook
+              {
+                facebookUid ?
+                  <button onClick={ () => disconnectProvider(FACEBOOK_PROVIDER) } >
+                    <FormattedMessage id='actions.disconnect' />
+                  </button>
+                  :
+                  <a href={ paths.USERS_OAUTH_FACEBOOK_CONNECT } >
                     <FormattedMessage id='actions.connect' />
                   </a>
               }
