@@ -45,5 +45,8 @@ export const actions = {
   }),
   currentUserDisconnectSocial: ({ provider, callback, errorCallback }) => ({
     type: types.CURRENT_USER_DISCONNECT_SOCIAL, payload: { provider }, callback, errorCallback
+  }),
+  fetchCurrentUserSkillLevelOptions: ({ callback, errorCallback }) => ({
+    type: types.FETCH_CURRENT_USER_SKILL_LEVEL_OPTIONS, callback, errorCallback
   })
 };

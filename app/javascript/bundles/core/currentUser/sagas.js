@@ -206,6 +206,18 @@ export function* currentUserDisconnectSocial({ payload: { provider }, errorCallb
   }
 }
 
+export function* fetchCurrentUserSkillLevelOptions({ errorCallback, callback }) {
+  try {
+    const skillLevelOptions = yield call(api.fetchCurrentUserSkillLevelOptions);
+
+    yield put({ type: types.SET_SKILL_LEVEL_OPTIONS, payload: { skillLevelOptions } });
+    if (callback) callback();
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
@@ -218,6 +230,7 @@ export function* currentUserWatch() {
   yield takeLatest(types.CURRENT_USER_FORGOT_PASSWORD, currentUserForgotPassword);
   yield takeLatest(types.CURRENT_USER_FORGOT_PASSWORD_UPDATE, currentUserForgotPasswordUpdate);
   yield takeLatest(types.CURRENT_USER_DISCONNECT_SOCIAL, currentUserDisconnectSocial);
+  yield takeLatest(types.FETCH_CURRENT_USER_SKILL_LEVEL_OPTIONS, fetchCurrentUserSkillLevelOptions);
 }
 
 export const currentUserSagas = [

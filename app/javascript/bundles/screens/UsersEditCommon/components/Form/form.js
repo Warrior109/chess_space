@@ -2,9 +2,10 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { Row, Col } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
-import { shape, string, func } from 'prop-types';
+import { shape, array, string, func } from 'prop-types';
 
 import FieldWithErrors from 'components/FieldWithErrors';
+import SelectField from 'components/SelectField';
 import DateField from 'components/DateField';
 import LocationField from 'components/LocationField';
 import { AvatarBlock } from './components';
@@ -14,10 +15,11 @@ const propTypes = {
     firstName: string.isRequired,
     lastName: string.isRequired
   }).isRequired,
+  skillLevelOptions: array.isRequired,
   handleSubmit: func.isRequired
 };
 
-const Form = ({ handleSubmit, currentUser: { firstName, lastName } }) => {
+const Form = ({ handleSubmit, currentUser: { firstName, lastName }, skillLevelOptions }) => {
   return (
     <form onSubmit={ handleSubmit } >
       <Row>
@@ -40,9 +42,9 @@ const Form = ({ handleSubmit, currentUser: { firstName, lastName } }) => {
             </Col>
             <Col sm={ 8 } >
               <Field
-                component={ FieldWithErrors }
-                type='text'
                 name='skillLevel'
+                options={ skillLevelOptions }
+                component={ SelectField }
               />
             </Col>
 

@@ -2,6 +2,8 @@
 
 # User model
 class User < ApplicationRecord
+  extend Enumerize
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -18,6 +20,22 @@ class User < ApplicationRecord
   validates :last_name, presence: true
   validates :google_uid, uniqueness: {allow_nil: true}
   validates :facebook_uid, uniqueness: {allow_nil: true}
+
+  enumerize :skill_level, in: %i[
+    novice
+    4_category
+    3_category
+    2_category
+    1_category
+    candidate_master
+    master
+    fide_master
+    female_fide_master
+    international_master
+    female_international_master
+    international_grandmaster
+    female_internation_grandmaster
+  ]
 
   # List of default paths for attachments. Used in the WithImageProcessing#default_image_path_for
   DEFAULT_ATTACHMENT_PATHS = {

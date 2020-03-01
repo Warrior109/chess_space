@@ -3,7 +3,7 @@
 # Graphql schema for App
 class ChessSpaceWebappSchema < GraphQL::Schema
   mutation Types::MutationType
-  # query Types::QueryType
+  query Types::QueryType
   # subscription Types::SubscriptionType
 
   # GraphQL::Batch setup:

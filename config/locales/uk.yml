@@ -66,3 +66,23 @@ uk:
       sended_reset_password_instructions: Інструкції по відновленню паролю успішно надіслані на ваш email.
       social_disconected: "%{social} успішно від'єднано від вашого акаунту."
       social_connected: "%{social} успішно підключено до вашого акаунту."
+
+  error_messages:
+    something_went_wrong: Щось пішло не так. Спробуйте перегрузити сторінку.
+
+  enumerize:
+    user:
+      skill_level:
+        novice: Безрозрядник (б/р)
+        4_category: 4 розряд
+        3_category: 3 розряд
+        2_category: 2 розряд
+        1_category: 1 розряд
+        candidate_master: кандидат у майстри спорту (КМС)
+        master: майстер спорту (МС)
+        fide_master: майстер FIDE (FM)
+        female_fide_master: жіночий майстер FIDE (WFM)
+        international_master: міжнародний майстер (IM)
+        female_international_master: жіночий міжнародний майстер (WIM)
+        international_grandmaster: міжнародний гросмейстер (GM)
+        female_internation_grandmaster: жіночий міжнародний гросмейстер (WGM)

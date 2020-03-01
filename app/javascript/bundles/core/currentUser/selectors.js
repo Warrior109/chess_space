@@ -19,5 +19,6 @@ export const selectors = {
       aboutMe,
       location: { lat, lng, address, countryCode }
     })
-  )
+  ),
+  getSkillLevelOptions: state => state.currentUser.skillLevelOptions
 };

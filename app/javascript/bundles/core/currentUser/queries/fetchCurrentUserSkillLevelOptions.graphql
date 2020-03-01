@@ -1,0 +1,6 @@
+query userSkillLevelOptions {
+  userSkillLevelOptions {
+    label,
+    value
+  }
+}

@@ -3,19 +3,34 @@ import { Container, Row } from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
 import { FormattedMessage } from 'react-intl';
 import moment from 'moment';
-import { object, func } from 'prop-types';
+import { object, array, func } from 'prop-types';
 
 import Loader from 'components/Loader';
 import { Form } from './components';
 
 const propTypes = {
   userUpdateFormInitialValues: object.isRequired,
-  userUpdateDispatch: func.isRequired
+  skillLevelOptions: array,
+  userUpdateDispatch: func.isRequired,
+  fetchCurrentUserSkillLevelOptionsDispatch: func.isRequired
 };
 
 class UsersEditCommon extends Component {
   state = {
-    inProcess: false
+    inProcess: false,
+    isLoading: !this.props.skillLevelOptions
+  };
+
+  componentDidMount() {
+    const { fetchCurrentUserSkillLevelOptionsDispatch } = this.props;
+
+    const callback = () => this.setState({ isLoading: false });
+    const errorCallback = () => {
+      toastr.error('', { component: <FormattedMessage id='error_messages.something_went_wrong' /> });
+    };
+
+    // This is lightweight data, and change very rarely, so no need to reset it
+    fetchCurrentUserSkillLevelOptionsDispatch({ callback, errorCallback });
   };
 
   handleSubmit = ({
@@ -46,14 +61,20 @@ class UsersEditCommon extends Component {
   render() {
     const {
       handleSubmit,
-      state: { inProcess },
-      props: { userUpdateFormInitialValues }
+      state: { inProcess, isLoading },
+      props: { userUpdateFormInitialValues, skillLevelOptions }
     } = this;
+
+    if (isLoading) return <Loader />;
 
     return (
       <Container>
         { inProcess && <Loader /> }
-        <Form initialValues={ userUpdateFormInitialValues } onSubmit={ handleSubmit } />
+        <Form
+          { ...{ skillLevelOptions } }
+          initialValues={ userUpdateFormInitialValues }
+          onSubmit={ handleSubmit }
+        />
       </Container>
     );
   }

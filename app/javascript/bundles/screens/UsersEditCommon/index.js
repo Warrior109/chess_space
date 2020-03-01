@@ -5,12 +5,14 @@ import UsersEditCommon from './usersEditCommon';
 import { selectors, actions } from 'core/currentUser';
 
 const mapStateToProps = state => ({
-  userUpdateFormInitialValues: selectors.getUserUpdateFormInitialValues(state)
+  userUpdateFormInitialValues: selectors.getUserUpdateFormInitialValues(state),
+  skillLevelOptions: selectors.getSkillLevelOptions(state)
 });
 
 const mapDispatchToProps = dispatsh => (
   bindActionCreators({
-    userUpdateDispatch: actions.userUpdate
+    userUpdateDispatch: actions.userUpdate,
+    fetchCurrentUserSkillLevelOptionsDispatch: actions.fetchCurrentUserSkillLevelOptions
   }, dispatsh)
 );
 
