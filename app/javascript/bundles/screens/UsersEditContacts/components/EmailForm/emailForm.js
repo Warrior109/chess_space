@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
 import { Col } from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
-import { shape, string, func } from 'prop-types';
+import { shape, string, bool, func } from 'prop-types';
 
 import Loader from 'components/Loader';
 import { Form } from './components';
@@ -11,22 +11,18 @@ const propTypes = {
   currentUser: shape({
     email: string.isRequired,
   }).isRequired,
+  isEditMode: bool.isRequired,
+  toggleMode: func.isRequired,
   userSecureUpdateDispatch: func.isRequired
 };
 
 class EmailForm extends Component {
   state = {
-    isEditMode: false,
     inProcess: false
   };
 
-  toggleMode = () => this.setState((state) => ({ isEditMode: !state.isEditMode }));
-
   handleSubmit = ({ email, password }) => {
-    const {
-      toggleMode,
-      props: { userSecureUpdateDispatch }
-    } = this;
+    const { userSecureUpdateDispatch, toggleMode } = this.props;
 
     const callback = () => {
       toggleMode();
@@ -41,10 +37,9 @@ class EmailForm extends Component {
 
   render() {
     const {
-      toggleMode,
       handleSubmit,
-      state: { isEditMode, inProcess },
-      props: { currentUser: { email } }
+      state: { inProcess },
+      props: { currentUser: { email }, toggleMode, isEditMode }
     } = this;
 
     return (

@@ -6,7 +6,7 @@ import { shape, string, func } from 'prop-types';
 
 import Loader from 'components/Loader';
 import { paths, GOOGLE_PROVIDER, FACEBOOK_PROVIDER } from 'layouts/constants';
-import { PROVIDER_TO_SOCIAL } from './constants';
+import { PROVIDER_TO_SOCIAL, EDIT_MODS } from './constants';
 import { NameForm, EmailForm } from './components';
 
 const propTypes = {
@@ -19,8 +19,13 @@ const propTypes = {
 
 class UsersEditContacts extends Component {
   state = {
-    inProcess: false
+    inProcess: false,
+    editMode: null
   };
+
+  toggleEditMode = (mode) => {
+    this.setState((state) => ({ editMode: state.editMode === mode ? null : mode }));
+  }
 
   disconnectProvider = (provider) => {
     const { currentUserDisconnectSocialDispatch } = this.props;
@@ -47,8 +52,9 @@ class UsersEditContacts extends Component {
 
   render() {
     const {
+      toggleEditMode,
       disconnectProvider,
-      state: { inProcess },
+      state: { inProcess, editMode },
       props: { currentUser: { googleUid, facebookUid } }
     } = this;
 
@@ -56,8 +62,14 @@ class UsersEditContacts extends Component {
       <Container>
         { inProcess && <Loader /> }
         <Row>
-          <NameForm />
-          <EmailForm />
+          <NameForm
+            toggleMode={ () => toggleEditMode(EDIT_MODS.NAME) }
+            isEditMode={ editMode === EDIT_MODS.NAME }
+          />
+          <EmailForm
+            toggleMode={ () => toggleEditMode(EDIT_MODS.EMAIL) }
+            isEditMode={ editMode === EDIT_MODS.EMAIL }
+          />
 
           <Col sm={ 4 } >
             <FormattedMessage id='user.fields.social' />

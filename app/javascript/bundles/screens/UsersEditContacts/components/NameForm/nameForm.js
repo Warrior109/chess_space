@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import { Col } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
-import { shape, string, func } from 'prop-types';
+import { shape, string, bool, func } from 'prop-types';
 
 import Loader from 'components/Loader';
 import { Form } from './components';
@@ -12,20 +12,18 @@ const propTypes = {
     firstName: string.isRequired,
     lastName: string.isRequired
   }).isRequired,
+  isEditMode: bool.isRequired,
+  toggleMode: func.isRequired,
   userSecureUpdateDispatch: func.isRequired
 };
 
 class NameForm extends Component {
   state = {
-    isEditMode: false,
     inProcess: false
   };
 
   handleSubmit = ({ firstName, lastName, password }) => {
-    const {
-      toggleMode,
-      props: { userSecureUpdateDispatch }
-    } = this;
+    const { userSecureUpdateDispatch, toggleMode } = this.props;
 
     const callback = () => {
       toggleMode();
@@ -38,14 +36,11 @@ class NameForm extends Component {
     userSecureUpdateDispatch({ firstName, lastName, password, callback, errorCallback });
   };
 
-  toggleMode = () => this.setState((state) => ({ isEditMode: !state.isEditMode }));
-
   render() {
     const {
       handleSubmit,
-      toggleMode,
-      state: { isEditMode, inProcess },
-      props: { currentUser: { firstName, lastName } }
+      state: { inProcess },
+      props: { currentUser: { firstName, lastName }, toggleMode, isEditMode }
     } = this;
 
     return (
