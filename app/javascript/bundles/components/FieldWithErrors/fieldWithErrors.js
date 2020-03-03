@@ -1,5 +1,5 @@
 import React from 'react';
-import { object, string, shape, bool } from 'prop-types';
+import { object, string, node, shape, bool } from 'prop-types';
 
 const propTypes = {
   input: object.isRequired,
@@ -9,7 +9,7 @@ const propTypes = {
   disabled: bool,
   meta: shape({
     touched: bool,
-    error: string
+    error: node
   }).isRequired,
   componentType: string
 };

@@ -1,35 +1,47 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { MINIMUM_PASSWORD_LENGTH, MAXIMUM_PASSWORD_LENGTH, EMAIL_REGEXP } from './constants';
 
 export const validations = {
   email: email => {
     if (!email) {
-      return 'Required';
+      return <FormattedMessage id='validations.required' />;
     } else if (!EMAIL_REGEXP.test(email)) {
-      return 'Not valid';
+      return <FormattedMessage id='validations.email.invalid' />;
     }
   },
   firstName: firstName => {
     if (!firstName) {
-      return 'Required';
+      return <FormattedMessage id='validations.required' />;
     }
   },
   lastName: lastName => {
     if (!lastName) {
-      return 'Required';
+      return <FormattedMessage id='validations.required' />;
     }
   },
   password: password => {
     if (!password) {
-      return 'Required';
+      return <FormattedMessage id='validations.required' />;
     } else if (password.length < MINIMUM_PASSWORD_LENGTH) {
-      return `Password too short. Minimum ${MINIMUM_PASSWORD_LENGTH} characters.`;
+      return (
+        <FormattedMessage
+          id='validations.password.too_short'
+          values={ {min_chars: MINIMUM_PASSWORD_LENGTH} }
+        />
+      );
     } else if (password.length > MAXIMUM_PASSWORD_LENGTH) {
-      return `Password too long. Maximum ${MAXIMUM_PASSWORD_LENGTH} characters.`;
+      return (
+        <FormattedMessage
+          id='validations.password.too_long'
+          values={ {max_chars: MAXIMUM_PASSWORD_LENGTH} }
+        />
+      );
     }
   },
   passwordConfirmation: (passwordConfirmation, password) => {
     if (passwordConfirmation !== password) {
-      return 'Passwords don\'t match';
+      return <FormattedMessage id='validations.password_confirmation.not_match' />;
     }
   }
 };

@@ -67,6 +67,16 @@ uk:
       social_disconected: "%{social} успішно від'єднано від вашого акаунту."
       social_connected: "%{social} успішно підключено до вашого акаунту."
 
+  validations:
+    required: Обов'язкове поле.
+    email:
+      invalid: Не коректний email.
+    password:
+      too_short: "Закороткий пароль. Мінімальна кількість символів - %{min_chars}."
+      too_long: "Задовгий пароль. Максимальна кількість символів - %{max_chars}."
+    password_confirmation:
+      not_match: Паролі не збігаються.
+
   error_messages:
     something_went_wrong: Щось пішло не так. Спробуйте перегрузити сторінку.
 
