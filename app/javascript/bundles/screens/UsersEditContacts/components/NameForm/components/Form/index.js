@@ -1,12 +1,14 @@
 import { reduxForm } from 'redux-form';
 
+import { validations } from 'core/currentUser';
 import Form from './form';
 
 const validate = ({ firstName, lastName, password }) => {
   const errors = {};
-  if (!firstName) errors.firstName = 'Required';
-  if (!lastName) errors.lastName = 'Required';
-  if (!password) errors.password = 'Required';
+  errors.firstName = validations.firstName(firstName);
+  errors.lastName = validations.lastName(lastName);
+  errors.password = validations.password(password);
+
   return errors;
 };
 

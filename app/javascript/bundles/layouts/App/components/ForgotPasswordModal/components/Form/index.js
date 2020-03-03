@@ -1,11 +1,13 @@
 import { reduxForm } from 'redux-form';
 import { injectIntl } from 'react-intl';
 
+import { validations } from 'core/currentUser';
 import Form from './form';
 
 const validate = ({ email }) => {
   const errors = {};
-  if (!email) errors.email = 'Required';
+  errors.email = validations.email(email);
+
   return errors;
 };
 
