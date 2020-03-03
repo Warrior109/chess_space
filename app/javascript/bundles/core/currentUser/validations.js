@@ -1,9 +1,11 @@
-import { MINIMUM_PASSWORD_LENGTH, MAXIMUM_PASSWORD_LENGTH } from './constants';
+import { MINIMUM_PASSWORD_LENGTH, MAXIMUM_PASSWORD_LENGTH, EMAIL_REGEXP } from './constants';
 
 export const validations = {
   email: email => {
     if (!email) {
       return 'Required';
+    } else if (!EMAIL_REGEXP.test(email)) {
+      return 'Not valid';
     }
   },
   firstName: firstName => {
