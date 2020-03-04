@@ -44,7 +44,7 @@ class UsersEditContacts extends Component {
       this.setState({ inProcess: false });
     };
 
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     currentUserDisconnectSocialDispatch({ provider, callback, errorCallback });

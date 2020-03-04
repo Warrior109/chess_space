@@ -53,7 +53,6 @@ const parseResponse = (res, queries) => {
   if (res.body.data) {
     return Object.values(res.body.data)[0];
   }
-  // eslint-disable-next-line
-  console.error(res.body);
-  return {};
+
+  throw res.body;
 };

@@ -36,7 +36,7 @@ class Header extends Component {
       toastr.success(formatMessage(defaultMessages.deviseSessionsSignedOut));
       history.push(paths.ROOT);
     };
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     logOutDispatch({ callback, errorCallback });

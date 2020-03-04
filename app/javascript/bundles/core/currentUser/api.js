@@ -10,7 +10,8 @@ import {
   currentUserForgotPassword,
   currentUserForgotPasswordUpdate,
   currentUserDisconnectSocial,
-  fetchCurrentUserSkillLevelOptions
+  fetchCurrentUserSkillLevelOptions,
+  fetchCurrentUser
 } from './queries';
 
 const api = {
@@ -66,6 +67,9 @@ const api = {
   }),
   fetchCurrentUserSkillLevelOptions: () => graphQLRequest({
     query: fetchCurrentUserSkillLevelOptions
+  }),
+  fetchCurrentUser: () => graphQLRequest({
+    query: fetchCurrentUser
   })
 };
 

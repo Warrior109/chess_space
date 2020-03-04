@@ -90,7 +90,7 @@ class LocationField extends Component {
     return (
       <div>
         <input
-          { ...{ ...input, disabled, value: address, onChange: changeHandler, onBlur: blurHandler } }
+          { ...{ ...input, disabled, value: address || '', onChange: changeHandler, onBlur: blurHandler } }
           className='reminder-input'
           placeholder={ placeholder }
           ref={ node => this.locationNode = node }

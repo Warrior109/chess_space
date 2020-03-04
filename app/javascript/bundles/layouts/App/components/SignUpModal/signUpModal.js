@@ -22,10 +22,11 @@ class SignUpModal extends Component {
   handleSubmit = ({ firstName, lastName, email, password, passwordConfirmation }) => {
     const { checkUserEmailUniquenessDispatch, signUpUserDispatch } = this.props;
 
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
     const callback = () => {
       signUpUserDispatch({
-        firstName, lastName, email, password, passwordConfirmation, callback: errorCallback, errorCallback
+        firstName, lastName, email, password, passwordConfirmation,
+        callback: errorCallback, errorCallback
       });
     };
 

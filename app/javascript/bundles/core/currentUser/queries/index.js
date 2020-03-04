@@ -9,6 +9,7 @@ import currentUserForgotPassword from './currentUserForgotPassword.graphql';
 import currentUserForgotPasswordUpdate from './currentUserForgotPasswordUpdate.graphql';
 import currentUserDisconnectSocial from './currentUserDisconnectSocial.graphql';
 import fetchCurrentUserSkillLevelOptions from './fetchCurrentUserSkillLevelOptions.graphql';
+import fetchCurrentUser from './fetchCurrentUser.graphql';
 
 export {
   logOut,
@@ -21,5 +22,6 @@ export {
   currentUserForgotPassword,
   currentUserForgotPasswordUpdate,
   currentUserDisconnectSocial,
-  fetchCurrentUserSkillLevelOptions
+  fetchCurrentUserSkillLevelOptions,
+  fetchCurrentUser
 };

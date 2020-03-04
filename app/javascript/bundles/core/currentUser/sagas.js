@@ -1,3 +1,5 @@
+import React from 'react';
+import { FormattedMessage } from 'react-intl';
 import { call, fork, put, select, takeLatest, takeEvery } from 'redux-saga/effects';
 import { stopSubmit } from 'redux-form';
 import { toastr } from 'react-redux-toastr';
@@ -20,7 +22,7 @@ export function* logOut({ errorCallback, callback }) {
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -37,7 +39,7 @@ export function* signIn({ payload: { email, password }, errorCallback, callback 
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -54,7 +56,7 @@ export function* checkUserEmailUniqueness({ payload: { email }, errorCallback, c
       if (errorCallback) errorCallback();
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -77,7 +79,7 @@ export function* signUpUser({
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -94,7 +96,7 @@ export function* userUpdate({ payload, errorCallback, callback }) {
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -113,7 +115,7 @@ export function* updateCurrentUserAvatar({
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -130,7 +132,7 @@ export function* userSecureUpdate({ payload, errorCallback, callback }) {
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -147,7 +149,7 @@ export function* currentUserDelete({ payload: { password }, errorCallback, callb
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -163,7 +165,7 @@ export function* currentUserForgotPassword({ payload: { email }, errorCallback, 
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -184,7 +186,7 @@ export function* currentUserForgotPasswordUpdate({
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -201,7 +203,7 @@ export function* currentUserDisconnectSocial({ payload: { provider }, errorCallb
       if (errorCallback) errorCallback(resp.errors);
     }
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
@@ -213,8 +215,41 @@ export function* fetchCurrentUserSkillLevelOptions({ errorCallback, callback }) 
     yield put({ type: types.SET_SKILL_LEVEL_OPTIONS, payload: { skillLevelOptions } });
     if (callback) callback();
   } catch(err) {
-    setError(err);
+    yield checkError(err);
     if (errorCallback) errorCallback(err);
+  }
+}
+
+export function* fetchCurrentUser({ callback, errorCallback }) {
+  try {
+    const currentUser = yield call(api.fetchCurrentUser);
+
+    yield put({ type: types.SET_CURRENT_USER, payload: { currentUser } });
+    if (callback) callback();
+  } catch(err) {
+    setError(err);
+    if (errorCallback) errorCallback();
+  }
+};
+
+// In case when user is authorized, but try to send request to unauthorized route (or in reverse case)
+// We receive an error 'undefinedField', for this case we should to update currentUser in store.
+// NOTE: Should always be used in the catch block for al sagas
+export function* checkError(err) {
+  if (err.errors && err.errors[1] && err.errors[1].extensions.code === 'undefinedField') {
+    const currentUserBefore = yield select(selectors.getCurrentUser);
+    const isCurrentUserBefore = !!(currentUserBefore && currentUserBefore.id);
+    yield fetchCurrentUser({});
+    const currentUserAfter = yield select(selectors.getCurrentUser);
+    const isCurrentUserAfter = !!(currentUserAfter && currentUserAfter.id);
+
+    if (isCurrentUserBefore && !isCurrentUserAfter) {
+      toastr.error('', {component: <FormattedMessage id='error_messages.logouted' />});
+    } else if (!isCurrentUserBefore && isCurrentUserAfter) {
+      toastr.error('', {component: <FormattedMessage id='error_messages.logined' />});
+    }
+  } else {
+    setError(err);
   }
 }
 

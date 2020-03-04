@@ -29,7 +29,7 @@ class UsersForgotPasswordEdit extends Component {
       toastr.success('', { component: <FormattedMessage id='devise.passwords.updated' /> });
     };
 
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     const resetPasswordToken = queryString.parse(location.search).reset_password_token || '';

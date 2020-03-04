@@ -25,7 +25,7 @@ class SignInModal extends Component {
     const callback = () => {
       toastr.success('', { component: <FormattedMessage id='devise.sessions.signed_in' /> });
     };
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     signInDispatch({ email, password, callback, errorCallback });

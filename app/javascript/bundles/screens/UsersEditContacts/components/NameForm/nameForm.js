@@ -30,7 +30,7 @@ class NameForm extends Component {
       this.setState({ inProcess: false });
       toastr.success('', { component: <FormattedMessage id='user.success_messages.update' /> });
     };
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     userSecureUpdateDispatch({ firstName, lastName, password, callback, errorCallback });

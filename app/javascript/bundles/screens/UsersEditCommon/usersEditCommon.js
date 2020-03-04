@@ -42,7 +42,7 @@ class UsersEditCommon extends Component {
       toastr.success('', { component: <FormattedMessage id='user.success_messages.update' /> });
       this.setState({ inProcess: false });
     };
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     userUpdateDispatch({

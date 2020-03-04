@@ -29,7 +29,7 @@ class DeleteConfirmationModal extends Component {
         '', { component: <FormattedMessage id='user.success_messages.account_deleted' /> }
       );
     };
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     currentUserDeleteDispatch({ password, callback, errorCallback });

@@ -33,7 +33,7 @@ class ForgotPasswordModal extends Component {
       toggle();
     };
 
-    const errorCallback = () => this.setState({ inProcess: false });
+    const errorCallback = () => this._ismounted && this.setState({ inProcess: false });
 
     this.setState({ inProcess: true });
     currentUserForgotPasswordDispatch({ email, callback, errorCallback });
