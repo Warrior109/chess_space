@@ -8,6 +8,10 @@ class ApplicationController < ActionController::Base
 
   private
 
+  def load_default_props(*queries)
+    LoadDefaultProps.run!(queries: queries, user: current_user, controller: self)
+  end
+
   def current_user
     @current_user ||= super || warden.authenticate(scope: :user)
   rescue StandardError
