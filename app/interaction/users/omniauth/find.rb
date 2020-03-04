@@ -8,7 +8,7 @@ class Users::Omniauth::Find < ApplicationInteraction
 
   def execute
     user = User.find_by(PROVIDER_TO_UID_NAME.fetch(auth.provider.to_sym) => auth.uid)
-    errors.add(:user, 'not found.') unless user
+    errors.add(:user, t(:user_not_found)) unless user
     user
   end
 end

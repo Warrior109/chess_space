@@ -19,4 +19,8 @@ class Mutations::BaseMutation < GraphQL::Schema::RelayClassicMutation
   def controller
     context.fetch(:controller)
   end
+
+  def retrieve_errors(interactor)
+    interactor.errors.messages.values.flatten
+  end
 end

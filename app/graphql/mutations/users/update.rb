@@ -42,7 +42,7 @@ class Mutations::Users::Update < Mutations::BaseAuthMutation
     else
       {
         user: nil,
-        errors: interactor.errors.full_messages
+        errors: retrieve_errors(interactor)
       }
     end
   end

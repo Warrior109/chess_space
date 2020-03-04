@@ -26,7 +26,7 @@ class Mutations::Users::ForgotPasswordUpdate < Mutations::BaseNoAuthMutation
     else
       {
         user: nil,
-        errors: interactor.errors.full_messages
+        errors: retrieve_errors(interactor)
       }
     end
   end

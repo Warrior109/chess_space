@@ -3,6 +3,7 @@
 # Connect social network to user
 class Users::Omniauth::ConnectSocial < ApplicationInteraction
   PROVIDER_TO_UID_NAME = User::OAUTH_PROVIDER_TO_UID_NAME
+  PROVIDER_TO_SOCIAL = User::OAUTH_PROVIDER_TO_SOCIAL
 
   object :user, class: User
   object :auth, class: OmniAuth::AuthHash
@@ -16,7 +17,9 @@ class Users::Omniauth::ConnectSocial < ApplicationInteraction
   private
 
   def social_not_connected_yet
-    errors.add(auth.provider, 'already connected') if user.attributes.fetch(uid_name.to_s).present?
+    return if user.attributes.fetch(uid_name.to_s).blank?
+
+    errors.add(:oauth, t(:already_conected, social: PROVIDER_TO_SOCIAL.fetch(auth.provider.to_sym)))
   end
 
   memoize def uid_name

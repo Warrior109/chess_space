@@ -14,7 +14,7 @@ class Mutations::Users::Delete < Mutations::BaseAuthMutation
 
       {errors: []}
     else
-      {errors: interactor.errors.full_messages}
+      {errors: retrieve_errors(interactor)}
     end
   end
 end

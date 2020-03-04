@@ -29,6 +29,14 @@ class Header extends Component {
     isDropdownOpen: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   logOutHandler = () => {
     const { logOutDispatch, history, intl: { formatMessage } } = this.props;
 

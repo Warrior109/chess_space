@@ -71,6 +71,7 @@ uk:
     required: Обов'язкове поле.
     email:
       invalid: Не коректний email.
+      taken: Email вже зайнятий.
     password:
       too_short: "Закороткий пароль. Мінімальна кількість символів - %{min_chars}."
       too_long: "Задовгий пароль. Максимальна кількість символів - %{max_chars}."

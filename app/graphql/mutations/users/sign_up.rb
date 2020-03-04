@@ -30,7 +30,7 @@ class Mutations::Users::SignUp < Mutations::BaseNoAuthMutation
     else
       {
         user: nil,
-        errors: interactor.errors.full_messages
+        errors: retrieve_errors(interactor)
       }
     end
   end

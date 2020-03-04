@@ -51,7 +51,7 @@ export function* checkUserEmailUniqueness({ payload: { email }, errorCallback, c
     if (isValid) {
       if (callback) callback();
     } else {
-      const errors = { email: 'Email already been taken' };
+      const errors = {email: <FormattedMessage id='validations.email.taken' />};
       yield put(stopSubmit('signUpForm', errors));
       if (errorCallback) errorCallback();
     }

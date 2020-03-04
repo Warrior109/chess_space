@@ -19,7 +19,7 @@ class Users::SecureUpdate < ApplicationInteraction
     if user.valid_password?(password)
       compose(Users::Update, update_params)
     else
-      errors.add(:password, 'incorrect')
+      errors.add(:password, t(:incorrect_password))
     end
 
     user

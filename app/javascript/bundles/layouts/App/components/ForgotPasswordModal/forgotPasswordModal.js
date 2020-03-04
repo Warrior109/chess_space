@@ -19,6 +19,14 @@ class ForgotPasswordModal extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleSubmit = ({ email }) => {
     const { currentUserForgotPasswordDispatch, toggle } = this.props;
 

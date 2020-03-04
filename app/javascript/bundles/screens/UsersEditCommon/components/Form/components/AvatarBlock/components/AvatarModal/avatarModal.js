@@ -21,6 +21,14 @@ class AvatarModal extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleZoomChange = (e) => this.setState({ zoom: e.target.value });
 
   updateUserAvatarHandler = () => {

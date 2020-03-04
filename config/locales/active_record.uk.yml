@@ -1,0 +1,10 @@
+uk:
+  activerecord:
+    errors:
+      models:
+        user:
+          attributes:
+            google_uid:
+              taken: Цей акаунт вже підключений до іншого користувача.
+            facebook_uid:
+              taken: Цей акаунт вже підключений до іншого користувача.

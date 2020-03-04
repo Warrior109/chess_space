@@ -12,10 +12,10 @@ class Users::Omniauth::SignUp < ApplicationInteraction
       .tap(&method(:validate!))
       .then { |attrs| compose(Users::Create, attrs) }
   rescue UserExistsError
-    errors.add(:user, 'already exists. Please try to sign in.')
+    errors.add(:user, t(:already_exists))
     nil
   rescue UserEmailExistsError
-    errors.add(:user, 'with such email already exists.')
+    errors.add(:user, t(:email_already_exists))
     nil
   end
 

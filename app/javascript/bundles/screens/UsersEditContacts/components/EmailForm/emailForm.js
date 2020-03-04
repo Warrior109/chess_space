@@ -21,6 +21,14 @@ class EmailForm extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleSubmit = ({ email, password }) => {
     const { userSecureUpdateDispatch, toggleMode } = this.props;
 

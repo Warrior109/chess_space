@@ -17,6 +17,14 @@ class UsersEditSecurity extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleSubmit = ({ password, newPassword, newPasswordConfirmation }) => {
     const { userSecureUpdateDispatch, resetPasswordUpdateFormDispatch } = this.props;
 

@@ -23,6 +23,14 @@ class UsersEditContacts extends Component {
     editMode: null
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   toggleEditMode = (mode) => {
     this.setState((state) => ({ editMode: state.editMode === mode ? null : mode }));
   }

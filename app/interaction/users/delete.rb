@@ -9,7 +9,7 @@ class Users::Delete < ApplicationInteraction
     if user.valid_password?(password)
       user.destroy!
     else
-      errors.add(:password, 'incorrect')
+      errors.add(:password, t(:incorrect_password))
     end
     user
   end

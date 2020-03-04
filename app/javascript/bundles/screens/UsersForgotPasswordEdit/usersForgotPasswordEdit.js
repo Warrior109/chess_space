@@ -18,6 +18,14 @@ class UsersForgotPasswordEdit extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleSubmit = ({ password, passwordConfirmation }) => {
     const {
       props: { location, history, currentUserForgotPasswordUpdateDispatch }

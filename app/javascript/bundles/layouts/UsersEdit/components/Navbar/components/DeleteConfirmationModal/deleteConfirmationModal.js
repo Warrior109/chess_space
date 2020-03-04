@@ -20,6 +20,14 @@ class DeleteConfirmationModal extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleSubmit = ({ password }) => {
     const { currentUserDeleteDispatch, history } = this.props;
 

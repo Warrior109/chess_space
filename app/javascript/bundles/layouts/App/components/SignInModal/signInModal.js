@@ -19,6 +19,14 @@ class SignInModal extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleSubmit = ({ email, password }) => {
     const { signInDispatch } = this.props;
 

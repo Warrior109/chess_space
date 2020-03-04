@@ -43,7 +43,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     if interactor.valid?
       on_success(interactor.result)
     else
-      flash[:alert] = interactor.errors.full_messages.to_sentence
+      flash[:alert] = retrieve_error_message(interactor)
       on_error
     end
   end
@@ -68,5 +68,9 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     else
       redirect_to root_path
     end
+  end
+
+  def retrieve_error_message(interactor)
+    interactor.errors.messages.values.flatten.to_sentence
   end
 end

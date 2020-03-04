@@ -24,6 +24,7 @@ class UsersEditCommon extends Component {
   componentDidMount() {
     const { fetchCurrentUserSkillLevelOptionsDispatch } = this.props;
 
+    this._ismounted = true;
     const callback = () => this.setState({ isLoading: false });
     const errorCallback = () => {
       toastr.error('', { component: <FormattedMessage id='error_messages.something_went_wrong' /> });
@@ -32,6 +33,10 @@ class UsersEditCommon extends Component {
     // This is lightweight data, and change very rarely, so no need to reset it
     fetchCurrentUserSkillLevelOptionsDispatch({ callback, errorCallback });
   };
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
 
   handleSubmit = ({
     trainer, skillLevel, birthday, location: { lat, lng, address }, goal, aboutMe

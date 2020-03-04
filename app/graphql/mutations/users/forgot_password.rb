@@ -14,7 +14,7 @@ class Mutations::Users::ForgotPassword < Mutations::BaseNoAuthMutation
       }
     else
       {
-        errors: interactor.errors.full_messages
+        errors: retrieve_errors(interactor)
       }
     end
   end

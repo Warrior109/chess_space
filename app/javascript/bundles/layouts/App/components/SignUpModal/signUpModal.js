@@ -19,6 +19,14 @@ class SignUpModal extends Component {
     inProcess: false
   };
 
+  componentDidMount() {
+    this._ismounted = true;
+  }
+
+  componentWillUnmount() {
+    this._ismounted = false;
+  }
+
   handleSubmit = ({ firstName, lastName, email, password, passwordConfirmation }) => {
     const { checkUserEmailUniquenessDispatch, signUpUserDispatch } = this.props;
 
