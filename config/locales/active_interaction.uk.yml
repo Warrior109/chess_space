@@ -19,6 +19,13 @@ uk:
         incorrect_password: Не правильний пароль.
       secure_update:
         incorrect_password: Не правильний пароль.
+    chats:
+      create:
+        minimum_2_users: Мінімальна кількість користувачів для створення чату - 2.
+        same_users: Неможливо двічі добавити одного користувача до одного чату.
+    messages:
+      create:
+        sender_not_in_chat: Той хто відправив повідомлення не знаходиться в даному чаті.
 
     types:
       array: масив
