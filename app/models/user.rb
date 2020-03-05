@@ -13,6 +13,11 @@ class User < ApplicationRecord
 
   acts_as_paranoid
 
+  has_many :users_chats
+  has_many :chats, through: :users_chats
+  has_many :users_messages
+  has_many :messages, through: :users_messages
+
   has_one_attached :original_avatar
   has_one_attached :thumbnail_avatar
 

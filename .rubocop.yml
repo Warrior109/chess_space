@@ -10,8 +10,11 @@ AllCops:
     - 'db/schema.rb'
     - 'bin/**'
     - 'node_modules/**/**'
-
 # Our preferred style ==============================================================================
+
+Style/Documentation:
+  Exclude:
+    - 'db/migrate/**'
 
 Layout/LineLength:
   Max: 100
