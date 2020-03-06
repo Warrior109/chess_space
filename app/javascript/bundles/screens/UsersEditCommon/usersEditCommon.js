@@ -22,16 +22,21 @@ class UsersEditCommon extends Component {
   };
 
   componentDidMount() {
-    const { fetchCurrentUserSkillLevelOptionsDispatch } = this.props;
+    const {
+      state: { isLoading },
+      props: { fetchCurrentUserSkillLevelOptionsDispatch }
+    } = this;
 
     this._ismounted = true;
-    const callback = () => this.setState({ isLoading: false });
-    const errorCallback = () => {
-      toastr.error('', { component: <FormattedMessage id='error_messages.something_went_wrong' /> });
-    };
+    if (isLoading) {
+      const callback = () => this.setState({ isLoading: false });
+      const errorCallback = () => {
+        toastr.error('', { component: <FormattedMessage id='error_messages.something_went_wrong' /> });
+      };
 
-    // This is lightweight data, and change very rarely, so no need to reset it
-    fetchCurrentUserSkillLevelOptionsDispatch({ callback, errorCallback });
+      // This is lightweight data, and change very rarely, so no need to reset it
+      fetchCurrentUserSkillLevelOptionsDispatch({ callback, errorCallback });
+    }
   };
 
   componentWillUnmount() {

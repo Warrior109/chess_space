@@ -10,7 +10,8 @@ import {
   Landing, Root,
   UsersEditCommon, UsersEditContacts, UsersEditSecurity,
   UsersMyProfile,
-  UsersForgotPasswordEdit
+  UsersForgotPasswordEdit,
+  Chat
 } from 'screens';
 import { paths } from './constants';
 
@@ -36,6 +37,8 @@ const Layouts = () => {
           <Route path={ paths.USERS_EDIT_CONTACTS } component={ UsersEditContacts } exact />
           <Route path={ paths.USERS_EDIT_SECURITY } component={ UsersEditSecurity } exact />
         </CustomRouteSwitch>
+
+        <Route path={ paths.CHAT } component={ Chat } exact />
 
         <Redirect to={ paths.ROOT } />
       </CustomRouteSwitch>

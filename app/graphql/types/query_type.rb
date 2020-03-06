@@ -3,4 +3,5 @@
 # Base class to include all queries for user
 class Types::QueryType < Types::BaseObject
   include Queries::UserQueries
+  include Queries::ChatQueries
 end

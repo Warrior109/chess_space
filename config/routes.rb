@@ -11,6 +11,7 @@ Rails.application.routes.draw do
   resource :users, only: [] do
     get :my_profile
   end
+  resources :chats, only: %i[show]
   namespace :users do
     resource :edit, only: [] do
       get :common

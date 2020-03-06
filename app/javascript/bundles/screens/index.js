@@ -5,6 +5,7 @@ import UsersEditContacts from './UsersEditContacts';
 import UsersEditSecurity from './UsersEditSecurity';
 import UsersMyProfile from './UsersMyProfile';
 import UsersForgotPasswordEdit from './UsersForgotPasswordEdit';
+import Chat from './Chat';
 
 export {
   Landing,
@@ -13,5 +14,6 @@ export {
   UsersEditContacts,
   UsersEditSecurity,
   UsersMyProfile,
-  UsersForgotPasswordEdit
+  UsersForgotPasswordEdit,
+  Chat
 };
