@@ -1,11 +1,19 @@
 query chat($id: Int!) {
   chat(id: $id) {
-    id,
+    id
     messages {
-      id,
-      text,
+      id
+      text
       sender {
         id
+      }
+    }
+    companion {
+      id
+      firstName
+      lastName
+      thumbnailAvatar {
+        url
       }
     }
   }

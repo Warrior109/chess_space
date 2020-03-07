@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import { shape, array, string, func } from 'prop-types';
+import { Container, Row, Col } from 'reactstrap';
+import { shape, array, object, string, func } from 'prop-types';
 
 import Loader from 'components/Loader';
+import { Header, Body, Footer } from './components';
 
 const propTypes = {
-  chat: shape({
-    messages: array.isRequired
-  }),
+  chat: object,
   match: shape({
     params: shape({
       id: string.isRequired
@@ -36,24 +36,26 @@ class Chat extends Component {
 
   render() {
     const {
-      state: { isLoading },
-      props: { chat }
+      state: { isLoading }
     } = this;
 
     if (isLoading) return <Loader />;
 
     return (
-      <div>
-        {
-          chat.messages.map(({id, text, sender}) => (
-            <div key={ id } >
-              <div>SenderId: { sender.id }</div>
-              <div>Id: { id }</div>
-              <div>Text: { text }</div>
-            </div>
-          ))
-        }
-      </div>
+      <Container>
+        <Row>
+          <Col sm={ 3 } >
+            CHATS LIST
+          </Col>
+          <Col sm={ 9 } >
+            <Row>
+              <Col sm={ 12 } ><Header /></Col>
+              <Col sm={ 12 } ><Body /></Col>
+              <Col sm={ 12 } ><Footer /></Col>
+            </Row>
+          </Col>
+        </Row>
+      </Container>
     );
   }
 };
