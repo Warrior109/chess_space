@@ -11,7 +11,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatsh => (
   bindActionCreators({
-    fetchChatDispatch: actions.fetchChat
+    fetchChatScreenDataDispatch: actions.fetchChatScreenData
   }, dispatsh)
 );
 

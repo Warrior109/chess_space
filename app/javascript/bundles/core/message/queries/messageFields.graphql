@@ -1,0 +1,7 @@
+fragment messageFields on Message {
+  id
+  text
+  sender {
+    id
+  }
+}

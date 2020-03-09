@@ -3,9 +3,13 @@
 # Create message
 class Messages::Create < ApplicationInteraction
   object :sender, class: User
-  object :chat, class: Chat
+
+  integer :chat_id, default: nil
+  object :chat, class: Chat, default: -> { Chat.find_by(id: chat_id) }
+
   string :text
 
+  validates :chat, presence: true
   validate :sender_in_chat
 
   def execute
@@ -18,7 +22,7 @@ class Messages::Create < ApplicationInteraction
   private
 
   def sender_in_chat
-    errors.add(:sender, t(:sender_not_in_chat)) unless chat.users.include?(sender)
+    errors.add(:sender, t(:sender_not_in_chat)) unless chat&.users&.include?(sender)
   end
 
   def build_users_messages(message)

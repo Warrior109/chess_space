@@ -3,6 +3,7 @@
 //
 
 export const types = {
+  FETCH_CHAT_SCREEN_DATA: 'FETCH_CHAT_SCREEN_DATA',
   FETCH_CHAT: 'FETCH_CHAT',
   SET_CHAT: 'SET_CHAT'
 };

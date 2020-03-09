@@ -4,4 +4,5 @@
 class Types::QueryType < Types::BaseObject
   include Queries::UserQueries
   include Queries::ChatQueries
+  include Queries::MessageQueries
 end

@@ -12,7 +12,7 @@ const propTypes = {
       id: string.isRequired
     }).isRequired
   }).isRequired,
-  fetchChatDispatch: func.isRequired
+  fetchChatScreenDataDispatch: func.isRequired
 };
 
 class Chat extends Component {
@@ -23,14 +23,14 @@ class Chat extends Component {
   componentDidMount() {
     const {
       state: { isLoading },
-      props: { fetchChatDispatch, match: { params: { id } } }
+      props: { fetchChatScreenDataDispatch, match: { params: { id } } }
     } = this;
 
     if (isLoading) {
       const callback = () => this.setState({ isLoading: false });
       const errorCallback = () => this.setState({ isLoading: false });
 
-      fetchChatDispatch({ id: parseInt(id), callback, errorCallback });
+      fetchChatScreenDataDispatch({ id: parseInt(id), callback, errorCallback });
     };
   };
 

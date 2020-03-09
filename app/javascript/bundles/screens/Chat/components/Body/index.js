@@ -2,10 +2,10 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Body from './body';
 
-import { selectors, actions } from 'core/chat';
+import { selectors as messageSelectors } from 'core/message';
 
 const mapStateToProps = state => ({
-  messages: selectors.getChatMessages(state)
+  messages: messageSelectors.getMessages(state)
 });
 
 const mapDispatchToProps = dispatsh => (

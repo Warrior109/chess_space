@@ -1,0 +1,10 @@
+#import "./messageFields.graphql"
+
+mutation createMessage($input: MessagesCreateInput!) {
+  createMessage(input: $input) {
+    message {
+      ...messageFields
+    }
+    errors
+  }
+}

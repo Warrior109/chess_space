@@ -13,4 +13,5 @@ class Types::MutationType < Types::BaseObject
   field :current_user_forgot_password, mutation: Mutations::Users::ForgotPassword
   field :current_user_forgot_password_update, mutation: Mutations::Users::ForgotPasswordUpdate
   field :current_user_disconnect_social, mutation: Mutations::Users::DisconnectSocial
+  field :create_message, mutation: Mutations::Messages::Create
 end

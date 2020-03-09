@@ -247,7 +247,9 @@ export function* checkError(err) {
       toastr.error('', {component: <FormattedMessage id='error_messages.logouted' />});
     } else if (!isCurrentUserBefore && isCurrentUserAfter) {
       toastr.error('', {component: <FormattedMessage id='error_messages.logined' />});
-    }
+    } else {
+      setError(err);
+    };
   } else {
     setError(err);
   }
