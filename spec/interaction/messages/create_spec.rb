@@ -16,6 +16,7 @@ RSpec.describe Messages::Create do
     it { is_expected.to be_persisted }
     it { is_expected.to have_attributes(text: 'test message text', chat_id: chat.id) }
 
+    its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :new_messages, args: {}, object: kind_of(Message)) }
     its_block { is_expected.to change(Message, :count).from(0).to(1) }
     its_block { is_expected.to change(UsersMessage, :count).from(0).to(2) }
     its(:users_messages) {
@@ -31,6 +32,7 @@ RSpec.describe Messages::Create do
       it { is_expected.to be_persisted }
       it { is_expected.to have_attributes(text: 'test message text', chat_id: chat.id) }
 
+      its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :new_messages, args: {}, object: kind_of(Message)) }
       its_block { is_expected.to change(Message, :count).from(0).to(1) }
       its_block { is_expected.to change(UsersMessage, :count).from(0).to(2) }
       its(:users_messages) {

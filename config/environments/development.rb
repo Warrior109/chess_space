@@ -8,6 +8,10 @@ Rails.application.configure do # rubocop:disable Metrics/BlockLength
   # since you don't have to restart the web server when you make code changes.
   config.cache_classes = false
 
+  config.action_cable.mount_path = '/cable'
+  config.action_cable.url = 'ws://ec2-52-57-123-204.eu-central-1.compute.amazonaws.com:3003/cable'
+  config.action_cable.disable_request_forgery_protection = true
+
   # Do not eager load code on boot.
   config.eager_load = false
   config.hosts.push('chessspace', 'ec2-52-57-123-204.eu-central-1.compute.amazonaws.com')

@@ -27,8 +27,18 @@ export function* createMessage({ payload: { text }, errorCallback, callback }) {
   }
 }
 
+export function* subscribeToMessagesChannel({onReceive, onError, onCompleted}) {
+  const chat = yield select(chatSelectors.getChat);
+
+  yield call(
+    api.subscribeToMessagesChannel,
+    {variables: {chatId: chat.id}, onReceive, onError, onCompleted}
+  );
+}
+
 export function* messageWatch() {
   yield takeLatest(types.CREATE_MESSAGE, createMessage);
+  yield takeLatest(types.SUBSCRIBE_TO_MESSAGES_CHANNEL, subscribeToMessagesChannel);
 }
 
 export const messageSagas = [

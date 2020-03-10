@@ -1,4 +1,6 @@
 import createActionCableHandler from 'graphql-ruby-client/subscriptions/createActionCableHandler';
+import { createConsumer } from '@rails/actioncable';
+
 import { CABLE_URL } from './constants';
 
 class Socket {
@@ -6,9 +8,7 @@ class Socket {
 
   connectToSocket = () => {
     // should require, not import, because should run this library only on client side rendering
-    const ActionCable = require('actioncable');
-    const url = CABLE_URL;
-    const cable = ActionCable.createConsumer(url);
+    const cable = createConsumer(CABLE_URL);
     const createHandler = createActionCableHandler(cable);
     this.cable = cable;
     this.createHandler = createHandler;

@@ -2,6 +2,8 @@
 
 # Controller for chats
 class ChatsController < ApplicationController
+  before_action :authenticate_user!
+
   def show
     @default_props = params.fetch(:id).to_i.then { |id|
       load_default_props(

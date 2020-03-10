@@ -3,7 +3,12 @@
 //
 
 export const types = {
+  SUBSCRIBE_TO_MESSAGES_CHANNEL: 'SUBSCRIBE_TO_MESSAGES_CHANNEL',
   PUSH_MESSAGE: 'PUSH_MESSAGE',
   SET_MESSAGES_LIST: 'SET_MESSAGES_LIST',
   CREATE_MESSAGE: 'CREATE_MESSAGE'
+};
+
+export const subscriptionIds = {
+  MESSAGES_CHANNEL: 'messagesChannel',
 };

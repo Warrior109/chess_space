@@ -12,7 +12,9 @@ const propTypes = {
       id: string.isRequired
     }).isRequired
   }).isRequired,
-  fetchChatScreenDataDispatch: func.isRequired
+  fetchChatScreenDataDispatch: func.isRequired,
+  subscribeToMessagesChannelDispatch: func.isRequired,
+  pushMessageDispatch: func.isRequired
 };
 
 class Chat extends Component {
@@ -22,8 +24,13 @@ class Chat extends Component {
 
   componentDidMount() {
     const {
-      state: { isLoading },
-      props: { fetchChatScreenDataDispatch, match: { params: { id } } }
+      state: {isLoading},
+      props: {
+        fetchChatScreenDataDispatch,
+        subscribeToMessagesChannelDispatch,
+        pushMessageDispatch,
+        match: {params: {id}}
+      }
     } = this;
 
     if (isLoading) {
@@ -32,6 +39,9 @@ class Chat extends Component {
 
       fetchChatScreenDataDispatch({ id: parseInt(id), callback, errorCallback });
     };
+
+    const onReceive = ({newMessages}) => pushMessageDispatch({message: newMessages});
+    subscribeToMessagesChannelDispatch({ onReceive });
   };
 
   render() {

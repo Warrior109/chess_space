@@ -2,6 +2,8 @@
 
 # controller for edit pages
 class Users::EditsController < ApplicationController
+  before_action :authenticate_user!
+
   # UsersEditCommon screen
   def common
     @default_props = load_default_props(

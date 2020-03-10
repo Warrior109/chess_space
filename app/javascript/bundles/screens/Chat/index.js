@@ -4,6 +4,7 @@ import { withRouter } from 'react-router-dom';
 import Chat from './chat';
 
 import { selectors, actions } from 'core/chat';
+import { actions as messageActions } from 'core/message';
 
 const mapStateToProps = state => ({
   chat: selectors.getChat(state)
@@ -11,7 +12,9 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatsh => (
   bindActionCreators({
-    fetchChatScreenDataDispatch: actions.fetchChatScreenData
+    fetchChatScreenDataDispatch: actions.fetchChatScreenData,
+    subscribeToMessagesChannelDispatch: messageActions.subscribeToMessagesChannel,
+    pushMessageDispatch: messageActions.pushMessage
   }, dispatsh)
 );
 

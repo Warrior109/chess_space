@@ -15,7 +15,11 @@ class Messages::Create < ApplicationInteraction
   def execute
     message = Message.new(text: text, chat: chat)
     build_users_messages(message)
-    errors.merge!(message.errors) unless message.save
+    if message.save
+      broadcast(:new_messages, message, chat_id: chat.id)
+    else
+      errors.merge!(message.errors)
+    end
     message
   end
 
