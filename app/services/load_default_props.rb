@@ -8,6 +8,8 @@ class LoadDefaultProps < ApplicationInteraction
   QUERIES_FOLDER_NAME = 'queries'
   GRAPHQL_EXTENSION = '.graphql'
 
+  class InvalidQueryError < StandardError; end
+
   array :queries
   object :user, class: User
   object :controller, class: ApplicationController
@@ -22,28 +24,43 @@ class LoadDefaultProps < ApplicationInteraction
   private
 
   def generate_queries
-    queries.map do |core:, query:, **|
+    queries.map do |core:, query:, variables:, **|
       {
-        query: compose(
-          ReadFile,
-          pathname: CORE_PATH.join(
-            core.to_s.camelize(:lower),
-            QUERIES_FOLDER_NAME,
-            "#{query.to_s.camelize(:lower)}#{GRAPHQL_EXTENSION}"
-          )
-        )
+        query: read_graphql_query(core: core, query: query),
+        variables: variables.deep_transform_keys { |key| key.to_s.camelize(:lower) }
       }
     end
   end
 
   def generate_default_props(res)
     default_props = {}
-    res.each_with_index do |props, i|
+    res.map(&:to_h).each_with_index do |props, i|
       queries[i].then { |core:, store_key:, **|
         default_props[core] ||= {}
-        default_props[core].merge!(store_key => props.to_h.fetch('data').values.first)
+        fail InvalidQueryError, props.fetch('errors') if props.key?('errors')
+
+        default_props[core].merge!(store_key => props.fetch('data').values.first)
       }
     end
     default_props
+  end
+
+  def read_graphql_query(core:, query:)
+    CORE_PATH
+      .join(
+        core.to_s.camelize(:lower),
+        QUERIES_FOLDER_NAME,
+        "#{query.to_s.camelize(:lower)}#{GRAPHQL_EXTENSION}"
+      )
+      .then { |query_path| [compose(ReadFile, pathname: query_path), query_path.dirname] }
+      .then { |q, dir_path| load_fragments(q, dir_path) }
+  end
+
+  def load_fragments(query, dir_path)
+    result = query
+    query.scan(/(^#import\s"(.+\.graphql)"$)/).each do |line, file_path|
+      result.gsub!(line, compose(ReadFile, pathname: dir_path.join(file_path)))
+    end
+    result
   end
 end
