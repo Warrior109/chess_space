@@ -9,10 +9,11 @@ const Body = ({ messages }) => {
   return (
     <div>
       {
-        messages.map(({ id, text, isMine }) => (
-          <div key={ id } style={ {width: '100%', minHeight: '40px', position: 'relative'} } >
-            <div style={ {position: 'absolute', backgroundColor: 'gray', ...(isMine ? {right: 0} : {left: 0})} } >
-              { text }
+        messages.map(({uuid, text, isMine, status}) => (
+          <div key={ uuid } style={ {width: '100%', minHeight: '40px', position: 'relative'} } >
+            <div style={ {position: 'absolute', ...(isMine ? {right: 0} : {left: 0})} } >
+              <div style={ {backgroundColor: 'gray'} } >{text}</div>
+              <span>{status}</span>
             </div>
           </div>
         ))

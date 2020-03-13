@@ -1,6 +1,8 @@
 fragment messageFields on Message {
   id
   text
+  status
+  uuid
   sender {
     id
   }

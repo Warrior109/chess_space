@@ -6,13 +6,15 @@ class Mutations::Messages::Create < Mutations::BaseAuthMutation
   field :errors, [String], null: false
 
   argument :text, String, required: true
+  argument :uuid, String, required: true
   argument :chat_id, Integer, required: true
 
-  def resolve(text:, chat_id:)
+  def resolve(text:, chat_id:, uuid:)
     interactor = Messages::Create.run(
       sender: current_user,
       chat_id: chat_id,
-      text: text
+      text: text,
+      uuid: uuid
     )
 
     if interactor.valid?

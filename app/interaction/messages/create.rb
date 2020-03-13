@@ -8,19 +8,19 @@ class Messages::Create < ApplicationInteraction
   object :chat, class: Chat, default: -> { Chat.find_by(id: chat_id) }
 
   string :text
+  string :uuid # id which generated on frontend to identify messages
 
   validates :chat, presence: true
   validate :sender_in_chat
 
   def execute
-    message = Message.new(text: text, chat: chat)
+    message = Message.new(text: text, chat: chat, uuid: uuid)
     build_users_messages(message)
     if message.save
-      broadcast(:new_messages, message, chat_id: chat.id)
+      broadcast(:message, message, chat_id: chat.id)
     else
       errors.merge!(message.errors)
     end
-    message
   end
 
   private

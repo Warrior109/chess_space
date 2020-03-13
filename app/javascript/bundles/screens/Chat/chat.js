@@ -2,6 +2,8 @@ import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
 import { shape, array, object, string, func } from 'prop-types';
 
+import { deleteSubscription } from 'lib/utils';
+import { subscriptionIds } from 'core/message/constants';
 import Loader from 'components/Loader';
 import { Header, Body, Footer } from './components';
 
@@ -13,8 +15,9 @@ const propTypes = {
     }).isRequired
   }).isRequired,
   fetchChatScreenDataDispatch: func.isRequired,
-  subscribeToMessagesChannelDispatch: func.isRequired,
-  pushMessageDispatch: func.isRequired
+  subscribeToMessageChannelDispatch: func.isRequired,
+  processMessageDispatch: func.isRequired,
+  clearChatScreenDataDispatch: func.isRequired
 };
 
 class Chat extends Component {
@@ -27,8 +30,8 @@ class Chat extends Component {
       state: {isLoading},
       props: {
         fetchChatScreenDataDispatch,
-        subscribeToMessagesChannelDispatch,
-        pushMessageDispatch,
+        subscribeToMessageChannelDispatch,
+        processMessageDispatch,
         match: {params: {id}}
       }
     } = this;
@@ -40,8 +43,15 @@ class Chat extends Component {
       fetchChatScreenDataDispatch({ id: parseInt(id), callback, errorCallback });
     };
 
-    const onReceive = ({newMessages}) => pushMessageDispatch({message: newMessages});
-    subscribeToMessagesChannelDispatch({ onReceive });
+    const onReceive = ({message}) => processMessageDispatch({message});
+    subscribeToMessageChannelDispatch({ onReceive });
+  };
+
+  componentWillUnmount() {
+    const { clearChatScreenDataDispatch } = this.props;
+
+    deleteSubscription(subscriptionIds.MESSAGE_CHANNEL);
+    clearChatScreenDataDispatch();
   };
 
   render() {

@@ -5,7 +5,7 @@ class Users::Update < ApplicationInteraction
   object :user, class: User
 
   boolean :trainer, default: nil
-  string :skill_level, default: nil
+  symbol :skill_level, default: nil
   date :birthday, default: nil
   float :lat, default: nil
   float :lng, default: nil

@@ -1,0 +1,7 @@
+#import "./messageFields.graphql"
+
+subscription message($chatId: Int!) {
+  message(chatId: $chatId) {
+    ...messageFields
+  }
+}

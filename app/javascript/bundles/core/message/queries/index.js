@@ -1,5 +1,5 @@
 import fetchMessagesList from './fetchMessagesList.graphql';
 import createMessage from './createMessage.graphql';
-import subscribeToMessagesChannel from './subscribeToMessagesChannel.graphql';
+import subscribeToMessageChannel from './subscribeToMessageChannel.graphql';
 
-export { fetchMessagesList, createMessage, subscribeToMessagesChannel };
+export { fetchMessagesList, createMessage, subscribeToMessageChannel };

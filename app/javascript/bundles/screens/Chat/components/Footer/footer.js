@@ -9,45 +9,17 @@ const propTypes = {
   resetCreateMessageFormDispatch: func.isRequired
 };
 
-class Footer extends Component {
-  state = {
-    inProcess: false
+const Footer = ({createMessageDispatch, resetCreateMessageFormDispatch}) => {
+  const handleSubmit = ({text}) => {
+    createMessageDispatch({text});
+    resetCreateMessageFormDispatch();
   };
 
-  componentDidMount() {
-    this._ismounted = true;
-  };
-
-  componentDidMount() {
-    this._ismounted = true;
-  };
-
-  handleSubmit = ({ text }) => {
-    const {createMessageDispatch, resetCreateMessageFormDispatch} = this.props;
-
-    const callback = () => {
-      resetCreateMessageFormDispatch();
-      this.setState({inProcess: false});
-    };
-    const errorCallback = () => this._ismounted && this.setState({inProcess: false});
-
-    this.setState({ inProcess: true });
-    createMessageDispatch({ text, callback, errorCallback });
-  };
-
-  render() {
-    const {
-      handleSubmit,
-      state: { inProcess }
-    } = this;
-
-    return (
-      <div>
-        { inProcess && <Loader /> }
-        <Form onSubmit={ handleSubmit } />
-      </div>
-    );
-  };
+  return (
+    <div>
+      <Form onSubmit={ handleSubmit } />
+    </div>
+  );
 };
 Footer.propTypes = propTypes;
 

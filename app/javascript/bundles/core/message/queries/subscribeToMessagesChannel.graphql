@@ -1,7 +1,0 @@
-#import "./messageFields.graphql"
-
-subscription newMessages($chatId: Int!) {
-  newMessages(chatId: $chatId) {
-    ...messageFields
-  }
-}

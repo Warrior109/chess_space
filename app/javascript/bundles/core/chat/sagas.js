@@ -33,9 +33,15 @@ export function* fetchChatScreenData({ payload: {id}, errorCallback, callback })
   }
 }
 
+export function* clearChatScreenData() {
+  yield put({type: types.SET_CHAT, payload: {chat: null}});
+  yield put({type: messageTypes.SET_MESSAGES_LIST, payload: {messages: []}});
+}
+
 export function* chatWatch() {
   yield takeLatest(types.FETCH_CHAT, fetchChat);
   yield takeLatest(types.FETCH_CHAT_SCREEN_DATA, fetchChatScreenData);
+  yield takeLatest(types.CLEAR_CHAT_SCREEN_DATA, clearChatScreenData);
 }
 
 export const chatSagas = [

@@ -1,18 +1,18 @@
 import { graphQLRequest, createSubscription } from 'lib/utils';
 import {
   createMessage,
-  subscribeToMessagesChannel
+  subscribeToMessageChannel
 } from './queries';
 import { subscriptionIds } from './constants';
 
 const api = {
-  createMessage: ({text, chatId}) => graphQLRequest({
+  createMessage: ({text, chatId, uuid}) => graphQLRequest({
     query: createMessage,
-    variables: {input: {text, chatId}}
+    variables: {input: {text, chatId, uuid}}
   }),
-  subscribeToMessagesChannel: ({variables, onReceive, onError, onCompleted}) => createSubscription({
-    subscriptionId: subscriptionIds.MESSAGES_CHANNEL,
-    query: subscribeToMessagesChannel,
+  subscribeToMessageChannel: ({variables, onReceive, onError, onCompleted}) => createSubscription({
+    subscriptionId: subscriptionIds.MESSAGE_CHANNEL,
+    query: subscribeToMessageChannel,
     variables,
     onReceive,
     onError,

@@ -11,7 +11,7 @@ RSpec.describe Users::Update do
     let(:inputs) {
       super().merge(
         trainer: true,
-        skill_level: 'test',
+        skill_level: 'novice',
         birthday: Date.today,
         lat: 48.976,
         lng: 23.989,
