@@ -16,7 +16,9 @@ module Queries::ChatQueries
   end
 
   def chat(id:)
-    current_user.chats.find(id)
+    Loaders::Record
+      .for(Chat, joins: :users_chats, where: {users_chats: {user_id: current_user.id}})
+      .load(id)
   rescue ActiveRecord::RecordNotFound
     nil
   end

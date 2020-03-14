@@ -8,7 +8,7 @@ class Types::MessageType < Types::BaseObject
   field :status, String, null: false
   field :uuid, String, null: false
 
-  def sender_id
+  def sender
     Loaders::AssociationLoader.for(Message, :sender).load(object)
   end
 

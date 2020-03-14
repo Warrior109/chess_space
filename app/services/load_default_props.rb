@@ -24,7 +24,7 @@ class LoadDefaultProps < ApplicationInteraction
   private
 
   def generate_queries
-    queries.map do |core:, query:, variables:, **|
+    queries.map do |core:, query:, variables: {}, **|
       {
         query: read_graphql_query(core: core, query: query),
         variables: variables.deep_transform_keys { |key| key.to_s.camelize(:lower) }

@@ -23,4 +23,12 @@ class Types::UserType < Types::BaseObject
   field :thumbnail_avatar, Types::ImageType, null: true
   field :google_uid, String, null: true
   field :facebook_uid, String, null: true
+
+  def original_avatar
+    Loaders::AssociationLoader.for(User, :original_avatar_blob).load(object)
+  end
+
+  def thumbnail_avatar
+    Loaders::AssociationLoader.for(User, :thumbnail_avatar_blob).load(object)
+  end
 end
