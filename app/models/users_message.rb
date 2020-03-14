@@ -10,6 +10,7 @@ class UsersMessage < ApplicationRecord
   enumerize :role, in: %i[receiver sender]
 
   validates :role, presence: true
+  validates :message_id, uniqueness: {scope: :user_id}
 
   scope :sender, -> { where(role: :sender) }
   scope :receivers, -> { where(role: :receiver) }

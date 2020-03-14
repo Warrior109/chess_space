@@ -12,8 +12,15 @@ class Types::MessageType < Types::BaseObject
     Loaders::AssociationLoader.for(Message, :sender).load(object)
   end
 
-  # TODO: after add read_at system apply logic for readed
   def status
-    :saved
+    Loaders::Record
+      .for(
+        UsersMessage,
+        column: :message_id,
+        where: {role: :receiver},
+        where_not: {user_id: current_user.id, read_at: nil}
+      )
+      .load(object.id)
+      .then { |users_message| users_message ? :readed : :saved }
   end
 end

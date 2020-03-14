@@ -26,6 +26,9 @@ uk:
     messages:
       create:
         sender_not_in_chat: Той хто відправив повідомлення не знаходиться в даному чаті.
+      read:
+        messages_from_different_chats: Повідомлення з різних чатів.
+        user_not_from_this_chat: Користувач немає доступу до цього чату.
 
     types:
       array: масив
