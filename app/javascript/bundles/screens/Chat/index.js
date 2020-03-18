@@ -12,10 +12,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatsh => (
   bindActionCreators({
-    fetchChatScreenDataDispatch: actions.fetchChatScreenData,
+    fetchChatDispatch: actions.fetchChat,
     subscribeToMessageChannelDispatch: messageActions.subscribeToMessageChannel,
     processMessageDispatch: messageActions.processMessage,
-    clearChatScreenDataDispatch: actions.clearChatScreenData
+    setChatDispatch: actions.setChat
   }, dispatsh)
 );
 

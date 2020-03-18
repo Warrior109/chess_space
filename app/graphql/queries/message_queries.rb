@@ -5,7 +5,7 @@ module Queries::MessageQueries
   extend ActiveSupport::Concern
 
   included do
-    field :messages, [Types::MessageType], null: true do
+    field :messages, Types::MessageType.connection_type, null: true do
       description 'Returns messages for chat'
       argument :chat_id, Integer, required: true
 

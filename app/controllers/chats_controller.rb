@@ -6,10 +6,9 @@ class ChatsController < ApplicationController
 
   def show
     @default_props = params.fetch(:id).to_i.then { |id|
-      load_default_props(
-        {core: :chat, query: :fetch_chat, store_key: :object, variables: {id: id}},
-        core: :message, query: :fetch_messages_list, store_key: :list, variables: {chat_id: id}
-      )
+      load_default_props(core: :chat, query: :fetch_chat, store_key: :object, variables: {id: id})
     }
+  rescue LoadDefaultProps::InvalidQueryError
+    redirect_to root_path, alert: I18n.t('error_messages.access_restricted')
   end
 end

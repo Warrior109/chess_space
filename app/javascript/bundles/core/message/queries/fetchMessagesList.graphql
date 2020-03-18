@@ -1,7 +1,13 @@
 #import "./messageFields.graphql"
 
-query messages($chatId: Int!) {
-  messages(chatId: $chatId) {
-    ...messageFields
+query messages($cursor: String, $chatId: Int!) {
+  messages(last: 15, before: $cursor, chatId: $chatId) {
+    pageInfo {
+      startCursor
+      hasPreviousPage
+    }
+    nodes {
+      ...messageFields
+    }
   }
 }

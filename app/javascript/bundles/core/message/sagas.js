@@ -67,10 +67,38 @@ export function* processMessage({payload: {message}}) {
   }
 };
 
+export function* fetchMessagesList({ payload: {page, chatId}, errorCallback, callback }) {
+  try {
+    const cursors = yield select(selectors.getCursors);
+    const cursor = cursors[page - 2];
+    const {
+      pageInfo: {startCursor, hasPreviousPage},
+      nodes
+    } = yield call(api.fetchMessagesList, {chatId, cursor});
+
+    yield put({type: types.PUSH_MESSAGE_CURSOR, payload: {cursor: startCursor}});
+    yield put({type: types.UNSHIFT_MESSAGE_LIST, payload: {messages: nodes}});
+    yield put({type: types.SET_MESSAGE_HAS_MORE_PAGES, payload: {hasMorePages: hasPreviousPage}});
+
+    if (callback) callback();
+  } catch(err) {
+    yield checkError(err);
+    if (errorCallback) errorCallback(err);
+  }
+}
+
+export function* clearMessages() {
+  yield put({type: types.SET_MESSAGE_CURSORS, payload: {cursors: []}});
+  yield put({type: types.SET_MESSAGES_LIST, payload: {messages: []}});
+  yield put({type: types.SET_MESSAGE_HAS_MORE_PAGES, payload: {hasMorePages: true}});
+}
+
 export function* messageWatch() {
   yield takeLatest(types.CREATE_MESSAGE, createMessage);
   yield takeLatest(types.SUBSCRIBE_TO_MESSAGE_CHANNEL, subscribeToMessageChannel);
   yield takeLatest(types.PROCESS_MESSAGE, processMessage);
+  yield takeLatest(types.FETCH_MESSAGES_LIST, fetchMessagesList);
+  yield takeLatest(types.CLEAR_MESSAGES, clearMessages);
 }
 
 export const messageSagas = [

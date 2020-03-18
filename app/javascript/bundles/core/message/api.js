@@ -1,7 +1,8 @@
 import { graphQLRequest, createSubscription } from 'lib/utils';
 import {
   createMessage,
-  subscribeToMessageChannel
+  subscribeToMessageChannel,
+  fetchMessagesList
 } from './queries';
 import { subscriptionIds } from './constants';
 
@@ -18,6 +19,10 @@ const api = {
     onError,
     onCompleted
   }),
+  fetchMessagesList: ({cursor, chatId}) => graphQLRequest({
+    query: fetchMessagesList,
+    variables: {cursor, chatId}
+  })
 };
 
 export default api;

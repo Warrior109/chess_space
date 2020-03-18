@@ -21,6 +21,7 @@ class Messages::Create < ApplicationInteraction
     else
       errors.merge!(message.errors)
     end
+    message
   end
 
   private

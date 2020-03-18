@@ -24,11 +24,29 @@ class Types::UserType < Types::BaseObject
   field :google_uid, String, null: true
   field :facebook_uid, String, null: true
 
+  # TODO: extract it to field extension
   def original_avatar
-    Loaders::AssociationLoader.for(User, :original_avatar_blob).load(object)
+    Loaders::AssociationLoader.for(User, :original_avatar_attachment).load(object).then { |at|
+      if at
+        Loaders::AssociationLoader.for(ActiveStorage::Attachment, :blob).load(at).then {
+          object.original_avatar
+        }
+      else
+        object.original_avatar
+      end
+    }
   end
 
+  # TODO: extract it to field extension
   def thumbnail_avatar
-    Loaders::AssociationLoader.for(User, :thumbnail_avatar_blob).load(object)
+    Loaders::AssociationLoader.for(User, :thumbnail_avatar_attachment).load(object).then { |at|
+      if at
+        Loaders::AssociationLoader.for(ActiveStorage::Attachment, :blob).load(at).then {
+          object.thumbnail_avatar
+        }
+      else
+        object.thumbnail_avatar
+      end
+    }
   end
 end

@@ -5,7 +5,7 @@ module Queries::ChatQueries
   extend ActiveSupport::Concern
 
   included do
-    field :chat, Types::ChatType, null: true do
+    field :chat, Types::ChatType, null: false do
       description 'Returns chat by id'
       argument :id, Integer, required: true
 

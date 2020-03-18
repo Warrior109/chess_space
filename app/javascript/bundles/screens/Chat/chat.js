@@ -1,10 +1,13 @@
 import React, { Component } from 'react';
 import { Container, Row, Col } from 'reactstrap';
+import { toastr } from 'react-redux-toastr';
+import { FormattedMessage } from 'react-intl';
 import { shape, array, object, string, func } from 'prop-types';
 
 import { deleteSubscription } from 'lib/utils';
 import { subscriptionIds } from 'core/message/constants';
 import Loader from 'components/Loader';
+import { paths } from 'layouts/constants';
 import { Header, Body, Footer } from './components';
 
 const propTypes = {
@@ -13,11 +16,11 @@ const propTypes = {
     params: shape({
       id: string.isRequired
     }).isRequired
-  }).isRequired,
-  fetchChatScreenDataDispatch: func.isRequired,
+  }).isRequired, history: object.isRequired,
+  fetchChatDispatch: func.isRequired,
   subscribeToMessageChannelDispatch: func.isRequired,
   processMessageDispatch: func.isRequired,
-  clearChatScreenDataDispatch: func.isRequired
+  setChatDispatch: func.isRequired
 };
 
 class Chat extends Component {
@@ -29,29 +32,38 @@ class Chat extends Component {
     const {
       state: {isLoading},
       props: {
-        fetchChatScreenDataDispatch,
+        fetchChatDispatch,
         subscribeToMessageChannelDispatch,
         processMessageDispatch,
-        match: {params: {id}}
+        match: {params: {id}},
+        history
       }
     } = this;
 
-    if (isLoading) {
-      const callback = () => this.setState({ isLoading: false });
-      const errorCallback = () => this.setState({ isLoading: false });
+    const onReceive = ({message}) => processMessageDispatch({message});
 
-      fetchChatScreenDataDispatch({ id: parseInt(id), callback, errorCallback });
+    if (isLoading) {
+      const callback = () => {
+        subscribeToMessageChannelDispatch({ onReceive });
+        this.setState({ isLoading: false });
+      };
+      const errorCallback = () => {
+        history.push(paths.ROOT);
+        toastr.error('', {component: <FormattedMessage id='error_messages.access_restricted' />});
+      };
+
+      fetchChatDispatch({ id: parseInt(id), callback, errorCallback });
+    } else {
+      subscribeToMessageChannelDispatch({ onReceive });
     };
 
-    const onReceive = ({message}) => processMessageDispatch({message});
-    subscribeToMessageChannelDispatch({ onReceive });
   };
 
   componentWillUnmount() {
-    const { clearChatScreenDataDispatch } = this.props;
+    const { setChatDispatch } = this.props;
 
     deleteSubscription(subscriptionIds.MESSAGE_CHANNEL);
-    clearChatScreenDataDispatch();
+    setChatDispatch({chat: null});
   };
 
   render() {

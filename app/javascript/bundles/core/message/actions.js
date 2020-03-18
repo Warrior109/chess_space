@@ -12,5 +12,9 @@ export const actions = {
   }),
   processMessage: ({message}) => ({
     type: types.PROCESS_MESSAGE, payload: {message}
+  }),
+  clearMessages: () => ({type: types.CLEAR_MESSAGES}),
+  fetchMessagesList: ({ chatId, page, callback, errorCallback }) => ({
+    type: types.FETCH_MESSAGES_LIST, payload: { chatId, page }, callback, errorCallback
   })
 };

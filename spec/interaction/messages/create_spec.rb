@@ -2,7 +2,8 @@
 
 RSpec.describe Messages::Create do
   let(:interaction) { described_class.run(**inputs) }
-  let(:inputs) { {sender: sender, text: text, chat: chat} }
+  let(:inputs) { {sender: sender, text: text, chat: chat, uuid: uuid} }
+  let(:uuid) { SecureRandom.uuid }
   let(:sender) { create(:user) }
   let(:text) { '' }
   let(:chat) { create(:chat, users: [sender, receiver]) }

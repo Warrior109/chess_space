@@ -11,5 +11,7 @@ export const selectors = {
     (messages, currentUser) => messages.map((message) => ({
       ...message, isMine: message.sender.id === currentUser.id
     }))
-  )
+  ),
+  getCursors: state => state.message.cursors,
+  getHasMorePages: state => state.message.hasMorePages
 };
