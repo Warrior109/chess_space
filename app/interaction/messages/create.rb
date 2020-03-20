@@ -17,7 +17,7 @@ class Messages::Create < ApplicationInteraction
     message = Message.new(text: text, chat: chat, uuid: uuid)
     build_users_messages(message)
     if message.save
-      broadcast(:message, message, chat_id: chat.id)
+      broadcast(:message_channel, message, chat_id: chat.id)
     else
       errors.merge!(message.errors)
     end

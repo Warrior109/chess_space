@@ -1,12 +1,8 @@
 # frozen_string_literal: true
 
 # Base type for subscriptions
-class Types::SubscriptionType < GraphQL::Schema::Object
-  include Subscriptions::MessageSubscriptions
+class Types::SubscriptionType < Types::BaseObject
+  extend GraphQL::Subscriptions::SubscriptionRoot
 
-  private
-
-  def current_user
-    context[:current_user]
-  end
+  field :message_channel, subscription: Subscriptions::MessageChannel
 end

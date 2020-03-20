@@ -45,7 +45,7 @@ const connectToSocket = () => {
 };
 
 const createSubscription = ({ subscriptionId, query, variables, onReceive, onError, onCompleted }) => {
-  const onNextWrapper = ({ data }) => (onReceive && data && onReceive(data));
+  const onNextWrapper = ({data}) => (onReceive && data && onReceive(data));
   const onErrorWrapper = errors => (onError && onError(errors));
   const onCompletedWrapper = () => (onCompleted && onCompleted());
   return global.socket.createSubscription({

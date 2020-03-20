@@ -10,11 +10,12 @@ export const actions = {
   pushMessage: ({message}) => ({
     type: types.PUSH_MESSAGE, payload: {message}
   }),
-  processMessage: ({message}) => ({
-    type: types.PROCESS_MESSAGE, payload: {message}
+  processMessage: ({message, action}) => ({
+    type: types.PROCESS_MESSAGE, payload: {message, action}
   }),
   clearMessages: () => ({type: types.CLEAR_MESSAGES}),
   fetchMessagesList: ({ chatId, page, callback, errorCallback }) => ({
     type: types.FETCH_MESSAGES_LIST, payload: { chatId, page }, callback, errorCallback
-  })
+  }),
+  readMessage: ({id}) => ({type: types.READ_MESSAGE, payload: {id}})
 };

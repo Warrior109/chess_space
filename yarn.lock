@@ -951,6 +951,13 @@
   resolved "https://registry.yarnpkg.com/@formatjs/macro/-/macro-0.2.6.tgz#eb173658d803416a43210778b2f5c04c5a240bb6"
   integrity sha512-DfdnLJf8+PwLHzJECZ1Xfa8+sI9akQnUuLN2UdkaExTQmlY0Vs36rMzEP0JoVDBMk+KdQbJNt72rPeZkBNcKWg==
 
+"@k.sh/react-visibility-sensor@^5.1.0":
+  version "5.1.0"
+  resolved "https://registry.yarnpkg.com/@k.sh/react-visibility-sensor/-/react-visibility-sensor-5.1.0.tgz#707bc11d1236af1e1d6779533d590818af5c7116"
+  integrity sha512-xLFWFlJUR9mnZu40avQaaegbGDouNls/khTjK3B0e4FV11QNWNn48O/T/ZFMiKLMScEzQQW6b8sIYWG/sAHhVQ==
+  dependencies:
+    prop-types "^15.6.2"
+
 "@rails/actioncable@^6.0.2-1":
   version "6.0.2-1"
   resolved "https://registry.yarnpkg.com/@rails/actioncable/-/actioncable-6.0.2-1.tgz#8b16bff4d4c91b71069fe54bab9e23f709ccf89b"

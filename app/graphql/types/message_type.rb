@@ -18,7 +18,7 @@ class Types::MessageType < Types::BaseObject
         UsersMessage,
         column: :message_id,
         where: {role: :receiver},
-        where_not: {user_id: current_user.id, read_at: nil}
+        where_not: {read_at: nil}
       )
       .load(object.id)
       .then { |users_message| users_message ? :readed : :saved }

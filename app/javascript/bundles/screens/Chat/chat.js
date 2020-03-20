@@ -40,11 +40,11 @@ class Chat extends Component {
       }
     } = this;
 
-    const onReceive = ({message}) => processMessageDispatch({message});
+    const onReceive = ({messageChannel: {message, action}}) => processMessageDispatch({message, action});
 
     if (isLoading) {
       const callback = () => {
-        subscribeToMessageChannelDispatch({ onReceive });
+        subscribeToMessageChannelDispatch({onReceive});
         this.setState({ isLoading: false });
       };
       const errorCallback = () => {
@@ -54,7 +54,7 @@ class Chat extends Component {
 
       fetchChatDispatch({ id: parseInt(id), callback, errorCallback });
     } else {
-      subscribeToMessageChannelDispatch({ onReceive });
+      subscribeToMessageChannelDispatch({onReceive});
     };
 
   };

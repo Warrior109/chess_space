@@ -1,0 +1,10 @@
+#import "./messageFields.graphql"
+
+mutation readMessages($input: MessagesReadInput!) {
+  readMessages(input: $input) {
+    messages {
+      ...messageFields
+    }
+    errors
+  }
+}

@@ -20,5 +20,6 @@ export const selectors = {
       location: { lat, lng, address, countryCode }
     })
   ),
-  getSkillLevelOptions: state => state.currentUser.skillLevelOptions
+  getSkillLevelOptions: state => state.currentUser.skillLevelOptions,
+  getCurrentUserId: createSelector([getCurrentUser], (user) => user && user.id)
 };

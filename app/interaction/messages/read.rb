@@ -14,22 +14,36 @@ class Messages::Read < ApplicationInteraction
   def execute
     Message.transaction do
       user.users_messages
-          .where(message_id: ids)
-          .each { |um| um.update!(read_at: Time.current) }
+          .includes(:message)
+          .where(message_id: ids, read_at: nil) # no need to read already readed messages
+          .each(&method(:read_message))
+          .each(&method(:broadcast_message))
       user.messages.where(id: ids)
     end
   end
 
   private
 
+  def read_message(user_message)
+    user_message.update!(read_at: Time.current)
+  end
+
+  def broadcast_message(user_message)
+    broadcast(
+      :message_channel,
+      user_message.message,
+      chat_id: user_message.message.chat_id
+    )
+  end
+
   def ids_from_one_chat
-    return unless Chat.joins(:messages).where(messages: {id: ids}).count > 1
+    return unless Chat.joins(:messages).where(messages: {id: ids}).distinct.count > 1
 
     errors.add(:ids, t(:messages_from_different_chats))
   end
 
   def user_have_access_to_chat
-    return unless user.chats.joins(:messages).where(messages: {id: ids}).exists?
+    return if user.chats.joins(:messages).where(messages: {id: ids}).exists?
 
     errors.add(:ids, t(:user_not_from_this_chat))
   end

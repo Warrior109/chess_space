@@ -8,6 +8,9 @@ class ChessSpaceWebappSchema < GraphQL::Schema
 
   # GraphQL::Batch setup:
   use GraphQL::Batch
+
   use GraphQL::Subscriptions::ActionCableSubscriptions
+  use GraphQL::Execution::Interpreter
+  use GraphQL::Analysis::AST
   use GraphQL::Pagination::Connections
 end

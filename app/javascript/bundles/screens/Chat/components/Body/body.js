@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
+import VisibilitySensor from '@k.sh/react-visibility-sensor';
 import { array, number, bool, func } from 'prop-types';
 
 const propTypes = {
@@ -7,7 +8,8 @@ const propTypes = {
   hasMorePages: bool.isRequired,
   chatId: number.isRequired,
   clearMessagesDispatch: func.isRequired,
-  fetchMessagesListDispatch: func.isRequired
+  fetchMessagesListDispatch: func.isRequired,
+  readMessageDispatch: func.isRequired
 };
 
 class Body extends Component {
@@ -23,9 +25,16 @@ class Body extends Component {
     clearMessagesDispatch();
   };
 
+  onChangeMessageVisibility = (message, isVisible) => {
+    const { readMessageDispatch } = this.props;
+
+    if (isVisible) readMessageDispatch({id: message.id});
+  };
+
   render() {
     const {
       loadMore,
+      onChangeMessageVisibility,
       props: {messages, hasMorePages}
     } = this;
 
@@ -40,12 +49,25 @@ class Body extends Component {
         >
           <div>
             {
-              messages.map(({uuid, text, isMine, status}) => (
-                <div key={ uuid } style={ {width: '100%', minHeight: '40px', position: 'relative'} } >
-                  <div style={ {position: 'absolute', ...(isMine ? {right: 0} : {left: 0})} } >
-                    <div style={ {backgroundColor: 'gray'} } >{text}</div>
-                    <span>{status}</span>
-                  </div>
+              messages.map((message) => (
+                <div
+                  key={ message.uuid }
+                  style={ {width: '100%', minHeight: '40px', position: 'relative'} }
+                >
+                  {
+                    message.status === 'readed' || message.isMine ?
+                      <div style={ {position: 'absolute', ...(message.isMine ? {right: 0} : {left: 0})} } >
+                        <div style={ {backgroundColor: 'gray'} } >{message.text}</div>
+                        <span>{message.status}</span>
+                      </div>
+                      :
+                      <VisibilitySensor onChange={ (isVisible) => onChangeMessageVisibility(message, isVisible) } >
+                        <div style={ {position: 'absolute', ...(message.isMine ? {right: 0} : {left: 0})} } >
+                          <div style={ {backgroundColor: 'gray'} } >{message.text}</div>
+                          <span>{message.status}</span>
+                        </div>
+                      </VisibilitySensor>
+                  }
                 </div>
               ))
             }
