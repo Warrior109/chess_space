@@ -34,12 +34,29 @@ export function* createMessage({ payload: { text }, errorCallback, callback }) {
   }
 }
 
-export function* subscribeToMessageChannel({onReceive, onError, onCompleted}) {
+export function* subscribeToMessageWasCreated({onReceive, onError, onCompleted}) {
   const chat = yield select(chatSelectors.getChat);
 
+  const onReceiveOverrided = ({messageWasCreated: {object}}) => {
+    if (onReceive) onReceive(object);
+  };
+
   yield call(
-    api.subscribeToMessageChannel,
-    {variables: {chatId: chat.id}, onReceive, onError, onCompleted}
+    api.subscribeToMessageWasCreated,
+    {variables: {chatId: chat.id}, onReceive: onReceiveOverrided, onError, onCompleted}
+  );
+}
+
+export function* subscribeToMessageWasReaded({onReceive, onError, onCompleted}) {
+  const chat = yield select(chatSelectors.getChat);
+
+  const onReceiveOverrided = ({messageWasReaded: {object}}) => {
+    if (onReceive) onReceive(object);
+  };
+
+  yield call(
+    api.subscribeToMessageWasReaded,
+    {variables: {chatId: chat.id}, onReceive: onReceiveOverrided, onError, onCompleted}
   );
 }
 
@@ -112,11 +129,12 @@ export function* clearMessages() {
 
 export function* messageWatch() {
   yield takeLatest(types.CREATE_MESSAGE, createMessage);
-  yield takeLatest(types.SUBSCRIBE_TO_MESSAGE_CHANNEL, subscribeToMessageChannel);
+  yield takeLatest(types.SUBSCRIBE_TO_MESSAGE_WAS_CREATED, subscribeToMessageWasCreated);
   yield takeLatest(types.PROCESS_MESSAGE, processMessage);
   yield takeLatest(types.FETCH_MESSAGES_LIST, fetchMessagesList);
   yield takeLatest(types.CLEAR_MESSAGES, clearMessages);
   yield takeLatest(types.READ_MESSAGE, readMessage);
+  yield takeLatest(types.SUBSCRIBE_TO_MESSAGE_WAS_READED, subscribeToMessageWasReaded);
 }
 
 export const messageSagas = [

@@ -4,8 +4,11 @@ export const actions = {
   createMessage: ({text, callback, errorCallback}) => ({
     type: types.CREATE_MESSAGE, payload: {text}, callback, errorCallback
   }),
-  subscribeToMessageChannel: ({onReceive, onError, onCompleted}) => ({
-    type: types.SUBSCRIBE_TO_MESSAGE_CHANNEL, onReceive, onError, onCompleted
+  subscribeToMessageWasCreated: ({onReceive, onError, onCompleted}) => ({
+    type: types.SUBSCRIBE_TO_MESSAGE_WAS_CREATED, onReceive, onError, onCompleted
+  }),
+  subscribeToMessageWasReaded: ({onReceive, onError, onCompleted}) => ({
+    type: types.SUBSCRIBE_TO_MESSAGE_WAS_READED, onReceive, onError, onCompleted
   }),
   pushMessage: ({message}) => ({
     type: types.PUSH_MESSAGE, payload: {message}

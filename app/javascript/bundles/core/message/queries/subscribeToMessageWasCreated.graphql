@@ -1,0 +1,9 @@
+#import "./messageFields.graphql"
+
+subscription messageWasCreated($chatId: Int!) {
+  messageWasCreated(chatId: $chatId) {
+    object {
+      ...messageFields
+    }
+  }
+}

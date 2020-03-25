@@ -4,5 +4,7 @@
 class Types::SubscriptionType < Types::BaseObject
   extend GraphQL::Subscriptions::SubscriptionRoot
 
-  field :message_channel, subscription: Subscriptions::MessageChannel
+  # Messages
+  field :message_was_created, subscription: Subscriptions::Messages::WasCreated
+  field :message_was_readed, subscription: Subscriptions::Messages::WasReaded
 end

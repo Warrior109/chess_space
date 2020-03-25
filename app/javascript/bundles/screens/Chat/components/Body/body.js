@@ -13,16 +13,36 @@ const propTypes = {
 };
 
 class Body extends Component {
+  state = {
+    isTabOpen: document.hasFocus()
+  };
+
+  componentDidMount() {
+    const { onWindowFocus, onWindowBlur } = this;
+
+    window.addEventListener('focus', onWindowFocus);
+    window.addEventListener('blur', onWindowBlur);
+  };
+
+  comopnentWillUnmount() {
+    const {
+      onWindowFocus,
+      onWindowBlur,
+      props: {clearMessagesDispatch}
+    } = this;
+
+    window.removeEventListener('focus', onWindowFocus);
+    window.removeEventListener('blur', onWindowBlur);
+    clearMessagesDispatch();
+  };
+
+  onWindowFocus = () => this.setState({isTabOpen: true});
+  onWindowBlur = () => this.setState({isTabOpen: false});
+
   loadMore = (page) => {
     const { chatId, fetchMessagesListDispatch } = this.props;
 
     fetchMessagesListDispatch({chatId, page});
-  };
-
-  comopnentWillUnmount() {
-    const { clearMessagesDispatch } = this.props;
-
-    clearMessagesDispatch();
   };
 
   onChangeMessageVisibility = (message, isVisible) => {
@@ -35,6 +55,7 @@ class Body extends Component {
     const {
       loadMore,
       onChangeMessageVisibility,
+      state: {isTabOpen},
       props: {messages, hasMorePages}
     } = this;
 
@@ -61,7 +82,10 @@ class Body extends Component {
                         <span>{message.status}</span>
                       </div>
                       :
-                      <VisibilitySensor onChange={ (isVisible) => onChangeMessageVisibility(message, isVisible) } >
+                      <VisibilitySensor
+                        onChange={ (isVisible) => onChangeMessageVisibility(message, isVisible) }
+                        active={ isTabOpen }
+                      >
                         <div style={ {position: 'absolute', ...(message.isMine ? {right: 0} : {left: 0})} } >
                           <div style={ {backgroundColor: 'gray'} } >{message.text}</div>
                           <span>{message.status}</span>

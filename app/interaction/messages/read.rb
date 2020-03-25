@@ -30,7 +30,7 @@ class Messages::Read < ApplicationInteraction
 
   def broadcast_message(user_message)
     broadcast(
-      :message_channel,
+      :message_was_created,
       user_message.message,
       chat_id: user_message.message.chat_id
     )

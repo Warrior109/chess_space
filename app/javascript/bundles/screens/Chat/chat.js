@@ -18,7 +18,8 @@ const propTypes = {
     }).isRequired
   }).isRequired, history: object.isRequired,
   fetchChatDispatch: func.isRequired,
-  subscribeToMessageChannelDispatch: func.isRequired,
+  subscribeToMessageWasCreatedDispatch: func.isRequired,
+  subscribeToMessageWasReadedDispatch: func.isRequired,
   processMessageDispatch: func.isRequired,
   setChatDispatch: func.isRequired
 };
@@ -30,21 +31,19 @@ class Chat extends Component {
 
   componentDidMount() {
     const {
+      subscribeToMessagesChannels,
       state: {isLoading},
       props: {
         fetchChatDispatch,
-        subscribeToMessageChannelDispatch,
         processMessageDispatch,
         match: {params: {id}},
         history
       }
     } = this;
 
-    const onReceive = ({messageChannel: {message, action}}) => processMessageDispatch({message, action});
-
     if (isLoading) {
       const callback = () => {
-        subscribeToMessageChannelDispatch({onReceive});
+        subscribeToMessagesChannels();
         this.setState({ isLoading: false });
       };
       const errorCallback = () => {
@@ -54,16 +53,38 @@ class Chat extends Component {
 
       fetchChatDispatch({ id: parseInt(id), callback, errorCallback });
     } else {
-      subscribeToMessageChannelDispatch({onReceive});
+      subscribeToMessagesChannels();
     };
 
   };
 
   componentWillUnmount() {
-    const { setChatDispatch } = this.props;
+    const {
+      unsubscribeFromMessagesChannels,
+      props: {setChatDispatch}
+    } = this;
 
-    deleteSubscription(subscriptionIds.MESSAGE_CHANNEL);
+    unsubscribeFromMessagesChannels();
     setChatDispatch({chat: null});
+  };
+
+  subscribeToMessagesChannels = () => {
+    const {
+      subscribeToMessageWasCreatedDispatch,
+      subscribeToMessageWasReadedDispatch,
+      processMessageDispatch
+    } = this.props;
+
+    const onReceiveCreatedMessage = message => processMessageDispatch({message, action: 'create'});
+    subscribeToMessageWasCreatedDispatch({onReceive: onReceiveCreatedMessage});
+
+    const onReceiveReadedMessage = message => processMessageDispatch({message, action: 'update'});
+    subscribeToMessageWasReadedDispatch({onReceive: onReceiveReadedMessage});
+  };
+
+  unsubscribeFromMessagesChannels = () => {
+    deleteSubscription(subscriptionIds.MESSAGE_WAS_CREATED);
+    deleteSubscription(subscriptionIds.MESSAGE_WAS_READED);
   };
 
   render() {
