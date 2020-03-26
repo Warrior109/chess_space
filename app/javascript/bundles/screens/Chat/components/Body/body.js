@@ -3,6 +3,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import VisibilitySensor from '@k.sh/react-visibility-sensor';
 import { array, number, bool, func } from 'prop-types';
 
+import { MessageItem } from './components';
+
 const propTypes = {
   messages: array.isRequired,
   hasMorePages: bool.isRequired,
@@ -77,19 +79,13 @@ class Body extends Component {
                 >
                   {
                     message.status === 'readed' || message.isMine ?
-                      <div style={ {position: 'absolute', ...(message.isMine ? {right: 0} : {left: 0})} } >
-                        <div style={ {backgroundColor: 'gray'} } >{message.text}</div>
-                        <span>{message.status}</span>
-                      </div>
+                      <MessageItem { ...{ message } } />
                       :
                       <VisibilitySensor
-                        onChange={ (isVisible) => onChangeMessageVisibility(message, isVisible) }
                         active={ isTabOpen }
+                        onChange={ (isVisible) => onChangeMessageVisibility(message, isVisible) }
                       >
-                        <div style={ {position: 'absolute', ...(message.isMine ? {right: 0} : {left: 0})} } >
-                          <div style={ {backgroundColor: 'gray'} } >{message.text}</div>
-                          <span>{message.status}</span>
-                        </div>
+                        <MessageItem { ...{ message } } />
                       </VisibilitySensor>
                   }
                 </div>
