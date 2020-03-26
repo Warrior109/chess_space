@@ -7,6 +7,7 @@ class Types::MessageType < Types::BaseObject
   field :sender, Types::UserType, null: false
   field :status, String, null: false
   field :uuid, String, null: false
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: false
 
   def sender
     Loaders::AssociationLoader.for(Message, :sender).load(object)

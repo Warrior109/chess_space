@@ -5,3 +5,13 @@
 
 // Components
 @import 'components/preloader';
+
+// TODO: remove it, when you will write normal styles
+.chat-item {
+  cursor: pointer;
+
+  &.active {
+    background-color: blue;
+    cursor: auto;
+  }
+}

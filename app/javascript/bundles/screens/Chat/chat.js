@@ -8,7 +8,7 @@ import { deleteSubscription } from 'lib/utils';
 import { subscriptionIds } from 'core/message/constants';
 import Loader from 'components/Loader';
 import { paths } from 'layouts/constants';
-import { Header, Body, Footer } from './components';
+import { Header, Body, Footer, ChatList } from './components';
 
 const propTypes = {
   chat: object,
@@ -17,16 +17,20 @@ const propTypes = {
       id: string.isRequired
     }).isRequired
   }).isRequired, history: object.isRequired,
-  fetchChatDispatch: func.isRequired,
+  fetchChatScreenDataDispatch: func.isRequired,
   subscribeToMessageWasCreatedDispatch: func.isRequired,
   subscribeToMessageWasReadedDispatch: func.isRequired,
   processMessageDispatch: func.isRequired,
-  setChatDispatch: func.isRequired
+  clearChatScreenDataDispatch: func.isRequired,
+  clearMessagesDispatch: func.isRequired,
+  setChatDispatch: func.isRequired,
+  fetchMessagesListDispatch: func.isRequired
 };
 
 class Chat extends Component {
   state = {
-    isLoading: !this.props.chat
+    isLoading: !this.props.chat,
+    isChangingChat: false
   };
 
   componentDidMount() {
@@ -34,7 +38,7 @@ class Chat extends Component {
       subscribeToMessagesChannels,
       state: {isLoading},
       props: {
-        fetchChatDispatch,
+        fetchChatScreenDataDispatch,
         processMessageDispatch,
         match: {params: {id}},
         history
@@ -51,7 +55,7 @@ class Chat extends Component {
         toastr.error('', {component: <FormattedMessage id='error_messages.access_restricted' />});
       };
 
-      fetchChatDispatch({ id: parseInt(id), callback, errorCallback });
+      fetchChatScreenDataDispatch({id: parseInt(id), callback, errorCallback});
     } else {
       subscribeToMessagesChannels();
     };
@@ -61,11 +65,11 @@ class Chat extends Component {
   componentWillUnmount() {
     const {
       unsubscribeFromMessagesChannels,
-      props: {setChatDispatch}
+      props: {clearChatScreenDataDispatch}
     } = this;
 
     unsubscribeFromMessagesChannels();
-    setChatDispatch({chat: null});
+    clearChatScreenDataDispatch();
   };
 
   subscribeToMessagesChannels = () => {
@@ -87,9 +91,22 @@ class Chat extends Component {
     deleteSubscription(subscriptionIds.MESSAGE_WAS_READED);
   };
 
+  changeChat = chat => {
+    const {history, clearMessagesDispatch, setChatDispatch, fetchMessagesListDispatch} = this.props;
+
+    this.setState({isChangingChat: true});
+    history.push(paths.CHAT.replace(':id', chat.id));
+    clearMessagesDispatch();
+    setChatDispatch({chat});
+
+    const callback = () => this.setState({isChangingChat: false});
+    fetchMessagesListDispatch({chatId: chat.id, page: 0, callback});
+  };
+
   render() {
     const {
-      state: { isLoading }
+      changeChat,
+      state: { isLoading, isChangingChat }
     } = this;
 
     if (isLoading) return <Loader />;
@@ -98,14 +115,19 @@ class Chat extends Component {
       <Container>
         <Row>
           <Col sm={ 3 } >
-            CHATS LIST
+            <ChatList { ...{changeChat} } />
           </Col>
           <Col sm={ 9 } >
-            <Row>
-              <Col sm={ 12 } ><Header /></Col>
-              <Col sm={ 12 } ><Body /></Col>
-              <Col sm={ 12 } ><Footer /></Col>
-            </Row>
+            {
+              isChangingChat ?
+                <Loader />
+                :
+                <Row>
+                  <Col sm={ 12 } ><Header /></Col>
+                  <Col sm={ 12 } ><Body /></Col>
+                  <Col sm={ 12 } ><Footer /></Col>
+                </Row>
+            }
           </Col>
         </Row>
       </Container>

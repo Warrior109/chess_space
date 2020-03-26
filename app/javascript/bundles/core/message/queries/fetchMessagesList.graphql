@@ -1,7 +1,7 @@
 #import "./messageFields.graphql"
 
 query messages($cursor: String, $chatId: Int!) {
-  messages(last: 15, before: $cursor, chatId: $chatId) {
+  messages(last: 30, before: $cursor, chatId: $chatId) {
     pageInfo {
       startCursor
       hasPreviousPage

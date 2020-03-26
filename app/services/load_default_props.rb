@@ -35,14 +35,32 @@ class LoadDefaultProps < ApplicationInteraction
   def generate_default_props(res)
     default_props = {}
     res.map(&:to_h).each_with_index do |props, i|
-      queries[i].then { |core:, store_key:, **|
+      queries[i].then { |core:, **extra|
         default_props[core] ||= {}
         fail InvalidQueryError, props.fetch('errors') if props.key?('errors')
 
-        default_props[core].merge!(store_key => props.fetch('data').values.first)
+        default_props[core].deep_merge!(prepare_props(props, **extra))
       }
     end
     default_props
+  end
+
+  def prepare_props(props, store_key: nil, transform_to_store: {}, **)
+    props.fetch('data').values.first
+         .deep_transform_keys { |k| k.underscore.to_sym }
+         .then { |response|
+      next {store_key => response} if store_key
+
+      transform_to_store.reduce({}) { |result, (response_keys, store_conf)|
+        result.deep_merge(transform_response(response, response_keys, **store_conf))
+      }
+    }
+  end
+
+  def transform_response(response, response_keys, keys:, func: ->(val) { val })
+    response.dig(*Array(response_keys)).then(&func).then { |val|
+      Array(keys).reverse.reduce(val) { |res_val, key| {key => res_val} }
+    }
   end
 
   def read_graphql_query(core:, query:)
@@ -57,8 +75,8 @@ class LoadDefaultProps < ApplicationInteraction
   end
 
   def load_fragments(query, dir_path)
-    result = query
-    query.scan(/(^#import\s"(.+\.graphql)"$)/).each do |line, file_path|
+    result = query.dup
+    query.scan(/(^#\s*import\s"(.+\.graphql)"$)/).each do |line, file_path|
       result.gsub!(line, compose(ReadFile, pathname: dir_path.join(file_path)))
     end
     result

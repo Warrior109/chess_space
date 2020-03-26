@@ -1,0 +1,11 @@
+fragment chatFields on Chat {
+  id
+  companion {
+    id
+    firstName
+    lastName
+    thumbnailAvatar {
+      url
+    }
+  }
+}

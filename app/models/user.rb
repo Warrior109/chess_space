@@ -14,6 +14,7 @@ class User < ApplicationRecord
   acts_as_paranoid
 
   has_many :users_chats
+  has_many :sorted_chats, -> { most_recent_order }, through: :users_chats, source: :chat
   has_many :chats, through: :users_chats
   has_many :users_messages
   has_many :messages, through: :users_messages

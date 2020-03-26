@@ -1,13 +1,7 @@
+# import "./chatFields.graphql"
+
 query chat($id: Int!) {
   chat(id: $id) {
-    id
-    companion {
-      id
-      firstName
-      lastName
-      thumbnailAvatar {
-        url
-      }
-    }
+    ...chatFields
   }
 }

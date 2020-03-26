@@ -88,21 +88,21 @@ export function* fetchMessagesList({ payload: {page, chatId}, errorCallback, cal
   try {
     const cursors = yield select(selectors.getCursors);
     const cursor = cursors[page - 2];
-    const {
-      pageInfo: {startCursor, hasPreviousPage},
-      nodes
-    } = yield call(api.fetchMessagesList, {chatId, cursor});
+    const messages = yield call(api.fetchMessagesList, {chatId, cursor});
 
-    yield put({type: types.PUSH_MESSAGE_CURSOR, payload: {cursor: startCursor}});
-    yield put({type: types.UNSHIFT_MESSAGE_LIST, payload: {messages: nodes}});
-    yield put({type: types.SET_MESSAGE_HAS_MORE_PAGES, payload: {hasMorePages: hasPreviousPage}});
-
+    yield* saveMessagesList(messages);
     if (callback) callback();
   } catch(err) {
     yield checkError(err);
     if (errorCallback) errorCallback(err);
   }
 }
+
+export function* saveMessagesList({pageInfo: {startCursor, hasPreviousPage}, nodes}) {
+  yield put({type: types.PUSH_MESSAGE_CURSOR, payload: {cursor: startCursor}});
+  yield put({type: types.UNSHIFT_MESSAGE_LIST, payload: {messages: nodes}});
+  yield put({type: types.SET_MESSAGE_HAS_MORE_PAGES, payload: {hasMorePages: hasPreviousPage}});
+};
 
 export function* readMessage({payload: {id}, errorCallback, callback}) {
   try {

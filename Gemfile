@@ -59,6 +59,8 @@ gem 'paranoia'
 # Implement SPA
 gem 'react_on_rails'
 
+gem 'colorize' # for color output
+
 # For using Slim instead of erb
 gem 'slim-rails'
 group :development, :test do

@@ -20,7 +20,5 @@ module Queries::MessageQueries
       .for(Chat, joins: :users_chats, where: {users_chats: {user_id: current_user.id}})
       .load(chat_id)
       .then(&Loaders::AssociationLoader.for(Chat, :messages).method(:load))
-  rescue ActiveRecord::RecordNotFound
-    nil
   end
 end

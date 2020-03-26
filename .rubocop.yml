@@ -89,6 +89,9 @@ Style/CollectionMethods:
 Style/DateTime:
   Enabled: true
 
+Metrics/AbcSize:
+  Max: 17
+
 # TODO: Should be acted upon, but more than 20 offences currently
 Style/Send:
   Enabled: false

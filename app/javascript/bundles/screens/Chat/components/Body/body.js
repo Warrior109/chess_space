@@ -4,45 +4,46 @@ import VisibilitySensor from '@k.sh/react-visibility-sensor';
 import { array, number, bool, func } from 'prop-types';
 
 import { MessageItem } from './components';
+import Loader from 'components/Loader';
 
 const propTypes = {
   messages: array.isRequired,
   hasMorePages: bool.isRequired,
   chatId: number.isRequired,
-  clearMessagesDispatch: func.isRequired,
   fetchMessagesListDispatch: func.isRequired,
   readMessageDispatch: func.isRequired
 };
 
 class Body extends Component {
   state = {
-    isTabOpen: document.hasFocus()
+    isTabOpen: document.hasFocus(),
   };
 
   componentDidMount() {
-    const { onWindowFocus, onWindowBlur } = this;
+    const { onWindowFocus, onWindowBlur, scrollContainer } = this;
 
+    this._ismounted = true;
     window.addEventListener('focus', onWindowFocus);
     window.addEventListener('blur', onWindowBlur);
+
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
   };
 
-  comopnentWillUnmount() {
-    const {
-      onWindowFocus,
-      onWindowBlur,
-      props: {clearMessagesDispatch}
-    } = this;
+  componentWillUnmount() {
+    const {onWindowFocus, onWindowBlur} = this;
 
+    this._ismounted = false;
     window.removeEventListener('focus', onWindowFocus);
     window.removeEventListener('blur', onWindowBlur);
-    clearMessagesDispatch();
   };
 
-  onWindowFocus = () => this.setState({isTabOpen: true});
-  onWindowBlur = () => this.setState({isTabOpen: false});
+  onWindowFocus = () => this._ismounted && this.setState({isTabOpen: true});
+  onWindowBlur = () => this._ismounted && this.setState({isTabOpen: false});
 
   loadMore = (page) => {
-    const { chatId, fetchMessagesListDispatch } = this.props;
+    const {
+      props: {chatId, fetchMessagesListDispatch}
+    } = this;
 
     fetchMessagesListDispatch({chatId, page});
   };
@@ -61,10 +62,16 @@ class Body extends Component {
       props: {messages, hasMorePages}
     } = this;
 
+
     return (
-      <div style={ {height: '700px', overflow: 'auto'} } >
+      <div
+        style={ {height: '700px', overflow: 'auto'} }
+        ref={ (scrollContainer) => this.scrollContainer = scrollContainer }
+      >
         <InfiniteScroll
+          pageStart={ 1 }
           loadMore={ loadMore }
+          initialLoad={ !messages.length }
           loader={ <center key='loader'>Loading...</center> }
           hasMore={ hasMorePages }
           useWindow={ false }

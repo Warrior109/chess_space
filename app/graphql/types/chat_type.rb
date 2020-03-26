@@ -5,6 +5,8 @@ class Types::ChatType < Types::BaseObject
   field :id, Integer, null: false
   field :messages, [Types::MessageType], null: false
   field :companion, Types::UserType, null: false
+  field :last_message, Types::MessageType, null: true
+  field :created_at, GraphQL::Types::ISO8601DateTime, null: false
 
   def messages
     Loaders::AssociationLoader.for(Chat, :messages).load(object)
@@ -17,5 +19,9 @@ class Types::ChatType < Types::BaseObject
       .for(Chat, :users)
       .load(object)
       .then { |users| (users - [context[:current_user]]).first }
+  end
+
+  def last_message
+    Loaders::AssociationLoader.for(Chat, :last_message).load(object)
   end
 end
