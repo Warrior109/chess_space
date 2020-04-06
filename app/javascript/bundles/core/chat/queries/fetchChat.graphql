@@ -1,4 +1,4 @@
-# import "./chatFields.graphql"
+#import "./chatFields.graphql"
 
 query chat($id: Int!) {
   chat(id: $id) {

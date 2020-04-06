@@ -1,0 +1,8 @@
+#import "./chatFields.graphql"
+
+fragment chatListItemFields on Chat {
+  ...chatFields
+  lastMessage {
+    text
+  }
+}

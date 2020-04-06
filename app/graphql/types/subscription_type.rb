@@ -7,4 +7,7 @@ class Types::SubscriptionType < Types::BaseObject
   # Messages
   field :message_was_created, subscription: Subscriptions::Messages::WasCreated
   field :message_was_readed, subscription: Subscriptions::Messages::WasReaded
+
+  # Chats
+  field :chat_was_updated, subscription: Subscriptions::Chats::WasUpdated
 end

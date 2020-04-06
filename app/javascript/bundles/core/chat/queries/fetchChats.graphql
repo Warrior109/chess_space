@@ -1,4 +1,4 @@
-#import "./chatFields.graphql"
+#import "./chatListItemFields.graphql"
 
 query chats($cursor: String) {
   chats(first: 15, after: $cursor) {
@@ -7,10 +7,7 @@ query chats($cursor: String) {
       hasNextPage
     }
     nodes {
-      ...chatFields
-      lastMessage {
-        text
-      }
+      ...chatListItemFields
     }
   }
 }

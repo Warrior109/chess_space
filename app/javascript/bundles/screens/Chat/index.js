@@ -19,7 +19,8 @@ const mapDispatchToProps = dispatsh => (
     clearChatScreenDataDispatch: actions.clearChatScreenData,
     clearMessagesDispatch: messageActions.clearMessages,
     setChatDispatch: actions.setChat,
-    fetchMessagesListDispatch: messageActions.fetchMessagesList
+    fetchMessagesListDispatch: messageActions.fetchMessagesList,
+    subscribeToChatWasUpdatedDispatch: actions.subscribeToChatWasUpdated
   }, dispatsh)
 );
 

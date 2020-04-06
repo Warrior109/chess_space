@@ -6,6 +6,7 @@ import { shape, array, object, string, func } from 'prop-types';
 
 import { deleteSubscription } from 'lib/utils';
 import { subscriptionIds } from 'core/message/constants';
+import { subscriptionIds as chatSubscriptionIds } from 'core/chat/constants';
 import Loader from 'components/Loader';
 import { paths } from 'layouts/constants';
 import { Header, Body, Footer, ChatList } from './components';
@@ -24,6 +25,7 @@ const propTypes = {
   clearChatScreenDataDispatch: func.isRequired,
   clearMessagesDispatch: func.isRequired,
   setChatDispatch: func.isRequired,
+  subscribeToChatWasUpdatedDispatch: func.isRequired,
   fetchMessagesListDispatch: func.isRequired
 };
 
@@ -35,7 +37,7 @@ class Chat extends Component {
 
   componentDidMount() {
     const {
-      subscribeToMessagesChannels,
+      subscribeToChannels,
       state: {isLoading},
       props: {
         fetchChatScreenDataDispatch,
@@ -47,7 +49,7 @@ class Chat extends Component {
 
     if (isLoading) {
       const callback = () => {
-        subscribeToMessagesChannels();
+        subscribeToChannels();
         this.setState({ isLoading: false });
       };
       const errorCallback = () => {
@@ -57,38 +59,46 @@ class Chat extends Component {
 
       fetchChatScreenDataDispatch({id: parseInt(id), callback, errorCallback});
     } else {
-      subscribeToMessagesChannels();
+      subscribeToChannels();
     };
 
   };
 
   componentWillUnmount() {
     const {
-      unsubscribeFromMessagesChannels,
+      unsubscribeFromChannels,
       props: {clearChatScreenDataDispatch}
     } = this;
 
-    unsubscribeFromMessagesChannels();
+    unsubscribeFromChannels();
     clearChatScreenDataDispatch();
   };
 
-  subscribeToMessagesChannels = () => {
+  subscribeToChannels = () => {
     const {
       subscribeToMessageWasCreatedDispatch,
       subscribeToMessageWasReadedDispatch,
+      subscribeToChatWasUpdatedDispatch,
       processMessageDispatch
     } = this.props;
 
-    const onReceiveCreatedMessage = message => processMessageDispatch({message, action: 'create'});
-    subscribeToMessageWasCreatedDispatch({onReceive: onReceiveCreatedMessage});
+    subscribeToMessageWasCreatedDispatch({
+      onReceive: message => processMessageDispatch({message, action: 'create'})
+    });
 
-    const onReceiveReadedMessage = message => processMessageDispatch({message, action: 'update'});
-    subscribeToMessageWasReadedDispatch({onReceive: onReceiveReadedMessage});
+    subscribeToMessageWasReadedDispatch({
+      onReceive: message => processMessageDispatch({message, action: 'update'})
+    });
+
+    subscribeToChatWasUpdatedDispatch({
+      onReceive: chat => console.log(chat)
+    });
   };
 
-  unsubscribeFromMessagesChannels = () => {
+  unsubscribeFromChannels = () => {
     deleteSubscription(subscriptionIds.MESSAGE_WAS_CREATED);
     deleteSubscription(subscriptionIds.MESSAGE_WAS_READED);
+    deleteSubscription(chatSubscriptionIds.CHAT_WAS_UPDATED);
   };
 
   changeChat = chat => {

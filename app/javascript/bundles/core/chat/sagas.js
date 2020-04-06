@@ -50,6 +50,14 @@ export function* fetchChats({payload: {page}, errorCallback, callback}) {
   }
 }
 
+export function* subscribeToChatWasUpdated({onReceive, onError, onCompleted}) {
+  const onReceiveOverrided = ({chatWasUpdated}) => {
+    if (onReceive && chatWasUpdated) onReceive(chatWasUpdated.object);
+  };
+
+  yield call(api.subscribeToChatWasUpdated, {onReceive: onReceiveOverrided, onError, onCompleted});
+}
+
 export function* saveChats({pageInfo: {endCursor, hasNextPage}, nodes}) {
   yield put({type: types.PUSH_CHAT_CURSOR, payload: {cursor: endCursor}});
   yield put({type: types.PUSH_CHAT_LIST, payload: {chats: nodes}});
@@ -69,6 +77,7 @@ export function* chatWatch() {
   yield takeLatest(types.FETCH_CHAT_SCREEN_DATA, fetchChatScreenData);
   yield takeLatest(types.CLEAR_CHAT_SCREEN_DATA, clearChatScreenData);
   yield takeLatest(types.FETCH_CHATS, fetchChats);
+  yield takeLatest(types.SUBSCRIBE_TO_CHAT_WAS_UPDATED, subscribeToChatWasUpdated);
 }
 
 export const chatSagas = [

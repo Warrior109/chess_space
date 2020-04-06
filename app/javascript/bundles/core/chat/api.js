@@ -1,8 +1,10 @@
-import { graphQLRequest } from 'lib/utils';
+import {graphQLRequest, createSubscription} from 'lib/utils';
 import {
   fetchChat,
-  fetchChats
+  fetchChats,
+  subscribeToChatWasUpdated
 } from './queries';
+import { subscriptionIds } from './constants';
 
 const api = {
   fetchChat: ({ id }) => graphQLRequest({
@@ -25,7 +27,14 @@ const api = {
         responseKey: 'chats'
       }
     ]
-  })
+  }),
+  subscribeToChatWasUpdated: ({onReceive, onError, onCompleted}) => createSubscription({
+    subscriptionId: subscriptionIds.CHAT_WAS_UPDATED,
+    query: subscribeToChatWasUpdated,
+    onReceive,
+    onError,
+    onCompleted
+  }),
 };
 
 export default api;

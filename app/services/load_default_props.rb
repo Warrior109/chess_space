@@ -7,6 +7,7 @@ class LoadDefaultProps < ApplicationInteraction
   CORE_PATH = Rails.root.join('app/javascript/bundles/core').freeze
   QUERIES_FOLDER_NAME = 'queries'
   GRAPHQL_EXTENSION = '.graphql'
+  GRAPHQL_IMPORT_REGEXP = /(^#\s*import\s"(.+\.graphql)"$)/
 
   class InvalidQueryError < StandardError; end
 
@@ -76,8 +77,13 @@ class LoadDefaultProps < ApplicationInteraction
 
   def load_fragments(query, dir_path)
     result = query.dup
-    query.scan(/(^#\s*import\s"(.+\.graphql)"$)/).each do |line, file_path|
-      result.gsub!(line, compose(ReadFile, pathname: dir_path.join(file_path)))
+    query.scan(GRAPHQL_IMPORT_REGEXP).each do |line, file_path|
+      compose(ReadFile, pathname: dir_path.join(file_path)).then { |fragment|
+        result.gsub!(
+          line,
+          fragment.match?(GRAPHQL_IMPORT_REGEXP) ? load_fragments(fragment, dir_path) : fragment
+        )
+      }
     end
     result
   end

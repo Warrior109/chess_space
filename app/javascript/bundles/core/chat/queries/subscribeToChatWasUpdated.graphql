@@ -1,0 +1,9 @@
+#import "./chatListItemFields.graphql"
+
+subscription chatWasUpdated {
+  chatWasUpdated {
+    object {
+      ...chatListItemFields
+    }
+  }
+}
