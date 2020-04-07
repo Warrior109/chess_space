@@ -78,11 +78,18 @@ uk:
     password_confirmation:
       not_match: Паролі не збігаються.
 
+  toastr_titles:
+    error: Помилка!
+    success: Успіх
+    warning: Увага
+    info: Повідомляємо
+
   error_messages:
     something_went_wrong: Щось пішло не так. Спробуйте перегрузити сторінку.
     logouted: Ваша поточна сесія закінчилася. Будь ласка, увійдіть знову.
     logined: Ви вже авторизовані.
     access_restricted: Ви не маєте доступу до цієї сторінки.
+    page_not_found: Сторінки не існує.
 
   enumerize:
     user:

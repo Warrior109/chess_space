@@ -19,6 +19,10 @@ module Queries::MessageQueries
     Loaders::Record
       .for(Chat, joins: :users_chats, where: {users_chats: {user_id: current_user.id}})
       .load(chat_id)
-      .then(&Loaders::AssociationLoader.for(Chat, :messages).method(:load))
+      .then { |chat|
+      fail ActiveRecord::RecordNotFound unless chat
+
+      Loaders::AssociationLoader.for(Chat, :messages).load(chat)
+    }
   end
 end

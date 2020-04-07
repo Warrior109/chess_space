@@ -22,7 +22,7 @@ class Application extends Component {
     const { toastrData } = this.props;
     if (toastrData && toastrData.length) {
       toastrData.forEach(data => {
-        toastr[data.type]('', data.message);
+        toastr[data.type](data.title || '', data.message);
       });
     };
     connectToSocket();

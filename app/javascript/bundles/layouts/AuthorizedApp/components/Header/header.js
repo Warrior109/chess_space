@@ -41,7 +41,10 @@ class Header extends Component {
     const { logOutDispatch, history, intl: { formatMessage } } = this.props;
 
     const callback = () => {
-      toastr.success(formatMessage(defaultMessages.deviseSessionsSignedOut));
+      toastr.success(
+        formatMessage(defaultMessages.toastrTitlesSuccess),
+        {component: <FormattedMessage id='devise.sessions.signed_out' />}
+      );
       history.push(paths.ROOT);
     };
     const errorCallback = () => this._ismounted && this.setState({ inProcess: false });

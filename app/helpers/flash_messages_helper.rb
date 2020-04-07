@@ -9,10 +9,10 @@ module FlashMessagesHelper
       toastr_type = retrieve_toastr_type(key)
       if value.is_a? Array
         value.each do |msg|
-          array.push(type: toastr_type, message: msg)
+          array.push(type: toastr_type, title: t("toastr_titles.#{toastr_type}"), message: msg)
         end
       else
-        array.push(type: toastr_type, message: value)
+        array.push(type: toastr_type, title: t("toastr_titles.#{toastr_type}"), message: value)
       end
     end
   end
