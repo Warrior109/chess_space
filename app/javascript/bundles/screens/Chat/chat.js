@@ -26,7 +26,8 @@ const propTypes = {
   clearMessagesDispatch: func.isRequired,
   setChatDispatch: func.isRequired,
   subscribeToChatWasUpdatedDispatch: func.isRequired,
-  fetchMessagesListDispatch: func.isRequired
+  fetchMessagesListDispatch: func.isRequired,
+  replaceChatItemDispatch: func.isRequired
 };
 
 class Chat extends Component {
@@ -79,7 +80,8 @@ class Chat extends Component {
       subscribeToMessageWasCreatedDispatch,
       subscribeToMessageWasReadedDispatch,
       subscribeToChatWasUpdatedDispatch,
-      processMessageDispatch
+      processMessageDispatch,
+      replaceChatItemDispatch
     } = this.props;
 
     subscribeToMessageWasCreatedDispatch({
@@ -90,9 +92,7 @@ class Chat extends Component {
       onReceive: message => processMessageDispatch({message, action: 'update'})
     });
 
-    subscribeToChatWasUpdatedDispatch({
-      onReceive: chat => console.log(chat)
-    });
+    subscribeToChatWasUpdatedDispatch({onReceive: chat => replaceChatItemDispatch({chat})});
   };
 
   unsubscribeFromChannels = () => {

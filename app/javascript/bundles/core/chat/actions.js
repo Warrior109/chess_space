@@ -14,5 +14,6 @@ export const actions = {
   }),
   subscribeToChatWasUpdated: ({onReceive, onError, onCompleted}) => ({
     type: types.SUBSCRIBE_TO_CHAT_WAS_UPDATED, onReceive, onError, onCompleted
-  })
+  }),
+  replaceChatItem: ({chat}) => ({type: types.REPLACE_CHAT_ITEM, payload: {chat}})
 };

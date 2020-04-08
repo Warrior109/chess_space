@@ -20,7 +20,8 @@ const mapDispatchToProps = dispatsh => (
     clearMessagesDispatch: messageActions.clearMessages,
     setChatDispatch: actions.setChat,
     fetchMessagesListDispatch: messageActions.fetchMessagesList,
-    subscribeToChatWasUpdatedDispatch: actions.subscribeToChatWasUpdated
+    subscribeToChatWasUpdatedDispatch: actions.subscribeToChatWasUpdated,
+    replaceChatItemDispatch: actions.replaceChatItem
   }, dispatsh)
 );
 

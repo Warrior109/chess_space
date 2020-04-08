@@ -23,6 +23,8 @@ export function chatReducer(state = initialState, { payload, type }) {
       return update(state, {cursors: {$set: payload.cursors}});
     case types.SET_CHAT_HAS_MORE_PAGES:
       return update(state, {hasMorePages: {$set: payload.hasMorePages}});
+    case types.SET_CHAT_ITEM:
+      return update(state, {list: {[payload.index]: {$set: payload.chat}}});
     default: {
       return state;
     }

@@ -13,5 +13,15 @@ export const selectors = {
   getHasMorePages: state => state.chat.hasMorePages,
   makeIsActiveChat: () => createSelector(
     [getChatId, getChatItemId], (currentChatId, chatItemId) => currentChatId === chatItemId
+  ),
+  getSortedChats: createSelector(
+    [getChats],
+    (chats) => {
+      return chats.sort((first, second) => {
+        if (first.timestamp > second.timestamp) return -1;
+        if (second.timestamp > first.timestamp) return 1;
+        return 0;
+      });
+    }
   )
 };

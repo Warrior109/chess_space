@@ -2,6 +2,7 @@
 
 fragment chatListItemFields on Chat {
   ...chatFields
+  timestamp
   lastMessage {
     text
   }

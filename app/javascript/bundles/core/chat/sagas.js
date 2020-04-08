@@ -72,12 +72,19 @@ export function* clearChatScreenData() {
   yield* clearMessages();
 }
 
+export function* replaceChatItem({payload: {chat}}) {
+  const chats = yield select(selectors.getChats);
+  const chatIndex = chats.findIndex(chatItem => chatItem.id === chat.id);
+  if (chatIndex !== -1) yield put({type: types.SET_CHAT_ITEM, payload: {index: chatIndex, chat}});
+};
+
 export function* chatWatch() {
   yield takeLatest(types.FETCH_CHAT, fetchChat);
   yield takeLatest(types.FETCH_CHAT_SCREEN_DATA, fetchChatScreenData);
   yield takeLatest(types.CLEAR_CHAT_SCREEN_DATA, clearChatScreenData);
   yield takeLatest(types.FETCH_CHATS, fetchChats);
   yield takeLatest(types.SUBSCRIBE_TO_CHAT_WAS_UPDATED, subscribeToChatWasUpdated);
+  yield takeLatest(types.REPLACE_CHAT_ITEM, replaceChatItem);
 }
 
 export const chatSagas = [
