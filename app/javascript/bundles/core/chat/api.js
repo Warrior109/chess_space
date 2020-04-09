@@ -4,6 +4,7 @@ import {
   fetchChats,
   subscribeToChatWasUpdated
 } from './queries';
+import { fetchMessagesList } from 'core/message/queries';
 import { subscriptionIds } from './constants';
 
 const api = {
@@ -25,6 +26,11 @@ const api = {
       {
         query: fetchChats,
         responseKey: 'chats'
+      },
+      {
+        query: fetchMessagesList,
+        variables: {chatId: id},
+        responseKey: 'messages'
       }
     ]
   }),

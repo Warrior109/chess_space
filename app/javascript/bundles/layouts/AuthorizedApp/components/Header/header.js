@@ -3,7 +3,8 @@ import { toastr } from 'react-redux-toastr';
 import { Dropdown, DropdownToggle, DropdownMenu, DropdownItem, NavItem } from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { Link } from 'react-router-dom';
-import { object, shape, string, number, func } from 'prop-types';
+import classNames from 'classnames';
+import { object, shape, string, bool, number, func } from 'prop-types';
 
 import { defaultMessages } from 'locales/default';
 import SharedHeader from 'components/Header';
@@ -18,6 +19,7 @@ const propTypes = {
       url: string.isRequired
     }).isRequired
   }).isRequired,
+  isOnChatPage: bool.isRequired,
   intl: object.isRequired,
   history: object.isRequired,
   logOutDispatch: func.isRequired
@@ -60,12 +62,25 @@ class Header extends Component {
       logOutHandler,
       toggleDropdown,
       state: { inProcess, isDropdownOpen },
-      props: { currentUser }
+      props: { currentUser, isOnChatPage }
     } = this;
 
+    const messagesLinkClass = classNames({
+      disabled: isOnChatPage
+    });
     return (
       <SharedHeader>
         { inProcess && <Loader /> }
+        {
+          !!currentUser.recentChat &&
+            <Link
+              className={ messagesLinkClass }
+              to={ paths.CHAT.replace(':id', currentUser.recentChat.id) }
+            >
+              Chats
+              {!!currentUser.unreadChatsCount && <span>({currentUser.unreadChatsCount})</span>}
+            </Link>
+        }
         <Dropdown isOpen={ isDropdownOpen } toggle={ toggleDropdown } >
           <DropdownToggle caret >
             <img src={ currentUser.thumbnailAvatar.url } width={ 50 } height={ 50 } />

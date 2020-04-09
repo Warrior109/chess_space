@@ -5,9 +5,11 @@ import { injectIntl } from 'react-intl';
 import Header from './header';
 
 import { selectors, actions } from 'core/currentUser';
+import { selectors as routerSelectors } from 'core/router';
 
 const mapStateToProps = state => ({
   currentUser: selectors.getCurrentUser(state),
+  isOnChatPage: routerSelectors.isOnChatPage(state)
 });
 
 const mapDispatchToProps = dispatsh => (

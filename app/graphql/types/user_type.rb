@@ -23,6 +23,8 @@ class Types::UserType < Types::BaseObject
   field :thumbnail_avatar, Types::ImageType, null: true
   field :google_uid, String, null: true
   field :facebook_uid, String, null: true
+  field :recent_chat, Types::ChatType, null: true
+  field :unread_chats_count, Integer, null: false
 
   # TODO: extract it to field extension
   def original_avatar
@@ -48,5 +50,13 @@ class Types::UserType < Types::BaseObject
         object.thumbnail_avatar
       end
     }
+  end
+
+  def recent_chat
+    Loaders::AssociationLoader.for(User, :recent_chat).load(object)
+  end
+
+  def unread_chats_count
+    Loaders::Count.for(User, :unread_chats).load(object)
   end
 end

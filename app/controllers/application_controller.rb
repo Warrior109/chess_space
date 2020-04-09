@@ -7,6 +7,8 @@ class ApplicationController < ActionController::Base
   rescue_from LoadDefaultProps::InvalidQueryError, with: :invalid_query_handler
   rescue_from ActiveRecord::RecordNotFound, with: :not_found_handler
 
+  helper_method :load_default_props, :default_props
+
   private
 
   def invalid_query_handler(error)
@@ -19,8 +21,14 @@ class ApplicationController < ActionController::Base
     redirect_to root_path, alert: I18n.t('error_messages.page_not_found')
   end
 
+  def default_props
+    @default_props ||= {}
+  end
+
   def load_default_props(*queries)
-    LoadDefaultProps.run!(queries: queries, user: current_user, controller: self)
+    LoadDefaultProps
+      .run!(queries: queries, user: current_user, controller: self)
+      .then(&default_props.method(:deep_merge!))
   end
 
   def current_user

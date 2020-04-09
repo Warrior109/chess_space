@@ -1,20 +1,22 @@
 fragment userFields on User {
-  id,
-  firstName,
-  lastName,
-  email,
-  trainer,
-  skillLevel,
-  lat,
-  lng,
-  address,
-  city,
-  countryCode,
-  birthday,
-  goal,
-  aboutMe,
-  originalAvatar { url },
-  thumbnailAvatar { url },
-  googleUid,
+  id
+  firstName
+  lastName
+  email
+  trainer
+  skillLevel
+  lat
+  lng
+  address
+  city
+  countryCode
+  birthday
+  goal
+  aboutMe
+  originalAvatar { url }
+  thumbnailAvatar { url }
+  googleUid
   facebookUid
+  recentChat { id }
+  unreadChatsCount
 }

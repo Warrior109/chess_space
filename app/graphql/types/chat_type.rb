@@ -8,6 +8,7 @@ class Types::ChatType < Types::BaseObject
   field :last_message, Types::MessageType, null: true
   field :created_at, GraphQL::Types::ISO8601DateTime, null: false
   field :timestamp, Integer, null: false
+  field :unread_messages_count, Integer, null: false
 
   def messages
     Loaders::AssociationLoader.for(Chat, :messages).load(object)
@@ -31,5 +32,8 @@ class Types::ChatType < Types::BaseObject
       .for(Chat, :last_message)
       .load(object)
       .then { |last_message| last_message&.created_at&.to_i || object.created_at.to_i }
+  end
+
+  def unread_messages_count
   end
 end

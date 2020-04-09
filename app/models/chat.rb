@@ -13,4 +13,10 @@ class Chat < ApplicationRecord
       .order('most_recent_messages DESC')
       .group('chats.id')
   }
+
+  scope :unread, ->(user_id) {
+    joins(messages: :users_messages)
+      .where(users_messages: {read_at: nil, user_id: user_id, role: :receiver})
+      .distinct
+  }
 end
