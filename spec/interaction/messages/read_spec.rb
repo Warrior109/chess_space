@@ -12,7 +12,7 @@ RSpec.describe Messages::Read do
 
     it { is_expected.to match_array messages }
 
-    its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :message, args: {chat_id: chat.id, action: :update}, object: kind_of(Message)).exactly(3).times }
+    its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :message_was_readed, args: {chat_id: chat.id}, object: kind_of(Message)).exactly(3).times }
     its_block { is_expected.to change { UsersMessage.where(user_id: user.id, message_id: messages.pluck(:id)).pluck(:read_at) }.from(Array.new(3, nil)).to(Array.new(3, kind_of(ActiveSupport::TimeWithZone))) }
   end
 

@@ -101,6 +101,7 @@ group :test do
   gem 'rspec-its'                 # its(:foo) syntax
   gem 'saharspec'                 # some syntactic sugar for RSpec
   gem 'warden-rspec-rails'
+  gem 'shoulda'
 
   gem 'database_cleaner'
 end

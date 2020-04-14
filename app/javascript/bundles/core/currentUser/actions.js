@@ -48,5 +48,8 @@ export const actions = {
   }),
   fetchCurrentUserSkillLevelOptions: ({ callback, errorCallback }) => ({
     type: types.FETCH_CURRENT_USER_SKILL_LEVEL_OPTIONS, callback, errorCallback
+  }),
+  subscribeToCurrentUserWasUpdated: ({onReceive, onError, onCompleted}) => ({
+    type: types.SUBSCRIBE_TO_CURRENT_USER_WAS_UPDATED, onReceive, onError, onCompleted
   })
 };

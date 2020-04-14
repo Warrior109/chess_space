@@ -12,6 +12,6 @@ class UsersMessage < ApplicationRecord
   validates :role, presence: true
   validates :message_id, uniqueness: {scope: :user_id}
 
-  scope :sender, -> { where(role: :sender) }
+  scope :senders, -> { where(role: :sender) }
   scope :receivers, -> { where(role: :receiver) }
 end

@@ -17,7 +17,8 @@ RSpec.describe Messages::Create do
     it { is_expected.to be_persisted }
     it { is_expected.to have_attributes(text: 'test message text', chat_id: chat.id) }
 
-    its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :message, args: {chat_id: chat.id, action: :create}, object: kind_of(Message)) }
+    its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :message_was_created, args: {chat_id: chat.id}, object: kind_of(Message)) }
+    its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :chat_was_updated, args: {}, object: chat) }
     its_block { is_expected.to change(Message, :count).from(0).to(1) }
     its_block { is_expected.to change(UsersMessage, :count).from(0).to(2) }
     its(:users_messages) {
@@ -33,7 +34,8 @@ RSpec.describe Messages::Create do
       it { is_expected.to be_persisted }
       it { is_expected.to have_attributes(text: 'test message text', chat_id: chat.id) }
 
-      its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :message, args: {chat_id: chat.id, action: :create}, object: kind_of(Message)) }
+      its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :message_was_created, args: {chat_id: chat.id}, object: kind_of(Message)) }
+      its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :chat_was_updated, args: {}, object: chat) }
       its_block { is_expected.to change(Message, :count).from(0).to(1) }
       its_block { is_expected.to change(UsersMessage, :count).from(0).to(2) }
       its(:users_messages) {
@@ -41,6 +43,36 @@ RSpec.describe Messages::Create do
           have_attributes(role: 'sender', user_id: sender.id, read_at: kind_of(ActiveSupport::TimeWithZone)),
           have_attributes(role: 'receiver', user_id: receiver.id, read_at: nil)
         ]
+      }
+    end
+
+    context 'when sender have another recent chat' do
+      let(:another_chat) { create(:chat, users: [sender]) }
+
+      before {
+        chat
+        another_chat # creates another chat after chat
+      }
+
+      its_block { is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :user_was_updated, args: {user_id: sender.id}, object: sender) }
+    end
+
+    context 'when chat already readed' do
+      let!(:message) { create(:message, chat: chat, sender: sender) }
+
+      before { Messages::Read.run!(user: receiver, ids: [message.id]) }
+
+      its_block {
+        is_expected.to send_message(BroadcastToSubscription, :run!).with(subscription_name: :user_was_updated, args: {user_id: receiver.id}, object: receiver)
+          .and dont.send_message(BroadcastToSubscription, :run!).with(subscription_name: :user_was_updated, args: {user_id: sender.id}, object: sender)
+      }
+    end
+
+    context 'when chat recent and not readed' do
+      let!(:message) { create(:message, chat: chat) }
+
+      its_block {
+        is_expected.not_to send_message(BroadcastToSubscription, :run!).with(subscription_name: :user_was_updated, args: {user_id: kind_of(Integer)}, object: kind_of(User))
       }
     end
   end

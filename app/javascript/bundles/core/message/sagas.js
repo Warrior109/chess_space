@@ -37,8 +37,8 @@ export function* createMessage({ payload: { text }, errorCallback, callback }) {
 export function* subscribeToMessageWasCreated({onReceive, onError, onCompleted}) {
   const chat = yield select(chatSelectors.getChat);
 
-  const onReceiveOverrided = ({messageWasCreated: {object}}) => {
-    if (onReceive) onReceive(object);
+  const onReceiveOverrided = ({messageWasCreated: {item}}) => {
+    if (onReceive) onReceive(item);
   };
 
   yield call(
@@ -50,8 +50,8 @@ export function* subscribeToMessageWasCreated({onReceive, onError, onCompleted})
 export function* subscribeToMessageWasReaded({onReceive, onError, onCompleted}) {
   const chat = yield select(chatSelectors.getChat);
 
-  const onReceiveOverrided = ({messageWasReaded: {object}}) => {
-    if (onReceive) onReceive(object);
+  const onReceiveOverrided = ({messageWasReaded: {item}}) => {
+    if (onReceive) onReceive(item);
   };
 
   yield call(

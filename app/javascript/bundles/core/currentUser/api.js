@@ -1,4 +1,4 @@
-import { graphQLRequest } from 'lib/utils';
+import {graphQLRequest, createSubscription} from 'lib/utils';
 import {
   logOut,
   signIn,
@@ -11,8 +11,10 @@ import {
   currentUserForgotPasswordUpdate,
   currentUserDisconnectSocial,
   fetchCurrentUserSkillLevelOptions,
-  fetchCurrentUser
+  fetchCurrentUser,
+  subscribeToCurrentUserWasUpdated
 } from './queries';
+import {subscriptionIds} from './constants';
 
 const api = {
   logOut: () => graphQLRequest({
@@ -70,6 +72,14 @@ const api = {
   }),
   fetchCurrentUser: () => graphQLRequest({
     query: fetchCurrentUser
+  }),
+  subscribeToCurrentUserWasUpdated: ({variables, onReceive, onError, onCompleted}) => createSubscription({
+    subscriptionId: subscriptionIds.CURRENT_USER_WAS_UPDATED,
+    query: subscribeToCurrentUserWasUpdated,
+    variables,
+    onReceive,
+    onError,
+    onCompleted
   })
 };
 

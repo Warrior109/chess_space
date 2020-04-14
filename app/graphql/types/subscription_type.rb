@@ -10,4 +10,7 @@ class Types::SubscriptionType < Types::BaseObject
 
   # Chats
   field :chat_was_updated, subscription: Subscriptions::Chats::WasUpdated
+
+  # Uers
+  field :user_was_updated, subscription: Subscriptions::Users::WasUpdated
 end

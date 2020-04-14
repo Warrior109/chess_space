@@ -1,0 +1,9 @@
+#import "./userFields.graphql"
+
+subscription userWasUpdated($userId: Int!) {
+  userWasUpdated(userId: $userId) {
+    item {
+      ...userFields
+    }
+  }
+}

@@ -23,6 +23,7 @@ class User < ApplicationRecord
 
   has_many :users_messages
   has_many :messages, through: :users_messages
+  has_many :unread_messages, ->(u) { unread(u.id) }, through: :users_messages, source: :message
 
   has_one_attached :original_avatar
   has_one_attached :thumbnail_avatar
@@ -76,10 +77,45 @@ class User < ApplicationRecord
   end
   after_validation :reverse_geocode
 
-  def as_json(*args)
-    super.merge(
-      original_avatar: {url: image_path_for(original_avatar)},
-      thumbnail_avatar: {url: image_path_for(thumbnail_avatar)}
-    )
-  end
+  scope :readed_chat, ->(chat_id) {
+    joins(:users_chats)
+      .where(users_chats: {chat_id: chat_id})
+      .joins(sanitize_sql_array([<<~SQL, chat_id]))
+        LEFT OUTER JOIN users_messages unread_um
+          ON unread_um.user_id = users.id
+            AND unread_um.read_at IS NULL
+            AND unread_um.role = 'receiver'
+        LEFT OUTER JOIN messages unread_m
+          ON unread_m.id = unread_um.message_id
+            AND unread_m.chat_id = ?
+      SQL
+      .having('COUNT(unread_m.id) = 0')
+      .group('users.id')
+  }
+
+  scope :with_recent_chat, ->(chat_id) {
+    joins(<<~SQL)
+      INNER JOIN (
+        SELECT DISTINCT ON (id) users.id AS id,
+          GREATEST(MAX(messages.created_at), chats.created_at) AS recent_time
+        FROM users
+        INNER JOIN users_chats ON users_chats.user_id = users.id
+        INNER JOIN chats ON chats.id = users_chats.chat_id
+        LEFT JOIN messages ON messages.chat_id = chats.id
+        GROUP BY users.id, chats.created_at
+        ORDER BY id, recent_time DESC
+      ) AS recent_users ON recent_users.id = users.id
+
+      LEFT JOIN (
+        SELECT chats.id AS id, users_chats.user_id AS user_id,
+          GREATEST(MAX(messages.created_at), chats.created_at) AS recent_time
+        FROM chats
+        LEFT JOIN messages ON messages.chat_id = chats.id
+        INNER JOIN users_chats ON users_chats.chat_id = chats.id
+        GROUP BY chats.id, users_chats.user_id
+      ) AS recent_chats ON recent_chats.user_id = recent_users.id
+        AND recent_users.recent_time = recent_chats.recent_time
+    SQL
+      .where('recent_chats.id = ?', chat_id)
+  }
 end

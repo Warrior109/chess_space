@@ -255,6 +255,19 @@ export function* checkError(err) {
   }
 }
 
+export function* subscribeToCurrentUserWasUpdated({onReceive, onError, onCompleted}) {
+  const user = yield select(selectors.getCurrentUser);
+
+  const onReceiveOverrided = ({userWasUpdated}) => {
+    if (onReceive && userWasUpdated) onReceive(userWasUpdated.item);
+  };
+
+  yield call(
+    api.subscribeToCurrentUserWasUpdated,
+    {variables: {userId: user.id}, onReceive: onReceiveOverrided, onError, onCompleted}
+  );
+}
+
 export function* currentUserWatch() {
   yield takeLatest(types.LOG_OUT, logOut);
   yield takeLatest(types.SIGN_IN, signIn);
@@ -268,6 +281,7 @@ export function* currentUserWatch() {
   yield takeLatest(types.CURRENT_USER_FORGOT_PASSWORD_UPDATE, currentUserForgotPasswordUpdate);
   yield takeLatest(types.CURRENT_USER_DISCONNECT_SOCIAL, currentUserDisconnectSocial);
   yield takeLatest(types.FETCH_CURRENT_USER_SKILL_LEVEL_OPTIONS, fetchCurrentUserSkillLevelOptions);
+  yield takeLatest(types.SUBSCRIBE_TO_CURRENT_USER_WAS_UPDATED, subscribeToCurrentUserWasUpdated);
 }
 
 export const currentUserSagas = [

@@ -52,7 +52,7 @@ export function* fetchChats({payload: {page}, errorCallback, callback}) {
 
 export function* subscribeToChatWasUpdated({onReceive, onError, onCompleted}) {
   const onReceiveOverrided = ({chatWasUpdated}) => {
-    if (onReceive && chatWasUpdated) onReceive(chatWasUpdated.object);
+    if (onReceive && chatWasUpdated) onReceive(chatWasUpdated.item);
   };
 
   yield call(api.subscribeToChatWasUpdated, {onReceive: onReceiveOverrided, onError, onCompleted});

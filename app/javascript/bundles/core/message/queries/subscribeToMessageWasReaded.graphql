@@ -2,7 +2,7 @@
 
 subscription messageWasReaded($chatId: Int!) {
   messageWasReaded(chatId: $chatId) {
-    object {
+    item {
       ...messageFields
     }
   }

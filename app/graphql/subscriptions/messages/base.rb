@@ -2,7 +2,7 @@
 
 # Base class for different message subscription
 class Subscriptions::Messages::Base < Subscriptions::BaseSubscription
-  field :object, Types::MessageType, null: true
+  field :item, Types::MessageType, null: true
 
   argument :chat_id, Integer, required: true
 
@@ -14,6 +14,6 @@ class Subscriptions::Messages::Base < Subscriptions::BaseSubscription
   end
 
   def update(**)
-    object
+    {item: object}
   end
 end
