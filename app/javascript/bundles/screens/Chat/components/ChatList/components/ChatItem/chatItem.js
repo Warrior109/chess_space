@@ -1,6 +1,6 @@
 import React from 'react';
 import {Row, Col} from 'reactstrap';
-import {string, shape, bool, func} from 'prop-types';
+import {string, shape, bool, number, func} from 'prop-types';
 
 const propTypes = {
   chat: shape({
@@ -13,7 +13,8 @@ const propTypes = {
     }).isRequired,
     lastMessage: shape({
       text: string
-    })
+    }),
+    unreadMessagesCount: number.isRequired
   }).isRequired,
   isActive: bool.isRequired,
   changeChat: func.isRequired
@@ -29,7 +30,10 @@ const ChatItem = ({chat, isActive, changeChat}) => {
         <img src={ chat.companion.thumbnailAvatar.url } width={ 40 } height={ 40 } />
       </Col>
       <Col sm={ 10 } >
-        <div><strong>{ chat.companion.firstName } { chat.companion.lastName }</strong></div>
+        <div>
+          <strong>{ chat.companion.firstName } { chat.companion.lastName }</strong>
+          { !!chat.unreadMessagesCount && <span>({chat.unreadMessagesCount})</span> }
+        </div>
         <div>{ chat.lastMessage && chat.lastMessage.text }</div>
       </Col>
     </Row>

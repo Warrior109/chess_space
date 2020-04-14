@@ -57,6 +57,6 @@ class Types::UserType < Types::BaseObject
   end
 
   def unread_chats_count
-    Loaders::Count.for(User, :unread_chats).load(object)
+    Loaders::Count.for(User, name: :unread_chats).load(object)
   end
 end

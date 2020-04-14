@@ -35,5 +35,8 @@ class Types::ChatType < Types::BaseObject
   end
 
   def unread_messages_count
+    Loaders::Count
+      .for(Chat, {name: :messages}, name: :unread, args: [current_user.id])
+      .load(object)
   end
 end

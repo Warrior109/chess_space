@@ -8,4 +8,13 @@ class Message < ApplicationRecord
   has_one :sender, through: :sender_users_message, source: :user
 
   validates :text, presence: true
+
+  scope :unread, ->(user_id) {
+    joins(:users_messages)
+      .where(users_messages: {read_at: nil, user_id: user_id, role: :receiver})
+      .distinct
+  }
+
+  scope :latest_order, -> { order(created_at: :desc) } # latest message will be the first
+  scope :oldest_order, -> { order(created_at: :asc) } # oldest message will be the first
 end

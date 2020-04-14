@@ -6,4 +6,5 @@ fragment chatListItemFields on Chat {
   lastMessage {
     text
   }
+  unreadMessagesCount
 }

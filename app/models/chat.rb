@@ -4,8 +4,8 @@
 class Chat < ApplicationRecord
   has_many :users_chats
   has_many :users, through: :users_chats
-  has_many :messages, -> { order(created_at: :asc) }
-  has_one :last_message, -> { order(created_at: :desc) }, class_name: :Message
+  has_many :messages, -> { oldest_order }
+  has_one :last_message, -> { latest_order }, class_name: :Message
 
   scope :most_recent_order, -> {
     select('chats.*, GREATEST(MAX(messages.created_at), chats.created_at) AS most_recent_messages')
