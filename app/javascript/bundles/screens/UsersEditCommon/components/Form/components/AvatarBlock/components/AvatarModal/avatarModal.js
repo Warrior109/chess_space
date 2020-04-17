@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalFooter, ModalBody } from 'reactstrap';
+import {Modal, ModalHeader, ModalFooter, ModalBody, Button} from 'reactstrap';
 import AvatarEditor from 'react-avatar-editor';
 import { FormattedMessage } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
@@ -85,9 +85,9 @@ class AvatarModal extends Component {
             />
           </div>
           <div>
-            <button onClick={ updateUserAvatarHandler } >
+            <Button onClick={ updateUserAvatarHandler } >
               <FormattedMessage id='actions.save_changes' />
-            </button>
+            </Button>
           </div>
           { inProcess && <Loader /> }
         </ModalBody>

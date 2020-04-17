@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Modal, ModalHeader, ModalBody } from 'reactstrap';
+import {Modal, ModalHeader, ModalBody, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
 import { bool, func } from 'prop-types';
@@ -71,9 +71,9 @@ class ForgotPasswordModal extends Component {
           <div>
             <FormattedMessage id='modals.forgot_password.remember_password' />
             &nbsp;
-            <button onClick={ toggleSignInModal } >
+            <Button onClick={ toggleSignInModal } >
               <FormattedMessage id='modals.log_in.title' />
-            </button>
+            </Button>
           </div>
         </ModalBody>
       </Modal>

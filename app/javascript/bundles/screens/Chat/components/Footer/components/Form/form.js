@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap';
+import {Row, Col, Input, Form as BForm, Button} from 'reactstrap';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { func } from 'prop-types';
@@ -10,18 +10,22 @@ const propTypes = {
 
 const Form = ({ handleSubmit }) => {
   return (
-    <form onSubmit={ handleSubmit } >
-      <Row>
+    <BForm onSubmit={ handleSubmit } >
+      <Row className='form-group'>
         <Col sm={ 10 } >
-          <Field component='textarea' name='text' />
+          <Field
+            component='textarea'
+            name='text'
+            className='form-control'
+          />
         </Col>
         <Col sm={ 2 } >
-          <button type='submit'>
+          <Button type='submit'>
             <FormattedMessage id='actions.send' />
-          </button>
+          </Button>
         </Col>
       </Row>
-    </form>
+    </BForm>
   );
 };
 Form.propTypes = propTypes;

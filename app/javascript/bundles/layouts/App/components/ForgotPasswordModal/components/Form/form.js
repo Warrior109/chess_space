@@ -1,5 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
+import {Form as BForm, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { shape, func } from 'prop-types';
 
@@ -15,7 +16,7 @@ const propTypes = {
 
 const Form = ({ intl: { formatMessage }, handleSubmit }) => {
   return (
-    <form onSubmit={ handleSubmit } >
+    <BForm onSubmit={ handleSubmit } >
       <div>
         <Field
           type='email'
@@ -26,10 +27,10 @@ const Form = ({ intl: { formatMessage }, handleSubmit }) => {
           autoFocus
         />
       </div>
-      <button type='submit' >
+      <Button type='submit' >
         <FormattedMessage id='actions.send' />
-      </button>
-    </form>
+      </Button>
+    </BForm>
   );
 };
 Form.propTypes = propTypes;

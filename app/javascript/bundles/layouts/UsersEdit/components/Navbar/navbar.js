@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
+import {Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import {} from 'prop-types';
 
@@ -43,9 +44,9 @@ class Navbar extends Component {
           </NavLink>
         </div>
         <div>
-          <button onClick={ toggleDeleteConfirmationModal } >
+          <Button color='danger' onClick={ toggleDeleteConfirmationModal } >
             <FormattedMessage id='modals.delete_account.title' />
-          </button>
+          </Button>
         </div>
         <DeleteConfirmationModal
           isOpen={ isDeleteConfirmationModalOpen }

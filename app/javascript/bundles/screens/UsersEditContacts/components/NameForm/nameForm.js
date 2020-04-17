@@ -1,5 +1,5 @@
 import React, { Component, Fragment } from 'react';
-import { Col } from 'reactstrap';
+import {Col, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
 import { shape, string, bool, func } from 'prop-types';
@@ -65,7 +65,7 @@ class NameForm extends Component {
               <Col sm={ 4 } ><h5><FormattedMessage id='user.fields.name' /></h5></Col>
               <Col sm={ 8 } >
                 <span>{ firstName } { lastName }</span>
-                <button onClick={ toggleMode } ><FormattedMessage id='actions.edit' /></button>
+                <Button onClick={ toggleMode } ><FormattedMessage id='actions.edit' /></Button>
               </Col>
             </Fragment>
         }

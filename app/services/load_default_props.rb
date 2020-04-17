@@ -48,7 +48,7 @@ class LoadDefaultProps < ApplicationInteraction
 
   def prepare_props(props, store_key: nil, transform_to_store: {}, **)
     props.fetch('data').values.first
-         .deep_transform_keys { |k| k.underscore.to_sym }
+         .then { |r| r.is_a?(Hash) ? r.deep_transform_keys { |k| k.underscore.to_sym } : r }
          .then { |response|
       next {store_key => response} if store_key
 

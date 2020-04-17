@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import {Form as BForm, Button} from 'reactstrap';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { shape, func } from 'prop-types';
@@ -24,16 +25,23 @@ class Form extends Component {
     this.setState((state) => ({ isPasswordVisible: !state.isPasswordVisible }));
   };
 
+  toggleForgotPasswordModal = (e) => {
+    const { toggleForgotPasswordModal } = this.context;
+
+    e.preventDefault();
+    toggleForgotPasswordModal();
+  };
+
   render() {
     const {
       togglePasswordVisibilityHandler,
+      toggleForgotPasswordModal,
       state: { isPasswordVisible },
-      context: { toggleForgotPasswordModal },
       props: { intl: { formatMessage }, handleSubmit }
     } = this;
 
     return (
-      <form onSubmit={ handleSubmit } >
+      <BForm onSubmit={ handleSubmit } >
         <div>
           <Field
             component={ FieldWithErrors }
@@ -49,7 +57,7 @@ class Form extends Component {
             name='password'
             placeholder={ formatMessage(defaultMessages.userFieldsPassword) }
           />
-          <button onClick={ togglePasswordVisibilityHandler }>
+          <Button onClick={ togglePasswordVisibilityHandler }>
             {/* FIXME: remvove from yml file, if will be replaced with icon */}
             {
               isPasswordVisible ?
@@ -57,19 +65,19 @@ class Form extends Component {
                 :
                 <FormattedMessage id='actions.show_password' />
             }
-          </button>
+          </Button>
         </div>
         <div>
-          <button onClick={ toggleForgotPasswordModal } >
+          <Button onClick={ toggleForgotPasswordModal } >
             <FormattedMessage id='modals.forgot_password.title' />
-          </button>
+          </Button>
         </div>
         <div>
-          <button type='submit' >
+          <Button type='submit' >
             <FormattedMessage id='actions.sign_in' />
-          </button>
+          </Button>
         </div>
-      </form>
+      </BForm>
     );
   }
 };

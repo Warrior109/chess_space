@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { shape, func } from 'prop-types';
+import {Form as BForm, Button} from 'reactstrap';
 
 import { defaultMessages } from 'locales/default';
 import FieldWithErrors from 'components/FieldWithErrors';
@@ -31,7 +32,7 @@ class Form extends Component {
     } = this;
 
     return (
-      <form onSubmit={ handleSubmit }>
+      <BForm onSubmit={ handleSubmit }>
         <Field
           component={ FieldWithErrors }
           type='text'
@@ -56,7 +57,7 @@ class Form extends Component {
           name='password'
           placeholder={ formatMessage(defaultMessages.userFieldsPassword) }
         />
-        <button onClick={ togglePasswordVisibilityHandler }>
+        <Button onClick={ togglePasswordVisibilityHandler }>
           {/* FIXME: remvove from yml file, if will be replaced with icon */}
           {
             isPasswordVisible ?
@@ -64,17 +65,17 @@ class Form extends Component {
               :
               <FormattedMessage id='actions.show_password' />
           }
-        </button>
+        </Button>
         <Field
           component={ FieldWithErrors }
           type={ isPasswordVisible ? 'text' : 'password' }
           name='passwordConfirmation'
           placeholder={ formatMessage(defaultMessages.userFieldsPasswordConfirmation) }
         />
-        <button type='submit' >
+        <Button color='success' type='submit' >
           <FormattedMessage id='actions.registrate' />
-        </button>
-      </form>
+        </Button>
+      </BForm>
     );
   }
 };

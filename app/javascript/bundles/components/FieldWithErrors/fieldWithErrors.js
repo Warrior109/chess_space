@@ -1,4 +1,5 @@
 import React from 'react';
+import {Input} from 'reactstrap';
 import { object, string, node, shape, bool } from 'prop-types';
 
 const propTypes = {
@@ -11,26 +12,19 @@ const propTypes = {
     touched: bool,
     error: node
   }).isRequired,
-  componentType: string
 };
 
 const defaultProps = {
-  componentType: 'input',
   disabled: false
 };
 
 const FieldWithErrors = ({
-  input, placeholder, disabled, type, className, meta: { touched, error }, componentType
+  input, placeholder, disabled, type, className, meta: { touched, error }
 }) => {
   const inputProps = { ...input, placeholder, disabled, type, className };
   return (
     <div>
-      {
-        componentType === 'textarea' ?
-          <textarea { ...inputProps } />
-          :
-          <input { ...inputProps } />
-      }
+      <Input { ...inputProps } />
       { touched && (error && <span>{ error }</span>) }
     </div>
   );

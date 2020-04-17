@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import {Container, Row, Col, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { toastr } from 'react-redux-toastr';
 import { shape, string, func } from 'prop-types';
@@ -87,9 +87,9 @@ class UsersEditContacts extends Component {
               GOOGLE
               {
                 googleUid ?
-                  <button onClick={ () => disconnectProvider(GOOGLE_PROVIDER) } >
+                  <Button onClick={ () => disconnectProvider(GOOGLE_PROVIDER) } >
                     <FormattedMessage id='actions.disconnect' />
-                  </button>
+                  </Button>
                   :
                   <a href={ paths.USERS_OAUTH_GOOGLE_CONNECT } >
                     <FormattedMessage id='actions.connect' />
@@ -100,9 +100,9 @@ class UsersEditContacts extends Component {
               Facebook
               {
                 facebookUid ?
-                  <button onClick={ () => disconnectProvider(FACEBOOK_PROVIDER) } >
+                  <Button onClick={ () => disconnectProvider(FACEBOOK_PROVIDER) } >
                     <FormattedMessage id='actions.disconnect' />
-                  </button>
+                  </Button>
                   :
                   <a href={ paths.USERS_OAUTH_FACEBOOK_CONNECT } >
                     <FormattedMessage id='actions.connect' />

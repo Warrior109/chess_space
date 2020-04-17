@@ -2,6 +2,7 @@ import React from 'react';
 import { Field } from 'redux-form';
 import { FormattedMessage } from 'react-intl';
 import { shape, func } from 'prop-types';
+import {Form as BForm, Button} from 'reactstrap';
 
 import { defaultMessages } from 'locales/default';
 import FieldWithErrors from 'components/FieldWithErrors';
@@ -15,7 +16,7 @@ const propTypes = {
 
 const Form = ({ intl: { formatMessage }, handleSubmit }) => {
   return (
-    <form onSubmit={ handleSubmit } >
+    <BForm onSubmit={ handleSubmit } >
       <div>
         <FormattedMessage id='modals.delete_account.explanation_message' />:
       </div>
@@ -28,11 +29,11 @@ const Form = ({ intl: { formatMessage }, handleSubmit }) => {
         />
       </div>
       <div>
-        <button type='submit' >
+        <Button type='submit' >
           <FormattedMessage id='actions.delete' />
-        </button>
+        </Button>
       </div>
-    </form>
+    </BForm>
   );
 };
 Form.propTypes = propTypes;

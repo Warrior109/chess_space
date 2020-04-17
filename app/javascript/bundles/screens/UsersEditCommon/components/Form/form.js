@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { Row, Col } from 'reactstrap';
+import {Row, Col, Form as BForm, Input, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { shape, array, string, func } from 'prop-types';
 
@@ -21,7 +21,7 @@ const propTypes = {
 
 const Form = ({ handleSubmit, currentUser: { firstName, lastName }, skillLevelOptions }) => {
   return (
-    <form onSubmit={ handleSubmit } >
+    <BForm onSubmit={ handleSubmit } >
       <Row>
         <Col sm={ 9 } >
           <div>
@@ -32,7 +32,7 @@ const Form = ({ handleSubmit, currentUser: { firstName, lastName }, skillLevelOp
               <label><FormattedMessage id='user.fields.trainer' /></label>
             </Col>
             <Col sm={ 8 } >
-              <Field component='input' type='checkbox' name='trainer' />
+              <Field component={ Input } type='checkbox' name='trainer' />
             </Col>
           </Row>
 
@@ -74,7 +74,7 @@ const Form = ({ handleSubmit, currentUser: { firstName, lastName }, skillLevelOp
           <h5><FormattedMessage id='user.fields.goal' /></h5>
           <Field
             component={ FieldWithErrors }
-            componentType='textarea'
+            type='textarea'
             name='goal'
           />
         </Col>
@@ -83,15 +83,15 @@ const Form = ({ handleSubmit, currentUser: { firstName, lastName }, skillLevelOp
           <h5><FormattedMessage id='user.fields.about_me' /></h5>
           <Field
             component={ FieldWithErrors }
-            componentType='textarea'
+            type='textarea'
             name='aboutMe'
           />
         </Col>
-        <button type='submit' >
+        <Button color='success' type='submit' >
           <FormattedMessage id='actions.save_changes' />
-        </button>
+        </Button>
       </Row>
-    </form>
+    </BForm>
   );
 };
 Form.propTypes = propTypes;

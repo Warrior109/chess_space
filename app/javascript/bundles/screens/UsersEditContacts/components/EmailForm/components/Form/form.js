@@ -1,6 +1,6 @@
 import React from 'react';
 import { Field } from 'redux-form';
-import { Row, Col } from 'reactstrap';
+import {Row, Col, Form as BForm, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { func } from 'prop-types';
 
@@ -18,7 +18,7 @@ const Form = ({ handleSubmit, toggleMode }) => {
   };
 
   return (
-    <form onSubmit={ handleSubmit } >
+    <BForm onSubmit={ handleSubmit } >
       <Row>
         <Col sm={ 4 } >
           <h5><FormattedMessage id='user.fields.email' /></h5>
@@ -43,17 +43,17 @@ const Form = ({ handleSubmit, toggleMode }) => {
         </Col>
 
         <Col sm={ 6 } >
-          <button type='submit' >
+          <Button type='submit' >
             <FormattedMessage id='actions.save_changes' />
-          </button>
+          </Button>
         </Col>
         <Col sm={ 6 } >
-          <button onClick={ cancelHandler } >
+          <Button onClick={ cancelHandler } >
             <FormattedMessage id='actions.cancel' />
-          </button>
+          </Button>
         </Col>
       </Row>
-    </form>
+    </BForm>
   );
 };
 Form.propTypes = propTypes;

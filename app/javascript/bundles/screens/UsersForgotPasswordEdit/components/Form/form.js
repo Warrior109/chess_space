@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Container, Row, Col } from 'reactstrap';
+import {Container, Row, Col, Form as BForm, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { Field } from 'redux-form';
 import { func } from 'prop-types';
@@ -28,7 +28,7 @@ class Form extends Component {
     } = this;
 
     return (
-      <form onSubmit={ handleSubmit } >
+      <BForm onSubmit={ handleSubmit } >
         <Container>
           <Row>
             <Col sm={ 4 } >
@@ -40,7 +40,7 @@ class Form extends Component {
                 type={ isPasswordVisible ? 'text' : 'password' }
                 name='password'
               />
-              <button onClick={ togglePasswordVisibilityHandler }>
+              <Button onClick={ togglePasswordVisibilityHandler }>
                 {/* FIXME: remvove from yml file, if will be replaced with icon */}
                 {
                   isPasswordVisible ?
@@ -48,7 +48,7 @@ class Form extends Component {
                     :
                     <FormattedMessage id='actions.show_password' />
                 }
-              </button>
+              </Button>
             </Col>
             <Col sm={ 4 } >
               <FormattedMessage id='user.fields.new_password_confirmation' />
@@ -61,13 +61,13 @@ class Form extends Component {
               />
             </Col>
             <Col sm={ 12 } >
-              <button type='submit' >
+              <Button color='success' type='submit' >
                 <FormattedMessage id='actions.save_changes' />
-              </button>
+              </Button>
             </Col>
           </Row>
         </Container>
-      </form>
+      </BForm>
     );
   }
 };

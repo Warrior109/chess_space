@@ -1,6 +1,6 @@
 import React, { Component, Fragment } from 'react';
 import { FormattedMessage } from 'react-intl';
-import { Col } from 'reactstrap';
+import {Col, Button} from 'reactstrap';
 import { toastr } from 'react-redux-toastr';
 import { shape, string, bool, func } from 'prop-types';
 
@@ -64,7 +64,7 @@ class EmailForm extends Component {
               <Col sm={ 4 } ><h5><FormattedMessage id='user.fields.email' /></h5></Col>
               <Col sm={ 8 } >
                 <span>{ email }</span>
-                <button onClick={ toggleMode } ><FormattedMessage id='actions.edit' /></button>
+                <Button onClick={ toggleMode } ><FormattedMessage id='actions.edit' /></Button>
               </Col>
             </Fragment>
         }

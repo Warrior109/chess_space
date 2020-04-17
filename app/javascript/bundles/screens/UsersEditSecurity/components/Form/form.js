@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Field } from 'redux-form';
-import { Row, Col } from 'reactstrap';
+import {Row, Col, Form as BForm, Button} from 'reactstrap';
 import { FormattedMessage } from 'react-intl';
 import { func } from 'prop-types';
 
@@ -28,7 +28,7 @@ class Form extends Component {
     } = this;
 
     return (
-      <form onSubmit={ handleSubmit } >
+      <BForm onSubmit={ handleSubmit } >
         <Row>
           <Col sm={ 4 }>
             <FormattedMessage id='user.fields.old_password' />
@@ -39,7 +39,7 @@ class Form extends Component {
               type={ isPasswordVisible ? 'text' : 'password' }
               name='password'
             />
-            <button onClick={ togglePasswordVisibilityHandler }>
+            <Button onClick={ togglePasswordVisibilityHandler }>
               {/* FIXME: remvove from yml file, if will be replaced with icon */}
               {
                 isPasswordVisible ?
@@ -47,7 +47,7 @@ class Form extends Component {
                   :
                   <FormattedMessage id='actions.show_password' />
               }
-            </button>
+            </Button>
           </Col>
 
           <Col sm={ 4 }>
@@ -72,12 +72,12 @@ class Form extends Component {
             />
           </Col>
           <Col sm={ 12 } >
-            <button type='submit' >
+            <Button color='success' type='submit' >
               <FormattedMessage id='actions.save_changes' />
-            </button>
+            </Button>
           </Col>
         </Row>
-      </form>
+      </BForm>
     );
   }
 };
