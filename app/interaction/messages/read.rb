@@ -8,32 +8,41 @@ class Messages::Read < ApplicationInteraction
 
   object :user, desc: 'user, who reads messages', class: User
 
+  validate :ids_not_empty
   validate :ids_from_one_chat
   validate :user_have_access_to_chat
 
   def execute
-    Message.transaction do
+    Message.transaction {
       user.users_messages
-          .includes(:message)
+          .includes(message: :chat)
           .where(message_id: ids, read_at: nil) # no need to read already readed messages
           .each(&method(:read_message))
-          .each(&method(:broadcast_message))
-      user.messages.where(id: ids)
-    end
+    }.then(&method(:broadcast_changes))
+    user.messages.where(id: ids)
   end
 
   private
 
   def read_message(user_message)
     user_message.update!(read_at: Time.current)
+
+    broadcast(:message_was_readed, user_message.message, chat_id: user_message.message.chat_id)
   end
 
-  def broadcast_message(user_message)
-    broadcast(
-      :message_was_readed,
-      user_message.message,
-      chat_id: user_message.message.chat_id
-    )
+  def broadcast_changes(user_messages)
+    return if user_messages.empty?
+
+    chat = user_messages.to_a.first.message.chat # all messages from one chat
+
+    broadcast(:chat_was_updated, chat)
+
+    # Broadcast user changes only if chat becames readed
+    broadcast(:user_was_updated, user, user_id: user.id) if chat.readed?(user.id)
+  end
+
+  def ids_not_empty
+    errors.add(:ids, t(:ids_empty)) if ids.empty?
   end
 
   def ids_from_one_chat

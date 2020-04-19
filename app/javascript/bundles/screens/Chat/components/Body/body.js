@@ -4,6 +4,8 @@ import VisibilitySensor from '@k.sh/react-visibility-sensor';
 import { array, number, bool, func } from 'prop-types';
 
 import { MessageItem } from './components';
+import {subscriptionIds} from 'core/message/constants';
+import {deleteSubscription} from 'lib/utils';
 import Loader from 'components/Loader';
 
 const propTypes = {
@@ -11,7 +13,10 @@ const propTypes = {
   hasMorePages: bool.isRequired,
   chatId: number.isRequired,
   fetchMessagesListDispatch: func.isRequired,
-  readMessageDispatch: func.isRequired
+  readMessageDispatch: func.isRequired,
+  subscribeToMessageWasCreatedDispatch: func.isRequired,
+  subscribeToMessageWasReadedDispatch: func.isRequired,
+  processMessageDispatch: func.isRequired
 };
 
 class Body extends Component {
@@ -20,25 +25,50 @@ class Body extends Component {
   };
 
   componentDidMount() {
-    const { onWindowFocus, onWindowBlur, scrollContainer } = this;
+    const {onWindowFocus, onWindowBlur, scrollContainer, subscribeToChannels} = this;
 
     this._ismounted = true;
     window.addEventListener('focus', onWindowFocus);
     window.addEventListener('blur', onWindowBlur);
 
     scrollContainer.scrollTop = scrollContainer.scrollHeight;
+
+    subscribeToChannels();
   };
 
   componentWillUnmount() {
-    const {onWindowFocus, onWindowBlur} = this;
+    const {onWindowFocus, onWindowBlur, unsubscribeFromChannels} = this;
 
     this._ismounted = false;
     window.removeEventListener('focus', onWindowFocus);
     window.removeEventListener('blur', onWindowBlur);
+
+    unsubscribeFromChannels();
   };
 
   onWindowFocus = () => this._ismounted && this.setState({isTabOpen: true});
   onWindowBlur = () => this._ismounted && this.setState({isTabOpen: false});
+
+  subscribeToChannels = () => {
+    const {
+      subscribeToMessageWasCreatedDispatch,
+      subscribeToMessageWasReadedDispatch,
+      processMessageDispatch
+    } = this.props;
+
+    subscribeToMessageWasCreatedDispatch({
+      onReceive: message => processMessageDispatch({message, action: 'create'})
+    });
+
+    subscribeToMessageWasReadedDispatch({
+      onReceive: message => processMessageDispatch({message, action: 'update'})
+    });
+  };
+
+  unsubscribeFromChannels = () => {
+    deleteSubscription(subscriptionIds.MESSAGE_WAS_CREATED);
+    deleteSubscription(subscriptionIds.MESSAGE_WAS_READED);
+  };
 
   loadMore = (page) => {
     const {
@@ -51,6 +81,7 @@ class Body extends Component {
   onChangeMessageVisibility = (message, isVisible) => {
     const { readMessageDispatch } = this.props;
 
+    // TODO: Read batch of messages
     if (isVisible) readMessageDispatch({id: message.id});
   };
 

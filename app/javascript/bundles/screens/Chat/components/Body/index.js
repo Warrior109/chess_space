@@ -14,6 +14,9 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatsh => (
   bindActionCreators({
     fetchMessagesListDispatch: messageActions.fetchMessagesList,
+    subscribeToMessageWasCreatedDispatch: messageActions.subscribeToMessageWasCreated,
+    subscribeToMessageWasReadedDispatch: messageActions.subscribeToMessageWasReaded,
+    processMessageDispatch: messageActions.processMessage,
     readMessageDispatch: messageActions.readMessage
   }, dispatsh)
 );

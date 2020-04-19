@@ -29,6 +29,7 @@ uk:
       read:
         messages_from_different_chats: Повідомлення з різних чатів.
         user_not_from_this_chat: Користувач немає доступу до цього чату.
+        ids_empty: Порожній список повідомлень
 
     types:
       array: масив

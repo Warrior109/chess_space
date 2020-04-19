@@ -58,4 +58,20 @@ RSpec.describe Chat, type: :model do
       it { is_expected.to match_array [chat1] }
     end
   end
+
+  describe '#readed?' do
+    subject { chat.readed?(user.id) }
+
+    let(:chat) { create(:chat, users: [user]) }
+    let(:user) { create(:user) }
+    let!(:messages) { create_list(:message, 3, chat_id: chat.id) }
+
+    it { is_expected.to be false }
+
+    context 'when user read all messages' do
+      before { Messages::Read.run!(user: user, ids: messages.pluck(:id)) }
+
+      it { is_expected.to be true }
+    end
+  end
 end

@@ -13,9 +13,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatsh => (
   bindActionCreators({
     fetchChatScreenDataDispatch: actions.fetchChatScreenData,
-    subscribeToMessageWasCreatedDispatch: messageActions.subscribeToMessageWasCreated,
-    subscribeToMessageWasReadedDispatch: messageActions.subscribeToMessageWasReaded,
-    processMessageDispatch: messageActions.processMessage,
     clearChatScreenDataDispatch: actions.clearChatScreenData,
     clearMessagesDispatch: messageActions.clearMessages,
     setChatDispatch: actions.setChat,

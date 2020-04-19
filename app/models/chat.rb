@@ -19,4 +19,8 @@ class Chat < ApplicationRecord
       .where(users_messages: {read_at: nil, user_id: user_id, role: :receiver})
       .distinct
   }
+
+  def readed?(user_id)
+    !messages.unread(user_id).exists?
+  end
 end
