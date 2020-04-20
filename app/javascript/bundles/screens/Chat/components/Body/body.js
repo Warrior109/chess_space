@@ -3,7 +3,8 @@ import InfiniteScroll from 'react-infinite-scroller';
 import VisibilitySensor from '@k.sh/react-visibility-sensor';
 import { array, number, bool, func } from 'prop-types';
 
-import { MessageItem } from './components';
+import {MessageItem} from './components';
+import {MIN_SCROLL_FROM_BOTTOM} from './constants';
 import {subscriptionIds} from 'core/message/constants';
 import {deleteSubscription} from 'lib/utils';
 import Loader from 'components/Loader';
@@ -22,26 +23,50 @@ const propTypes = {
 class Body extends Component {
   state = {
     isTabOpen: document.hasFocus(),
+    scrollOnBottom: true
   };
 
   componentDidMount() {
-    const {onWindowFocus, onWindowBlur, scrollContainer, subscribeToChannels} = this;
+    const {
+      onWindowFocus, onWindowBlur, scrollContainer, scrollBottom, subscribeToChannels,
+      onScrollScrollContainer
+    } = this;
 
     this._ismounted = true;
     window.addEventListener('focus', onWindowFocus);
     window.addEventListener('blur', onWindowBlur);
+    scrollContainer.addEventListener('scroll', onScrollScrollContainer);
 
-    scrollContainer.scrollTop = scrollContainer.scrollHeight;
+    scrollBottom();
 
     subscribeToChannels();
   };
 
+  componentDidUpdate({messages}) {
+    const {
+      scrollBottom,
+      state: {scrollOnBottom},
+      props: {messages: newMessages}
+    } = this;
+    if (messages.length < newMessages.length) { // if at least one element was added and scroll was on bottom
+      if (scrollOnBottom) {
+        scrollBottom();
+      } else if (!newMessages[newMessages.length - 1].id) { // new message sended from the screen
+        scrollBottom();
+      }
+    };
+  };
+
   componentWillUnmount() {
-    const {onWindowFocus, onWindowBlur, unsubscribeFromChannels} = this;
+    const {
+      onWindowFocus, onWindowBlur, unsubscribeFromChannels, scrollContainer,
+      onScrollScrollContainer
+    } = this;
 
     this._ismounted = false;
     window.removeEventListener('focus', onWindowFocus);
     window.removeEventListener('blur', onWindowBlur);
+    scrollContainer.removeEventListener('scroll', onScrollScrollContainer);
 
     unsubscribeFromChannels();
   };
@@ -51,10 +76,12 @@ class Body extends Component {
 
   subscribeToChannels = () => {
     const {
-      subscribeToMessageWasCreatedDispatch,
-      subscribeToMessageWasReadedDispatch,
-      processMessageDispatch
-    } = this.props;
+      props: {
+        subscribeToMessageWasCreatedDispatch,
+        subscribeToMessageWasReadedDispatch,
+        processMessageDispatch
+      }
+    } = this;
 
     subscribeToMessageWasCreatedDispatch({
       onReceive: message => processMessageDispatch({message, action: 'create'})
@@ -63,6 +90,12 @@ class Body extends Component {
     subscribeToMessageWasReadedDispatch({
       onReceive: message => processMessageDispatch({message, action: 'update'})
     });
+  };
+
+  scrollBottom = () => {
+    const {scrollContainer} = this;
+
+    scrollContainer.scrollTop = scrollContainer.scrollHeight;
   };
 
   unsubscribeFromChannels = () => {
@@ -83,6 +116,22 @@ class Body extends Component {
 
     // TODO: Read batch of messages
     if (isVisible) readMessageDispatch({id: message.id});
+  };
+
+  onScrollScrollContainer = () => {
+    const {
+      scrollContainer,
+      state: {scrollOnBottom}
+    } = this;
+
+    const scrollFromBottom = scrollContainer.scrollHeight -
+      (scrollContainer.scrollTop + scrollContainer.offsetHeight);
+
+    if (scrollFromBottom <= MIN_SCROLL_FROM_BOTTOM) {
+      if (!scrollOnBottom) this.setState({scrollOnBottom: true});
+    } else {
+      if (scrollOnBottom) this.setState({scrollOnBottom: false});
+    };
   };
 
   render() {

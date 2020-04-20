@@ -11,7 +11,7 @@ import { selectors } from './selectors';
 import api from './api';
 import { types } from './constants';
 
-export function* createMessage({ payload: { text }, errorCallback, callback }) {
+export function* createMessage({payload: { text }, errorCallback, callback}) {
   try {
     const chat = yield select(chatSelectors.getChat);
     const currentUser = yield select(currentUserSelectors.getCurrentUser);

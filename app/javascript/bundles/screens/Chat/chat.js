@@ -91,7 +91,7 @@ class Chat extends Component {
   render() {
     const {
       changeChat,
-      state: { isLoading, isChangingChat }
+      state: {isLoading, isChangingChat}
     } = this;
 
     if (isLoading) return <Loader />;
