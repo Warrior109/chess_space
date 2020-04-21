@@ -1,5 +1,6 @@
 fragment chatFields on Chat {
   id
+  unreadMessagesCount
   companion {
     id
     firstName

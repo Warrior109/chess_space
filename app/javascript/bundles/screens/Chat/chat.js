@@ -70,10 +70,15 @@ class Chat extends Component {
   subscribeToChannel = () => {
     const {
       subscribeToChatWasUpdatedDispatch,
-      replaceChatItemDispatch
+      replaceChatItemDispatch,
+      chat: currentChat,
+      setChatDispatch
     } = this.props;
 
-    subscribeToChatWasUpdatedDispatch({onReceive: chat => replaceChatItemDispatch({chat})});
+    subscribeToChatWasUpdatedDispatch({onReceive: chat => {
+      replaceChatItemDispatch({chat});
+      if (currentChat.id === chat.id) setChatDispatch({chat});
+    }});
   };
 
   changeChat = chat => {

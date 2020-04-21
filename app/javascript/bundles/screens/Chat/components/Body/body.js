@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import InfiniteScroll from 'react-infinite-scroller';
 import VisibilitySensor from '@k.sh/react-visibility-sensor';
-import { array, number, bool, func } from 'prop-types';
+import {shape, array, number, bool, func} from 'prop-types';
 
 import {MessageItem} from './components';
 import {MIN_SCROLL_FROM_BOTTOM} from './constants';
@@ -12,7 +12,7 @@ import Loader from 'components/Loader';
 const propTypes = {
   messages: array.isRequired,
   hasMorePages: bool.isRequired,
-  chatId: number.isRequired,
+  chat: shape({ id: number.isRequired, unreadMessagesCount: number.isRequired }).isRequired,
   fetchMessagesListDispatch: func.isRequired,
   readMessageDispatch: func.isRequired,
   subscribeToMessageWasCreatedDispatch: func.isRequired,
@@ -23,7 +23,7 @@ const propTypes = {
 class Body extends Component {
   state = {
     isTabOpen: document.hasFocus(),
-    scrollOnBottom: true
+    isScrollOnBottom: true
   };
 
   componentDidMount() {
@@ -45,11 +45,11 @@ class Body extends Component {
   componentDidUpdate({messages}) {
     const {
       scrollBottom,
-      state: {scrollOnBottom},
+      state: {isScrollOnBottom},
       props: {messages: newMessages}
     } = this;
     if (messages.length < newMessages.length) { // if at least one element was added and scroll was on bottom
-      if (scrollOnBottom) {
+      if (isScrollOnBottom) {
         scrollBottom();
       } else if (!newMessages[newMessages.length - 1].id) { // new message sended from the screen
         scrollBottom();
@@ -105,7 +105,7 @@ class Body extends Component {
 
   loadMore = (page) => {
     const {
-      props: {chatId, fetchMessagesListDispatch}
+      props: {chat: {id: chatId}, fetchMessagesListDispatch}
     } = this;
 
     fetchMessagesListDispatch({chatId, page});
@@ -121,16 +121,16 @@ class Body extends Component {
   onScrollScrollContainer = () => {
     const {
       scrollContainer,
-      state: {scrollOnBottom}
+      state: {isScrollOnBottom}
     } = this;
 
     const scrollFromBottom = scrollContainer.scrollHeight -
       (scrollContainer.scrollTop + scrollContainer.offsetHeight);
 
     if (scrollFromBottom <= MIN_SCROLL_FROM_BOTTOM) {
-      if (!scrollOnBottom) this.setState({scrollOnBottom: true});
+      if (!isScrollOnBottom) this.setState({isScrollOnBottom: true});
     } else {
-      if (scrollOnBottom) this.setState({scrollOnBottom: false});
+      if (isScrollOnBottom) this.setState({isScrollOnBottom: false});
     };
   };
 
@@ -138,8 +138,9 @@ class Body extends Component {
     const {
       loadMore,
       onChangeMessageVisibility,
-      state: {isTabOpen},
-      props: {messages, hasMorePages}
+      scrollBottom,
+      state: {isTabOpen, isScrollOnBottom},
+      props: {messages, hasMorePages, chat: {unreadMessagesCount}}
     } = this;
 
 
@@ -180,6 +181,13 @@ class Body extends Component {
             }
           </div>
         </InfiniteScroll>
+        {
+          !isScrollOnBottom &&
+            <div className='scroll-down-arrow' onClick={ scrollBottom } >
+              Scroll down
+              { !!unreadMessagesCount && <span>({ unreadMessagesCount })</span> }
+            </div>
+        }
       </div>
     );
   };

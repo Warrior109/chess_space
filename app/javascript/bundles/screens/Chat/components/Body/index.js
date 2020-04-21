@@ -8,7 +8,7 @@ import { selectors as messageSelectors, actions as messageActions } from 'core/m
 const mapStateToProps = state => ({
   messages: messageSelectors.getMessages(state),
   hasMorePages: messageSelectors.getHasMorePages(state),
-  chatId: selectors.getChatId(state)
+  chat: selectors.getChat(state)
 });
 
 const mapDispatchToProps = dispatsh => (
