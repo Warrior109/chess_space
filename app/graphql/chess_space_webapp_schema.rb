@@ -13,4 +13,7 @@ class ChessSpaceWebappSchema < GraphQL::Schema
   use GraphQL::Execution::Interpreter
   use GraphQL::Analysis::AST
   use GraphQL::Pagination::Connections
+
+  # Connections
+  connections.add(Message.const_get(:GeneratedRelationMethods), Connections::MessagesConnection)
 end
