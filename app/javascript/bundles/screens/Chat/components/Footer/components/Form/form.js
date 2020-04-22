@@ -5,10 +5,18 @@ import { FormattedMessage } from 'react-intl';
 import { func } from 'prop-types';
 
 const propTypes = {
-  handleSubmit: func.isRequired
+  handleSubmit: func.isRequired,
+  submitForm: func.isRequired
 };
 
-const Form = ({ handleSubmit }) => {
+const Form = ({handleSubmit, submitForm}) => {
+  const onKeyDown = (e) => {
+    if (e.ctrlKey && e.key === 'Enter') {
+      e.preventDefault();
+      submitForm();
+    }
+  };
+
   return (
     <BForm onSubmit={ handleSubmit } >
       <Row className='form-group'>
@@ -17,6 +25,7 @@ const Form = ({ handleSubmit }) => {
             component='textarea'
             name='text'
             className='form-control'
+            onKeyDown={ onKeyDown }
           />
         </Col>
         <Col sm={ 2 } >

@@ -1,7 +1,15 @@
-import { reduxForm } from 'redux-form';
+import {reduxForm, submit} from 'redux-form';
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
-import Form from './form';
 import { validations } from 'core/message';
+import Form from './form';
+
+const mapDispatchToProps = dispatsh => (
+  bindActionCreators({
+    submitForm: () => submit('createMessageForm')
+  }, dispatsh)
+);
 
 const validate = ({ text }) => {
   const errors = {};
@@ -9,4 +17,6 @@ const validate = ({ text }) => {
   return errors;
 };
 
-export default reduxForm({ form: 'createMessageForm', validate })(Form);
+export default reduxForm({form: 'createMessageForm', validate})(
+  connect(null, mapDispatchToProps)(Form)
+);
