@@ -15,9 +15,10 @@ const mapDispatchToProps = dispatsh => (
   bindActionCreators({
     fetchMessagesListDispatch: messageActions.fetchMessagesList,
     subscribeToMessageWasCreatedDispatch: messageActions.subscribeToMessageWasCreated,
-    subscribeToMessageWasReadedDispatch: messageActions.subscribeToMessageWasReaded,
+    subscribeToMessagesWasReadedDispatch: messageActions.subscribeToMessagesWasReaded,
     processMessageDispatch: messageActions.processMessage,
-    readMessageDispatch: messageActions.readMessage
+    readMessagesDispatch: messageActions.readMessages,
+    markMessagesAsReadedDispatch: messageActions.markMessagesAsReaded
   }, dispatsh)
 );
 

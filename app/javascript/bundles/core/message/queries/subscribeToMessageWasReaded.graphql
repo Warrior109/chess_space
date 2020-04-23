@@ -1,9 +1,0 @@
-#import "./messageFields.graphql"
-
-subscription messageWasReaded($chatId: Int!) {
-  messageWasReaded(chatId: $chatId) {
-    item {
-      ...messageFields
-    }
-  }
-}

@@ -1,0 +1,5 @@
+subscription messagesWasReaded($chatId: Int!) {
+  messagesWasReaded(chatId: $chatId) {
+    ids
+  }
+}

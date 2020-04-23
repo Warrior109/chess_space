@@ -47,15 +47,15 @@ export function* subscribeToMessageWasCreated({onReceive, onError, onCompleted})
   );
 }
 
-export function* subscribeToMessageWasReaded({onReceive, onError, onCompleted}) {
+export function* subscribeToMessagesWasReaded({onReceive, onError, onCompleted}) {
   const chat = yield select(chatSelectors.getChat);
 
-  const onReceiveOverrided = ({messageWasReaded: {item}}) => {
-    if (onReceive) onReceive(item);
+  const onReceiveOverrided = ({messagesWasReaded: {ids}}) => {
+    if (onReceive) onReceive(ids);
   };
 
   yield call(
-    api.subscribeToMessageWasReaded,
+    api.subscribeToMessagesWasReaded,
     {variables: {chatId: chat.id}, onReceive: onReceiveOverrided, onError, onCompleted}
   );
 }
@@ -104,9 +104,9 @@ export function* saveMessagesList({pageInfo: {startCursor, hasPreviousPage}, nod
   yield put({type: types.SET_MESSAGE_HAS_MORE_PAGES, payload: {hasMorePages: hasPreviousPage}});
 };
 
-export function* readMessage({payload: {id}, errorCallback, callback}) {
+export function* readMessages({payload: {ids}, errorCallback, callback}) {
   try {
-    const resp = yield call(api.readMessages, {ids: [id]});
+    const resp = yield call(api.readMessages, {ids});
 
     if (!resp.errors.length) {
       yield* resp.messages.forEach(message => processMessage({payload: {message, action: 'update'}}));
@@ -118,6 +118,21 @@ export function* readMessage({payload: {id}, errorCallback, callback}) {
   } catch(err) {
     yield checkError(err);
     if (errorCallback) errorCallback(err);
+  }
+}
+
+export function* markMessagesAsReaded({payload: {ids}}) {
+  const idsSet = new Set(ids);
+
+  const messages = yield select(selectors.getMessagesList);
+  let index = 0;
+  for (let message of messages) {
+    if (idsSet.has(message.id)) {
+      idsSet.delete(message.id);
+      yield put({type: types.MARK_MESSAGE_ITEM_AS_READ, payload: {index}});
+    }
+    if (idsSet.size === 0) break;
+    index++;
   }
 }
 
@@ -133,8 +148,9 @@ export function* messageWatch() {
   yield takeLatest(types.PROCESS_MESSAGE, processMessage);
   yield takeLatest(types.FETCH_MESSAGES_LIST, fetchMessagesList);
   yield takeLatest(types.CLEAR_MESSAGES, clearMessages);
-  yield takeLatest(types.READ_MESSAGE, readMessage);
-  yield takeLatest(types.SUBSCRIBE_TO_MESSAGE_WAS_READED, subscribeToMessageWasReaded);
+  yield takeLatest(types.READ_MESSAGES, readMessages);
+  yield takeLatest(types.SUBSCRIBE_TO_MESSAGES_WAS_READED, subscribeToMessagesWasReaded);
+  yield takeLatest(types.MARK_MESSAGES_AS_READED, markMessagesAsReaded);
 }
 
 export const messageSagas = [

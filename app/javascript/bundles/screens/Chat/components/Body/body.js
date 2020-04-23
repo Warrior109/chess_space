@@ -12,12 +12,16 @@ import Loader from 'components/Loader';
 const propTypes = {
   messages: array.isRequired,
   hasMorePages: bool.isRequired,
-  chat: shape({ id: number.isRequired, unreadMessagesCount: number.isRequired }).isRequired,
+  chat: shape({
+    id: number.isRequired,
+    unreadMessagesCount: number.isRequired
+  }).isRequired,
   fetchMessagesListDispatch: func.isRequired,
-  readMessageDispatch: func.isRequired,
+  readMessagesDispatch: func.isRequired,
   subscribeToMessageWasCreatedDispatch: func.isRequired,
-  subscribeToMessageWasReadedDispatch: func.isRequired,
-  processMessageDispatch: func.isRequired
+  subscribeToMessagesWasReadedDispatch: func.isRequired,
+  processMessageDispatch: func.isRequired,
+  markMessagesAsReadedDispatch: func.isRequired
 };
 
 class Body extends Component {
@@ -29,17 +33,18 @@ class Body extends Component {
   componentDidMount() {
     const {
       onWindowFocus, onWindowBlur, scrollContainer, scrollBottom, subscribeToChannels,
-      onScrollScrollContainer
+      onScrollScrollContainer, readMessagesWorker
     } = this;
 
     this._ismounted = true;
+
     window.addEventListener('focus', onWindowFocus);
     window.addEventListener('blur', onWindowBlur);
     scrollContainer.addEventListener('scroll', onScrollScrollContainer);
 
     scrollBottom();
-
     subscribeToChannels();
+    readMessagesWorker();
   };
 
   componentDidUpdate({messages}) {
@@ -60,7 +65,7 @@ class Body extends Component {
   componentWillUnmount() {
     const {
       onWindowFocus, onWindowBlur, unsubscribeFromChannels, scrollContainer,
-      onScrollScrollContainer
+      onScrollScrollContainer, readMessagesWorkerId
     } = this;
 
     this._ismounted = false;
@@ -69,8 +74,10 @@ class Body extends Component {
     scrollContainer.removeEventListener('scroll', onScrollScrollContainer);
 
     unsubscribeFromChannels();
+    clearTimeout(readMessagesWorkerId);
   };
 
+  visibleMessageIds = new Set();
   onWindowFocus = () => this._ismounted && this.setState({isTabOpen: true});
   onWindowBlur = () => this._ismounted && this.setState({isTabOpen: false});
 
@@ -78,8 +85,9 @@ class Body extends Component {
     const {
       props: {
         subscribeToMessageWasCreatedDispatch,
-        subscribeToMessageWasReadedDispatch,
-        processMessageDispatch
+        subscribeToMessagesWasReadedDispatch,
+        processMessageDispatch,
+        markMessagesAsReadedDispatch
       }
     } = this;
 
@@ -87,8 +95,8 @@ class Body extends Component {
       onReceive: message => processMessageDispatch({message, action: 'create'})
     });
 
-    subscribeToMessageWasReadedDispatch({
-      onReceive: message => processMessageDispatch({message, action: 'update'})
+    subscribeToMessagesWasReadedDispatch({
+      onReceive: ids => markMessagesAsReadedDispatch({ids})
     });
   };
 
@@ -100,7 +108,7 @@ class Body extends Component {
 
   unsubscribeFromChannels = () => {
     deleteSubscription(subscriptionIds.MESSAGE_WAS_CREATED);
-    deleteSubscription(subscriptionIds.MESSAGE_WAS_READED);
+    deleteSubscription(subscriptionIds.MESSAGES_WAS_READED);
   };
 
   loadMore = (page) => {
@@ -112,10 +120,9 @@ class Body extends Component {
   };
 
   onChangeMessageVisibility = (message, isVisible) => {
-    const { readMessageDispatch } = this.props;
+    const {visibleMessageIds} = this;
 
-    // TODO: Read batch of messages
-    if (isVisible) readMessageDispatch({id: message.id});
+    if (isVisible) visibleMessageIds.add(message.id);
   };
 
   onScrollScrollContainer = () => {
@@ -132,6 +139,24 @@ class Body extends Component {
     } else {
       if (isScrollOnBottom) this.setState({isScrollOnBottom: false});
     };
+  };
+
+  // Works in background and reads batch of messages
+  readMessagesWorker = () => {
+    const {
+      visibleMessageIds,
+      readMessagesWorker,
+      props: {readMessagesDispatch}
+    } = this;
+
+    const ids = Array.from(visibleMessageIds);
+
+    if (ids.length) {
+      const callback = () => ids.forEach(id => visibleMessageIds.delete(id));
+      readMessagesDispatch({ids, callback});
+    };
+
+    this.readMessagesWorkerId = setTimeout(readMessagesWorker, 500);
   };
 
   render() {

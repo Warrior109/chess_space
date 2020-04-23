@@ -26,6 +26,8 @@ export function messageReducer(state = initialState, { payload, type }) {
       return update(state, { cursors: { $set: payload.cursors } });
     case types.SET_MESSAGE_HAS_MORE_PAGES:
       return update(state, { hasMorePages: { $set: payload.hasMorePages } });
+    case types.MARK_MESSAGE_ITEM_AS_READ:
+      return update(state, {list: {[payload.index]: {status: {$set: 'readed'}}}});
     default: {
       return state;
     }

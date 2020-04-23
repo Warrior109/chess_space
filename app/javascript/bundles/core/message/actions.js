@@ -7,8 +7,8 @@ export const actions = {
   subscribeToMessageWasCreated: ({onReceive, onError, onCompleted}) => ({
     type: types.SUBSCRIBE_TO_MESSAGE_WAS_CREATED, onReceive, onError, onCompleted
   }),
-  subscribeToMessageWasReaded: ({onReceive, onError, onCompleted}) => ({
-    type: types.SUBSCRIBE_TO_MESSAGE_WAS_READED, onReceive, onError, onCompleted
+  subscribeToMessagesWasReaded: ({onReceive, onError, onCompleted}) => ({
+    type: types.SUBSCRIBE_TO_MESSAGES_WAS_READED, onReceive, onError, onCompleted
   }),
   pushMessage: ({message}) => ({
     type: types.PUSH_MESSAGE, payload: {message}
@@ -20,5 +20,6 @@ export const actions = {
   fetchMessagesList: ({ chatId, page, callback, errorCallback }) => ({
     type: types.FETCH_MESSAGES_LIST, payload: { chatId, page }, callback, errorCallback
   }),
-  readMessage: ({id}) => ({type: types.READ_MESSAGE, payload: {id}})
+  readMessages: ({ids, callback}) => ({type: types.READ_MESSAGES, payload: {ids}, callback}),
+  markMessagesAsReaded: ({ids}) => ({type: types.MARK_MESSAGES_AS_READED, payload: {ids}})
 };

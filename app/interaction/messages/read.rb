@@ -26,8 +26,6 @@ class Messages::Read < ApplicationInteraction
 
   def read_message(user_message)
     user_message.update!(read_at: Time.current)
-
-    broadcast(:message_was_readed, user_message.message, chat_id: user_message.message.chat_id)
   end
 
   def broadcast_changes(user_messages)
@@ -36,6 +34,7 @@ class Messages::Read < ApplicationInteraction
     chat = user_messages.to_a.first.message.chat # all messages from one chat
 
     broadcast(:chat_was_updated, chat)
+    broadcast(:messages_was_readed, user_messages.pluck(:message_id), chat_id: chat.id)
 
     # Broadcast user changes only if chat becames readed
     broadcast(:user_was_updated, user, user_id: user.id) if chat.readed?(user.id)

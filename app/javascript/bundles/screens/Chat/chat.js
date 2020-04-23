@@ -71,13 +71,12 @@ class Chat extends Component {
     const {
       subscribeToChatWasUpdatedDispatch,
       replaceChatItemDispatch,
-      chat: currentChat,
       setChatDispatch
     } = this.props;
 
     subscribeToChatWasUpdatedDispatch({onReceive: chat => {
       replaceChatItemDispatch({chat});
-      if (currentChat.id === chat.id) setChatDispatch({chat});
+      if (this.props.chat.id === chat.id) setChatDispatch({chat});
     }});
   };
 

@@ -2,7 +2,7 @@ import { graphQLRequest, createSubscription } from 'lib/utils';
 import {
   createMessage,
   subscribeToMessageWasCreated,
-  subscribeToMessageWasReaded,
+  subscribeToMessagesWasReaded,
   fetchMessagesList,
   readMessages
 } from './queries';
@@ -21,9 +21,9 @@ const api = {
     onError,
     onCompleted
   }),
-  subscribeToMessageWasReaded: ({variables, onReceive, onError, onCompleted}) => createSubscription({
-    subscriptionId: subscriptionIds.MESSAGE_WAS_READED,
-    query: subscribeToMessageWasReaded,
+  subscribeToMessagesWasReaded: ({variables, onReceive, onError, onCompleted}) => createSubscription({
+    subscriptionId: subscriptionIds.MESSAGES_WAS_READED,
+    query: subscribeToMessagesWasReaded,
     variables,
     onReceive,
     onError,
